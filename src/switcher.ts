@@ -1,17 +1,16 @@
 /**
  * WOOCOMMERCE MEDIA SECTION GALLERY
  */
-export const switcherContainer =
-	document.getElementById( 'woo-switch-gallery' );
-export const switcherContainerButtons = switcherContainer
-	? switcherContainer.getElementsByTagName( 'button' )
-	: null;
+export function init3dControls(): void {
+	const switcherContainer = document.getElementById( 'woo-switch-gallery' );
+	const switcherContainerButtons = switcherContainer
+		? switcherContainer.getElementsByTagName( 'button' )
+		: null;
 
-export function initControls() {
 	if ( switcherContainerButtons ) {
 		const modelViewerWrapper =
-			( document.querySelector(
-				'.woocommerce-product-gallery__3d'
+			( document.getElementById(
+				'woocommerce-product-gallery__3d'
 			) as HTMLElement ) || null;
 
 		Object.values( switcherContainerButtons ).forEach( ( button ) => {

@@ -1,24 +1,18 @@
+import { ModelViewerElement } from '@google/model-viewer';
 export declare const tapDistance: number;
 export declare let panning: boolean;
 export declare let panX: number[], panY: number[];
 export declare let startX: number, startY: number;
 export declare let metersPerPixel: number;
-export declare const errorContainer: HTMLElement;
-export declare const buttonArInit: HTMLElement;
-export declare const button3dRecenter: HTMLElement;
-export declare const button3dRotation: HTMLElement;
-export declare const modalToggleHotspot: HTMLElement;
-export declare const modalGenerateQR: HTMLElement;
-export declare const arButton: HTMLElement;
 export declare const onInteraction: () => void;
 /**
  * "If the canvas and modelID exist, then create a QR code and return the URL."
  *
  * @param {HTMLElement} canvas - The canvas element to render the QR code to.
  * @param {string}      id     - The attachment ID of the model.
- * @return A function that takes two arguments, canvas and id.
+ * @return {boolean} A function that takes two arguments, canvas and id.
  */
-export declare const getQRCode: (canvas: HTMLElement, id: string) => string | false;
+export declare function getQRCode(canvas: HTMLElement, id: string): boolean;
 /**
  * It takes an event, finds the progress bar, and updates the progress bar's value
  *
@@ -28,48 +22,67 @@ export declare const onProgress: (event: any) => void;
 /**
  * It takes a string as an argument, and then it displays that string in the error container
  *
+ * @param          container
  * @param {string} errorMessage - The error message to display.
  */
-export declare const logModelError: (errorMessage: string) => void;
+export declare const logModelError: (container: HTMLElement, errorMessage: string) => void;
+/**
+ * the rotation button is used to determine whether the model is autoRotating or not,
+ * if it has the classname "active" if the model is autoRotating
+ *
+ * @param  button
+ */
+export declare const getAutoRotation: (button: HTMLElement | null) => boolean;
 /**
  * It starts the rotation of the model.
+ *
+ * @param  container
  */
-export declare const startRotate: () => void;
+export declare const startRotate: (container: ModelViewerElement) => void;
 /**
  * It stops the rotation of the 3d model viewer
- */
-export declare const stopRotate: () => void;
-/**
- * If the 3D rotation button is active, start or stop the rotation
  *
- * @param {boolean} [start=true] - boolean = true
+ * @param  container
  */
-export declare const setRotate: (start?: boolean) => void;
+export declare const stopRotate: (container: ModelViewerElement) => void;
+/**
+ * If the 3D rotation isn't active, start the rotation
+ *
+ * @param  button3dRotation
+ * @param  mvContainer
+ */
+export declare const enableAutoRotate: (button3dRotation: HTMLElement | null, mvContainer: ModelViewerElement) => void;
 /**
  * If the button is active, stop the rotation, otherwise start the rotation
  *
- * @param {Event} event - Event - The event object.
+ * @param  event     - Event - The event object.
+ * @param  container
  */
-export declare const setRotation: (event: Event) => void;
+export declare const setAutoRotation: (event: Event, container: ModelViewerElement) => void;
 /**
  * It sets up the panning
  * vectors and the meters per pixel scale factor
+ *
+ * @param  container
  */
-export declare const startPan: () => void;
+export declare const startPan: (container: ModelViewerElement) => void;
 /**
  * It resets the camera to its initial position
+ *
+ * @param  container
  */
-export declare const centerView: () => void;
+export declare const centerView: (container: ModelViewerElement) => void;
 /**
  * If the user has not moved the mouse more than a certain distance from the starting point, then
  * recenter the camera on the point where the user clicked
  *
- * @param {Object} pointer         - The pointer object from the event.
- * @param          pointer.clientX
- * @param          pointer.clientY
+ * @param {ModelViewerElement} container
+ * @param {Object}             pointer         - The pointer object from the event.
+ * @param                      pointer.clientX
+ * @param                      pointer.clientY
  * @return {void}
  */
-export declare const recenter: (pointer: {
+export declare const recenter: (container: ModelViewerElement, pointer?: {
     clientX: number;
     clientY: number;
 }) => void;
@@ -91,22 +104,27 @@ export declare const throwErrorOnLoad: (event: any) => void;
 export declare const toggleHotspotVisibility: (hotspots: NodeListOf<Element>, isActive: boolean) => void;
 /**
  * It toggles the visibility of all hotspots in the current panorama
+ *
+ * @param {Event}              event     - The event that triggered the action.
+ * @param {ModelViewerElement} container
  */
-export declare const toggleHotspot: () => void;
+export declare const toggleHotspot: (event: Event, container: ModelViewerElement) => void;
 /**
  * It sets the center of the view to the center of the canvas, and then recenters the view to the
  * center of the canvas
  *
- * @param {Event} event - The event that triggered the action.
+ * @param {Event}              event     - The event that triggered the action.
+ * @param {ModelViewerElement} container
  */
-export declare const setRecenter: (event: Event) => void;
+export declare const setRecenter: (event: Event, container: ModelViewerElement) => void;
 /**
  * If the mvContainer can activate AR, then activate AR and show the hotspots. Otherwise, show the QR
  * code modal
  *
- * @param {Event} event - Event - The event object that was triggered by the user.
+ * @param {Event} event     - Event - The event object that was triggered by the user.
+ * @param         container
  */
-export declare const arInitialize: (event: Event) => void;
+export declare const arInitialize: (event: Event, container: ModelViewerElement) => void;
 /**
  * It removes the class 'active' from the modalGenerateQR element
  *

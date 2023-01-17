@@ -191,7 +191,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
     }
   }
 
-  .woocommerce-product-gallery__3d {
+  #woocommerce-product-gallery__3d {
     background: #f3f3f3;
     position: absolute;
     z-index: 3;
@@ -334,9 +334,6 @@ body.attachment #vr-model {
     }
   }
 }
-
-
-
 
 model-viewer[ar-tracking="not-tracking"] > #ar-failure {
   display: block;

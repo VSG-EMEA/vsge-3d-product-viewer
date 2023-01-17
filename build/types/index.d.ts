@@ -1,16 +1,15 @@
-import '@google/model-viewer';
+import '@google/model-viewer/dist/model-viewer.min';
 import { ModelViewerElement } from '@google/model-viewer';
 import 'focus-visible';
 import './style/style.scss';
-export declare const getContainer: () => ModelViewerElement | null;
-export declare let mvContainer: ModelViewerElement | null;
-export declare const getModelID: (container: HTMLElement) => string | false;
-export declare let modelID: string | false;
-export declare const modelVR: HTMLElement | null;
-export declare const getQrURL: (productID: string) => string | false;
-export declare const on3dInit: (container: HTMLElement) => void;
+export declare const getModelViewer: (container: HTMLElement | null) => ModelViewerElement | null;
+export declare const getQrURL: (productID: string | null) => boolean | undefined;
+export declare const getModelID: (container: HTMLElement) => string | null;
+export declare const initModelViewer: (mvContainer: ModelViewerElement) => void;
 /**
  * Product page only
+ *
+ * @param  mvContainer
  */
-export declare const onProductInit: () => void;
+export declare const onProductInit: (mvContainer: ModelViewerElement) => void;
 //# sourceMappingURL=index.d.ts.map

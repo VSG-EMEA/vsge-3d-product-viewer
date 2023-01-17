@@ -1,7 +1,5 @@
 /**
  * WOOCOMMERCE MEDIA SECTION GALLERY
  */
-export declare const switcherContainer: HTMLElement | null;
-export declare const switcherContainerButtons: HTMLCollectionOf<HTMLButtonElement> | null;
-export declare function initControls(): void;
+export declare function init3dControls(): void;
 //# sourceMappingURL=switcher.d.ts.map

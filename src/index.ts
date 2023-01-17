@@ -1,56 +1,53 @@
 /* global wp */
 
 // 3D MODEL VIEWER
-import '@google/model-viewer';
+import '@google/model-viewer/dist/model-viewer.min';
 import { ModelViewerElement } from '@google/model-viewer';
 import 'focus-visible';
-import * as QRCode from 'qrcode';
 
-import { initControls } from './switcher';
+import { init3dControls } from './switcher';
 
 import './style/style.scss';
 import {
 	arInitialize,
-	button3dRecenter,
-	button3dRotation,
-	buttonArInit,
 	deactivateQR,
 	getQRCode,
-	modalGenerateQR,
-	modalToggleHotspot,
 	onInteraction,
 	onProgress,
 	setRecenter,
-	setRotate,
-	setRotation,
+	enableAutoRotate,
+	setAutoRotation,
 	throwErrorOnLoad,
 	toggleHotspot,
+	stopRotate,
 } from './utils';
 
-export const getContainer = (): ModelViewerElement | null =>
-	document.querySelector( 'model-viewer' ) as ModelViewerElement;
-export let mvContainer: ModelViewerElement | null;
+export const getModelViewer = (
+	container: HTMLElement | null
+): ModelViewerElement | null => {
+	if ( container ) {
+		return container.querySelector( 'model-viewer' ) as ModelViewerElement;
+	}
+	return null;
+};
 
-// mvContainer.autoRotate.speed = initialCameraOrbit
+export const getQrURL = ( productID: string | null ) => {
+	const modelVR = document.getElementById(
+		'vsge-vr-model'
+	) as HTMLElement | null;
 
-export const getModelID = ( container: HTMLElement ): string | false =>
-	container?.dataset.model || false;
-export let modelID: string | false;
+	if ( modelVR && productID ) return getQRCode( modelVR, productID );
+};
 
-export const modelVR = document.getElementById(
-	'vsge-vr-model'
-) as HTMLElement | null;
+export const getModelID = ( container: HTMLElement ): string | null =>
+	container?.dataset.model || null;
 
-export const getQrURL = ( productID: string ) =>
-	modelVR ? getQRCode( modelVR, productID ) : false;
-let qrURL: string | false;
-
-export const on3dInit = ( container: HTMLElement ) => {
+export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
 	// execute loading
-	container.addEventListener( 'progress', onProgress );
+	mvContainer.addEventListener( 'progress', onProgress );
 
 	// throw an error if the model fails to load
-	container.addEventListener( 'ar-status', throwErrorOnLoad );
+	mvContainer.addEventListener( 'ar-status', throwErrorOnLoad );
 
 	document.body.addEventListener( 'mouseover', onInteraction, {
 		once: true,
@@ -62,52 +59,74 @@ export const on3dInit = ( container: HTMLElement ) => {
 	document.body.addEventListener( 'scroll', onInteraction, { once: true } );
 	document.body.addEventListener( 'keydown', onInteraction, { once: true } );
 
-	container.onmouseenter = () => setRotate( false );
+	mvContainer.onmouseleave = () => stopRotate( mvContainer );
 
-	container.onmouseleave = () => setRotate;
-
-	container.oncontextmenu = ( ev: Event ) => ev.preventDefault();
+	mvContainer.oncontextmenu = ( ev: Event ) => ev.preventDefault();
 };
 
 /**
  * Product page only
+ *
+ * @param  mvContainer
  */
-export const onProductInit = () => {
-	buttonArInit.onclick = () => arInitialize;
+export const onProductInit = ( mvContainer: ModelViewerElement ) => {
+	const buttonArInit =
+		( document.getElementById( 'ar-init' ) as HTMLElement ) || null;
+	const modalGenerateQR =
+		( document.getElementById( 'vsge-modal-qrcode' ) as HTMLElement ) ||
+		null;
+	const button3dRecenter =
+		( document.getElementById( 'ar-center' ) as HTMLElement ) || null;
+	const modalToggleHotspot =
+		( document.getElementById( 'ar-toggle-hotspots' ) as HTMLElement ) ||
+		null;
+	const button3dRotation =
+		( document.getElementById( 'ar-rotation' ) as HTMLElement ) || null;
+
+	buttonArInit.onclick = ( e ) => arInitialize( e, mvContainer );
 
 	modalGenerateQR.onclick = () => deactivateQR;
 
-	modalToggleHotspot.onclick = () => toggleHotspot;
+	modalToggleHotspot.onclick = ( e ) => toggleHotspot( e, mvContainer );
 
-	button3dRecenter.onclick = () => setRecenter;
+	button3dRecenter.onclick = ( e ) => setRecenter( e, mvContainer );
 
-	button3dRotation.onclick = () => setRotation;
+	button3dRotation.onclick = ( e ) => setAutoRotation( e, mvContainer );
+
+	mvContainer.onmouseenter = () =>
+		enableAutoRotate( button3dRotation, mvContainer );
 };
 
 /**
  * On page Load
  */
 window.addEventListener( 'load', () => {
-	mvContainer = getContainer();
+	const container3d: HTMLElement | null = document.getElementById(
+		'woocommerce-product-gallery__3d'
+	);
+	const mvContainer: ModelViewerElement | null =
+		getModelViewer( container3d );
 
-	/* if model viewer isn't available in this page exit immediately */
-	if ( mvContainer === null ) return;
-	modelID = getModelID( mvContainer );
+	/** if model viewer isn't available in this page exit immediately */
+	if ( mvContainer ) {
+		/**
+		 * Adds the switcher between gallery and 3d model
+		 */
+		initModelViewer( mvContainer );
 
-	/* if the model id was found the 3d model is available */
-	if ( modelID ) {
-		/* build the qr url of the related attachment page */
-		qrURL = getQrURL( modelID );
+		/**
+		 * Then start the basic 3d controls
+		 */
+		init3dControls();
 
-		/* fire the basic controls shared for both views */
-		on3dInit( mvContainer );
-
-		/* 4 product page only enable extra controls on the left */
-		if ( qrURL ) {
-			onProductInit();
+		/**
+		 * If the model id was found we are in the product page, and we need some extra controls
+		 * ADDITIONALLY, we will add:
+		 * - qr url of the related attachment page product page only
+		 * - enable extra controls on the left
+		 */
+		if ( getQrURL( getModelID( mvContainer ) ) ) {
+			onProductInit( mvContainer );
 		}
-
-		/* then start the 3d controls */
-		initControls();
 	}
 } );
