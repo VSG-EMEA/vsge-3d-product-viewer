@@ -1,4 +1,3 @@
-import '@google/model-viewer/dist/model-viewer.min';
 import { ModelViewerElement } from '@google/model-viewer';
 import 'focus-visible';
 import './style/style.scss';

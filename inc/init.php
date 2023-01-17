@@ -33,7 +33,7 @@ function replace_attachment_content($content)
         );
 
         ob_start();
-        ?><div class="woocommerce-product-gallery__3d">
+        ?><div id="woocommerce-product-gallery__3d">
         <model-viewer id="vr-model"
                       src="<?php echo $model_url; ?>"
                       data-model="<?php echo $model_3d; ?>"
@@ -106,7 +106,7 @@ function vsge_3d_model_viewer()
         }
     } ?>
     <!-- <model-viewer> HTML element -->
-    <div class="woocommerce-product-gallery__3d">
+    <div id="woocommerce-product-gallery__3d">
         <div class="model-viewer-helpers">
             <button slot="ar-init" id="ar-init">
           <span class="material-icons">
