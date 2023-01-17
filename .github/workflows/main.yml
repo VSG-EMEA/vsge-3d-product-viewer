@@ -39,9 +39,6 @@ jobs:
       - name: Setup environment to use the desired version of NodeJS
         uses: actions/setup-node@v3
 
-      - name: Installing wordpress/env
-        run: npm -g i @wordpress/env
-
       - name: Installing NPM dependencies
         run: npm install
 
