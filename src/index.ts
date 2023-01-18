@@ -8,19 +8,31 @@ import { init3dControls } from './switcher';
 
 import './style/style.scss';
 import {
-	arInitialize,
 	deactivateQR,
 	getQRCode,
 	onInteraction,
 	onProgress,
-	setRecenter,
-	enableAutoRotate,
-	setAutoRotation,
-	throwErrorOnLoad,
-	toggleHotspot,
-	stopRotate,
+	throwErrorOnFail,
 } from './utils';
 
+import {
+	arInitialize,
+	enableAutoRotate,
+	setAutoRotation,
+	setRecenter,
+	stopRotate,
+	toggleHotspot,
+} from './model-viewer';
+
+/**
+ * "If the container exists, return the model viewer element inside it, otherwise return null."
+ *
+ * The first line of the function is a type annotation. It tells TypeScript that the function will
+ * return a ModelViewerElement or null
+ *
+ * @param {HTMLElement | null} container - HTMLElement | null
+ * @return A model viewer element.
+ */
 export const getModelViewer = (
 	container: HTMLElement | null
 ): ModelViewerElement | null => {
@@ -30,6 +42,12 @@ export const getModelViewer = (
 	return null;
 };
 
+/**
+ * It returns a QR code URL for the current VR model
+ *
+ * @param {string | null} productID - The product ID of the product you want to generate a QR code for.
+ * @return A QR code that is generated from the modelVR element and the productID.
+ */
 export const getQrURL = ( productID: string | null ) => {
 	const modelVR = document.getElementById(
 		'vsge-vr-model'
@@ -38,15 +56,28 @@ export const getQrURL = ( productID: string | null ) => {
 	if ( modelVR && productID ) return getQRCode( modelVR, productID );
 };
 
+/**
+ * "Get the model ID from the container element."
+ *
+ * The function is a pure function, meaning it doesn't have any side effects. It doesn't modify the
+ * container element, and it doesn't modify any other part of the application. It just returns a value
+ *
+ * @param {HTMLElement} container - HTMLElement - The container element that contains the model.
+ */
 export const getModelID = ( container: HTMLElement ): string | null =>
 	container?.dataset.model || null;
 
+/**
+ * It adds event listeners to the model viewer element, and to the document body
+ *
+ * @param {ModelViewerElement} mvContainer - The model viewer element.
+ */
 export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
 	// execute loading
 	mvContainer.addEventListener( 'progress', onProgress );
 
 	// throw an error if the model fails to load
-	mvContainer.addEventListener( 'ar-status', throwErrorOnLoad );
+	mvContainer.addEventListener( 'ar-status', throwErrorOnFail );
 
 	document.body.addEventListener( 'mouseover', onInteraction, {
 		once: true,
@@ -66,14 +97,12 @@ export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
 /**
  * Product page only
  *
- * @param  mvContainer
+ * @param {ModelViewerElement} mvContainer - The model-viewer element.
  */
 export const onProductInit = ( mvContainer: ModelViewerElement ) => {
 	const buttonArInit =
 		( document.getElementById( 'ar-init' ) as HTMLElement ) || null;
-	const modalGenerateQR =
-		( document.getElementById( 'vsge-modal-qrcode' ) as HTMLElement ) ||
-		null;
+
 	const button3dRecenter =
 		( document.getElementById( 'ar-center' ) as HTMLElement ) || null;
 	const modalToggleHotspot =
@@ -83,8 +112,6 @@ export const onProductInit = ( mvContainer: ModelViewerElement ) => {
 		( document.getElementById( 'ar-rotation' ) as HTMLElement ) || null;
 
 	buttonArInit.onclick = ( e ) => arInitialize( e, mvContainer );
-
-	modalGenerateQR.onclick = () => deactivateQR;
 
 	modalToggleHotspot.onclick = ( e ) => toggleHotspot( e, mvContainer );
 

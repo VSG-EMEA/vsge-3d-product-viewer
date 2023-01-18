@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * If the current page is a single post, and the post has a 3D model attached, then enqueue the 3D
+ * model viewer script
+ * 
+ * @return the value of the variable .
+ */
 function vsge_frontend_scripts()
 {
 
@@ -20,6 +26,15 @@ function vsge_frontend_scripts()
     }
 }
 
+/**
+ * If the script handle is 'model-viewer', then add the type="module" attribute to the script tag
+ * 
+ * @param tag The HTML tag for the script.
+ * @param handle The handle of the script.
+ * @param src The URL of the script.
+ * 
+ * @return The script tag with the type="module" attribute added.
+ */
 function add_type_attribute($tag, $handle, $src)
 {
     // if not your script, do nothing and return original $tag
@@ -32,6 +47,11 @@ function add_type_attribute($tag, $handle, $src)
 }
 add_filter('script_loader_tag', 'add_type_attribute', 10, 3);
 
+/**
+ * If the current page is a single product page, then enqueue the stylesheet.
+ * 
+ * @return the value of the variable .
+ */
 function vsge_frontend_style()
 {
 

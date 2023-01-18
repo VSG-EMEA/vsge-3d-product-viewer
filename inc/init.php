@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * If the product has a 3D model, add a class to the product gallery container
+ * 
+ * @param classes (array) Array of CSS classes to add to the container.
+ * 
+ * @return the  array.
+ */
 function vsge_3d_model_container_class($classes)
 {
     global $product;
@@ -8,6 +15,14 @@ function vsge_3d_model_container_class($classes)
     return $classes;
 }
 
+/**
+ * If the current post is an attachment, and the attachment is a 3D model, then replace the content
+ * with the 3D model
+ * 
+ * @param content The content of the post.
+ * 
+ * @return The content of the attachment page.
+ */
 function replace_attachment_content($content)
 {
     if (! is_main_query() || in_the_loop() || ! is_singular()) {
@@ -64,6 +79,12 @@ function replace_attachment_content($content)
     return $content;
 }
 
+/**
+ * It checks if the post has a 3D model attached to it, if it does, it generates the HTML for the model
+ * viewer.
+ * 
+ * @return the HTML for the 3D model viewer.
+ */
 function vsge_3d_model_viewer()
 {
     global $post;
