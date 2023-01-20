@@ -26,8 +26,6 @@
     "declarationDir": "build/types",
     "emitDeclarationOnly": true,
 
-    // Don't emit; allow Babel to transform
-    "noEmit": true,
     "pretty": true,
 
     // Types should go into this directory.
@@ -44,6 +42,6 @@
       "expect-puppeteer"
     ]
   },
-  "include": ["src/**/*", "block.json"],
+  "include": ["src/**/*"],
   "exclude": ["build","coverage"]
 }

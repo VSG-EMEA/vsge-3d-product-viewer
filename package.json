@@ -7,6 +7,7 @@
   "main": "./build/vsge-model-viewer.js",
   "typings": "./build/main.d.ts",
   "files": [
+    "inc/*",
     "build/*",
     "vsge-3d-product-viewer.php",
     "LICENSE.md",

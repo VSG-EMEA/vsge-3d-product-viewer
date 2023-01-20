@@ -8,7 +8,6 @@ import { init3dControls } from './switcher';
 
 import './style/style.scss';
 import {
-	deactivateQR,
 	getQRCode,
 	onInteraction,
 	onProgress,
@@ -100,24 +99,31 @@ export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
  * @param {ModelViewerElement} mvContainer - The model-viewer element.
  */
 export const onProductInit = ( mvContainer: ModelViewerElement ) => {
-	const buttonArInit =
-		( document.getElementById( 'ar-init' ) as HTMLElement ) || null;
+	const buttonArInit = document.getElementById( 'ar-init' ) as HTMLElement;
 
-	const button3dRecenter =
-		( document.getElementById( 'ar-center' ) as HTMLElement ) || null;
-	const modalToggleHotspot =
-		( document.getElementById( 'ar-toggle-hotspots' ) as HTMLElement ) ||
-		null;
-	const button3dRotation =
-		( document.getElementById( 'ar-rotation' ) as HTMLElement ) || null;
+	const button3dRecenter = document.getElementById(
+		'ar-center'
+	) as HTMLElement;
 
-	buttonArInit.onclick = ( e ) => arInitialize( e, mvContainer );
+	const modalToggleHotspot = document.getElementById(
+		'ar-toggle-hotspots'
+	) as HTMLElement;
 
-	modalToggleHotspot.onclick = ( e ) => toggleHotspot( e, mvContainer );
+	const button3dRotation = document.getElementById(
+		'ar-rotation'
+	) as HTMLElement;
 
-	button3dRecenter.onclick = ( e ) => setRecenter( e, mvContainer );
+	if ( buttonArInit )
+		buttonArInit.onclick = ( e ) => arInitialize( e, mvContainer );
 
-	button3dRotation.onclick = ( e ) => setAutoRotation( e, mvContainer );
+	if ( modalToggleHotspot )
+		modalToggleHotspot.onclick = ( e ) => toggleHotspot( e, mvContainer );
+
+	if ( button3dRecenter )
+		button3dRecenter.onclick = ( e ) => setRecenter( e, mvContainer );
+
+	if ( button3dRotation )
+		button3dRotation.onclick = ( e ) => setAutoRotation( e, mvContainer );
 
 	mvContainer.onmouseenter = () =>
 		enableAutoRotate( button3dRotation, mvContainer );
