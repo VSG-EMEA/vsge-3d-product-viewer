@@ -3,62 +3,61 @@
 /**
  * If the current page is a single post, and the post has a 3D model attached, then enqueue the 3D
  * model viewer script
- * 
+ *
  * @return the value of the variable .
  */
-function vsge_frontend_scripts()
-{
+function vsge_mv_frontend_scripts() {
+	if ( ! is_main_query() || in_the_loop() || ! is_singular() ) {
+		return;
+	}
+	global $post;
 
-    if (!is_main_query() || in_the_loop() || !is_singular()) {
-        return;
-    }
-    global $post;
+	$model_3d = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true );
 
-    $model_3d = get_post_meta($post->ID, PLUGIN_NAMESPACE.'_media_3d_model', true);
-
-    if (is_attachment() || $model_3d) {
-        $asset = include PLUGIN_DIR . 'build/vsge-3d-product-viewer.asset.php';
-        wp_enqueue_script('model-viewer', 'https://unpkg.com/@google/model-viewer@2.1.1/dist/model-viewer.min.js', false, true);
-        wp_enqueue_script('vsge-3d-product-viewer', PLUGIN_DIR.'build/vsge-3d-product-viewer.js', 'model-viewer', true);
-        wp_localize_script('vsge-3d-product-viewer', 'wp', [
-            'siteurl' => get_option('siteurl'),
-        ]);
-    }
+	if ( is_attachment() || $model_3d ) {
+		$asset = include VSGE_MV_PLUGIN_DIR . 'build/vsge-3d-product-viewer.asset.php';
+		wp_enqueue_script( 'model-viewer', 'https://unpkg.com/@google/model-viewer@2.1.1/dist/model-viewer.min.js', false, true );
+		wp_enqueue_script( 'vsge-3d-product-viewer', VSGE_MV_PLUGIN_DIR . 'build/vsge-3d-product-viewer.js', 'model-viewer', true );
+		wp_localize_script(
+			'vsge-3d-product-viewer',
+			'wp',
+			array(
+				'siteurl' => get_option( 'siteurl' ),
+			)
+		);
+	}
 }
 
 /**
  * If the script handle is 'model-viewer', then add the type="module" attribute to the script tag
- * 
+ *
  * @param tag The HTML tag for the script.
  * @param handle The handle of the script.
  * @param src The URL of the script.
- * 
+ *
  * @return The script tag with the type="module" attribute added.
  */
-function add_type_attribute($tag, $handle, $src)
-{
-    // if not your script, do nothing and return original $tag
-    if ('model-viewer' !== $handle) {
-        return $tag;
-    }
-    // change the script tag by adding type="module" and return it.
-    $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
-    return $tag;
+function add_type_attribute( $tag, $handle, $src ) {
+	// if not your script, do nothing and return original $tag
+	if ( 'model-viewer' !== $handle ) {
+		return $tag;
+	}
+	// change the script tag by adding type="module" and return it.
+	$tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
+	return $tag;
 }
-add_filter('script_loader_tag', 'add_type_attribute', 10, 3);
+add_filter( 'script_loader_tag', 'add_type_attribute', 10, 3 );
 
 /**
  * If the current page is a single product page, then enqueue the stylesheet.
- * 
+ *
  * @return the value of the variable .
  */
-function vsge_frontend_style()
-{
+function vsge_mv_frontend_style() {
+	if ( ! is_main_query() || in_the_loop() || ! is_singular() ) {
+		return;
+	}
 
-    if (!is_main_query() || in_the_loop() || !is_singular()) {
-        return;
-    }
-
-    // Register and Enqueue on a single product page
-    wp_enqueue_style('vsge-3d-product-viewer-style', PLUGIN_DIR.'build/style-vsge-3d-product-viewer.css');
+	// Register and Enqueue on a single product page
+	wp_enqueue_style( 'vsge-3d-product-viewer-style', VSGE_MV_PLUGIN_DIR . 'build/style-vsge-3d-product-viewer.css' );
 }
