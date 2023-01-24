@@ -27,3 +27,9 @@ add_action(
 		add_filter( 'the_content', 'replace_attachment_content', 1 );
 	}
 );
+
+function vsge_mv_init() {
+	$plugin_rel_path = VSGE_MV_PLUGIN_DIR . 'languages';
+	load_plugin_textdomain( 'vsge-mv', false, $plugin_rel_path );
+}
+add_action('plugins_loaded', 'vsge_mv_init');

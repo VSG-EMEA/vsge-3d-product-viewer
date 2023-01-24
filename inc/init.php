@@ -3,9 +3,9 @@
 /**
  * If the product has a 3D model, add a class to the product gallery container
  *
- * @param classes (array) Array of CSS classes to add to the container.
+ * @param array $classes classes Array of CSS classes to add to the container.
  *
- * @return the  array.
+ * @return array the new product classes array.
  */
 function vsge_3d_model_container_class( $classes ) {
 	global $product;
@@ -18,9 +18,9 @@ function vsge_3d_model_container_class( $classes ) {
  * If the current post is an attachment, and the attachment is a 3D model, then replace the content
  * with the 3D model
  *
- * @param content The content of the post.
+ * @param string $content The content of the post.
  *
- * @return The content of the attachment page.
+ * @return string The content of the attachment page.
  */
 function replace_attachment_content( $content ) {
 	if ( ! is_main_query() || in_the_loop() || ! is_singular() ) {
@@ -62,8 +62,8 @@ function replace_attachment_content( $content ) {
 			</button>
 			<div class="vsge-modal-notice progress-bar-container hide" slot="progress-bar">
 				<div class="inner-modal">
-					<h3><?php esc_html_e( 'Ladies and Gentlemen, please start your (VR) Engines', 'products-importer' ); ?></h3>
-					<p><?php printf( esc_html__( '3D model is loading, please wait. After the download augmented reality mode wil be enabled, keep your phone facing the part of your workshop where you want to place your new %s product', 'products-importer' ), COMPANY ); ?></p>
+					<h3><?php esc_html_e( 'Ladies and Gentlemen, please start your (VR) Engines', 'vsge-mv' ); ?></h3>
+					<p><?php printf( esc_html__( '3D model is loading, please wait. After the download augmented reality mode wil be enabled, keep your phone facing the part of your workshop where you want to place your new %s product', 'vsge-mv' ), COMPANY ); ?></p>
 					<progress class="progress-bar" value="0" max="100"></progress>
 				</div>
 			</div>
@@ -81,7 +81,7 @@ function replace_attachment_content( $content ) {
  * It checks if the post has a 3D model attached to it, if it does, it generates the HTML for the model
  * viewer.
  *
- * @return the HTML for the 3D model viewer.
+ * @return void - the HTML for the 3D model viewer.
  */
 function vsge_3d_model_viewer() {
 	global $post;
@@ -104,13 +104,12 @@ function vsge_3d_model_viewer() {
 			isset( $model_data['camera-target'] ) ? ' camera-target="' . $model_data['camera-target'] . '"' : null,
 		)
 	);
-
 	// if the hotspots has set generate the hotspot html pointers
 	$hotspots_html = '';
 	if ( ! empty( $model_data['hotspots'] ) ) {
 		foreach ( $model_data['hotspots'] as $k => $hotspot ) {
 			if ( isset( $hotspot->position, $hotspot->title ) ) {
-				$slot = $hotspot->slot ?: 'hotspot-' . $k;
+				$slot = $hotspot->slot ? $hotspot->slot : 'hotspot-' . $k;
 				if ( isset( $hotspot->href ) ) {
 					$hotspots_html .= sprintf(
 						'<div class="hotspot" slot="hotspot-%s" data-position="%s" data-visibility-attribute="visible">
@@ -184,9 +183,9 @@ function vsge_3d_model_viewer() {
 	<div id="vsge-modal-qrcode" class="vsge-modal-notice outer-modal">
 		<div class="inner-modal">
 			<canvas id="vsge-vr-model"></canvas>
-			<h3>Instructions:</h3>
-			<p>Scan this code to open the model on your device, then, tap on the AR icon.</p>
-			<p><b>Click to close this message</b></p>
+			<h3><?php esc_html_e( 'Instructions:', 'vsge-mv' ); ?></h3>
+			<p><?php esc_html_e( 'Scan this code to open the model on your device, then, tap on the AR icon.', 'vsge-mv' ); ?></p>
+			<p><b><?php esc_html_e( 'Click to close this message', 'vsge-mv' ); ?></b></p>
 		</div>
 	</div>
 	<?php

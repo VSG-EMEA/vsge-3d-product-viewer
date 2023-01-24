@@ -1,4 +1,5 @@
 import QRCode from 'qrcode';
+import { __ } from '@wordpress/i18n';
 
 /**
  * It clicks the AR button
@@ -21,7 +22,7 @@ export function getQRCode( canvas: HTMLElement, id: string ): boolean {
 		// @ts-ignore
 		const url = wp.siteurl + '/?attachment_id=' + id;
 		QRCode.toCanvas( canvas, url, ( error ) => {
-			console.log( '3D Model-Viewer on mobiles at ' + url );
+			// console.log( '3D Model-Viewer on mobiles at ' + url );
 			if ( error ) throw new Error( error.message );
 		} );
 		return true;
@@ -86,7 +87,9 @@ export const throwErrorOnFail = ( event: Event ) => {
 		if ( errorContainer )
 			logModelError(
 				errorContainer,
-				'An error occurred activating VR, please check your browser permissions then clean cookies!<br/>To verify that the device is correctly configured to run WebXR, browse to <a href="https://immersive-web.github.io/webxr-samples/immersive-ar-session.html">a sample WebXR page</a> in <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API#browser_compatibility">a compatible browser</a>.'
+				__(
+					'An error occurred activating VR, please check your browser permissions then clean cookies!<br/>To verify that the device is correctly configured to run WebXR, browse to <a href="https://immersive-web.github.io/webxr-samples/immersive-ar-session.html">a sample WebXR page</a> in <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API#browser_compatibility">a compatible browser</a>.'
+				)
 			);
 	}
 };
