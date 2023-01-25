@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: vsge-mv\n"
+"POT-Creation-Date: 2023-01-25 00:56+0100\n"
+"PO-Revision-Date: 2023-01-25 00:56+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: vsge-mv.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
+
+#: inc/view.php:60
+#, fuzzy
+msgid "AR is not tracking!"
+msgstr "AR is not tracking!"
+
+#: inc/view.php:65
+#, fuzzy
+msgid "Ladies and Gentlemen, please start your (VR) Engines"
+msgstr "Ladies and Gentlemen, please start your (VR) Engines"
+
+#: inc/view.php:66
+#, fuzzy, php-format
+msgid ""
+"3D model is loading, please wait. After the download augmented reality mode "
+"wil be enabled, keep your phone facing the part of your workshop where you "
+"want to place your new %s product"
+msgstr ""
+"3D model is loading, please wait. After the download augmented reality mode "
+"wil be enabled, keep your phone facing the part of your workshop where you "
+"want to place your new %s product"
+
+#: inc/view.php:180
+#, fuzzy
+msgid "3D/VR"
+msgstr "3D/VR"
+
+#: inc/view.php:181
+#, fuzzy
+msgid "Gallery"
+msgstr "Gallery"
+
+#: inc/view.php:186
+#, fuzzy
+msgid "Instructions:"
+msgstr "Instructions:"
+
+#: inc/view.php:187
+#, fuzzy
+msgid ""
+"Scan this code to open the model on your device, then, tap on the AR icon."
+msgstr ""
+"Scan this code to open the model on your device, then, tap on the AR icon."
+
+#: inc/view.php:188
+#, fuzzy
+msgid "Click to close this message"
+msgstr "Click to close this message"
+
+#. Plugin Name of the plugin/theme
+#, fuzzy
+msgid "VSGE 3d product viewer"
+msgstr "VSGE 3d product viewer"
+
+#. Plugin URI of the plugin/theme
+#, fuzzy
+msgid "https://github.com/erikyo/vsge-3d-product-viewer"
+msgstr "https://github.com/erikyo/vsge-3d-product-viewer"
+
+#. Description of the plugin/theme
+#, fuzzy
+msgid "WordPress plugin vsge-3d-product-viewer"
+msgstr "WordPress plugin vsge-3d-product-viewer"
+
+#. Author of the plugin/theme
+#, fuzzy
+msgid "codekraft"
+msgstr "codekraft"
