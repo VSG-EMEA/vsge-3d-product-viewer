@@ -52,7 +52,7 @@ function replace_attachment_content( $content ) {
 					  data-model="<?php echo $model_3d; ?>"
 					  poster="<?php echo wp_get_attachment_image_url( $model_preview_id, 'square-crop-570' ); ?>"
 					  bounds="tight" camera-controls <?php echo $model_options; ?> min-field-of-view="10deg"
-					  ar camera-controls environment-image="neutral" shadow-intensity="1">\
+					  ar camera-controls environment-image="neutral" shadow-intensity="1">
 			<button id="ar-failure">
 				<div class="material-icons large">
 					error
