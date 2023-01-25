@@ -4,7 +4,7 @@
  * If the current page is a single post, and the post has a 3D model attached, then enqueue the 3D
  * model viewer script
  *
- * @return the value of the variable .
+ * @return void
  */
 function vsge_mv_frontend_scripts() {
 	if ( ! is_main_query() || in_the_loop() || ! is_singular() ) {
@@ -15,9 +15,9 @@ function vsge_mv_frontend_scripts() {
 	$model_3d = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true );
 
 	if ( is_attachment() || $model_3d ) {
-		$asset = include VSGE_MV_PLUGIN_DIR . 'build/vsge-3d-product-viewer.asset.php';
+		$asset = include VSGE_MV_PLUGIN_URL . 'build/vsge-3d-product-viewer.asset.php';
 		wp_enqueue_script( 'model-viewer', 'https://unpkg.com/@google/model-viewer@2.1.1/dist/model-viewer.min.js', false, true );
-		wp_enqueue_script( 'vsge-3d-product-viewer', VSGE_MV_PLUGIN_DIR . 'build/vsge-3d-product-viewer.js', 'model-viewer', true );
+		wp_enqueue_script( 'vsge-3d-product-viewer', VSGE_MV_PLUGIN_URL . 'build/vsge-3d-product-viewer.js', 'model-viewer', true );
 		wp_localize_script(
 			'vsge-3d-product-viewer',
 			'wp',
@@ -31,11 +31,11 @@ function vsge_mv_frontend_scripts() {
 /**
  * If the script handle is 'model-viewer', then add the type="module" attribute to the script tag
  *
- * @param tag The HTML tag for the script.
- * @param handle The handle of the script.
- * @param src The URL of the script.
+ * @param string $tag The HTML tag for the script.
+ * @param string $handle The handle of the script.
+ * @param string $src The URL of the script.
  *
- * @return The script tag with the type="module" attribute added.
+ * @return string The script tag with the type="module" attribute added.
  */
 function add_type_attribute( $tag, $handle, $src ) {
 	// if not your script, do nothing and return original $tag
@@ -51,7 +51,7 @@ add_filter( 'script_loader_tag', 'add_type_attribute', 10, 3 );
 /**
  * If the current page is a single product page, then enqueue the stylesheet.
  *
- * @return the value of the variable .
+ * @return void
  */
 function vsge_mv_frontend_style() {
 	if ( ! is_main_query() || in_the_loop() || ! is_singular() ) {
@@ -59,5 +59,5 @@ function vsge_mv_frontend_style() {
 	}
 
 	// Register and Enqueue on a single product page
-	wp_enqueue_style( 'vsge-3d-product-viewer-style', VSGE_MV_PLUGIN_DIR . 'build/style-vsge-3d-product-viewer.css' );
+	wp_enqueue_style( 'vsge-3d-product-viewer-style', VSGE_MV_PLUGIN_URL . 'build/style-vsge-3d-product-viewer.css' );
 }

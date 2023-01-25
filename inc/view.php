@@ -52,12 +52,12 @@ function replace_attachment_content( $content ) {
 					  data-model="<?php echo $model_3d; ?>"
 					  poster="<?php echo wp_get_attachment_image_url( $model_preview_id, 'square-crop-570' ); ?>"
 					  bounds="tight" camera-controls <?php echo $model_options; ?> min-field-of-view="10deg"
-					  ar camera-controls environment-image="neutral" shadow-intensity="1">
+					  ar camera-controls environment-image="neutral" shadow-intensity="1">\
 			<button id="ar-failure">
 				<div class="material-icons large">
 					error
 				</div>
-				AR is not tracking!
+				<?php esc_html_e( 'AR is not tracking!', 'vsge-mv' ); ?>
 				<p id="error"></p>
 			</button>
 			<div class="vsge-modal-notice progress-bar-container hide" slot="progress-bar">
@@ -177,8 +177,8 @@ function vsge_3d_model_viewer() {
 		</model-viewer>
 	</div>
 	<div id="woo-switch-gallery" class="woocommerce-product-gallery__select">
-		<button id="woo-select-3d" class="active" data-type="3d-model">3D/VR</button>
-		<button id="woo-select-gallery" data-type="gallery">Gallery</button>
+		<button id="woo-select-3d" class="active" data-type="3d-model"><?php esc_html_e( '3D/VR', 'vsge-mv' ); ?></button>
+		<button id="woo-select-gallery" data-type="gallery"><?php esc_html_e( 'Gallery', 'vsge-mv' ); ?></button>
 	</div>
 	<div id="vsge-modal-qrcode" class="vsge-modal-notice outer-modal">
 		<div class="inner-modal">
