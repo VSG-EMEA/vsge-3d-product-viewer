@@ -1,5 +1,6 @@
 import QRCode from 'qrcode';
 import { __ } from '@wordpress/i18n';
+import { ModelViewerElement } from '@google/model-viewer';
 
 /**
  * It clicks the AR button
@@ -20,7 +21,7 @@ export const onInteraction = () => {
 export function getQRCode( canvas: HTMLElement, id: string ): boolean {
 	if ( canvas && id ) {
 		// @ts-ignore
-		const url = wp.siteurl + '/?attachment_id=' + id;
+		const url = vsgemv.siteurl + '/?attachment_id=' + id;
 		QRCode.toCanvas( canvas, url, ( error ) => {
 			// console.log( '3D Model-Viewer on mobiles at ' + url );
 			if ( error ) throw new Error( error.message );
@@ -54,6 +55,46 @@ export const onProgress = ( event: any ) => {
 		}
 	}
 };
+
+export function attachmentPageInit(
+	event: any,
+	container: ModelViewerElement
+) {
+	const progress = event.currentTarget as HTMLProgressElement;
+	if ( progress ) {
+		/** Modal */
+		const modal = progress.querySelector( '.progress-bar-container' );
+		if ( modal ) {
+			if ( event.detail.totalProgress !== 1 ) {
+				modal.classList.remove( 'hide' );
+			}
+
+			/** Progress bar */
+			const updatingBar = progress.querySelector(
+				'.progress-bar'
+			) as HTMLProgressElement;
+			if ( updatingBar )
+				updatingBar.value = event.detail.totalProgress * 100;
+
+			// if the progressbar has reached the total.
+			if ( event.detail.totalProgress === 1 ) {
+				/** AR Button */
+				const arButton = container.querySelector(
+					'.ar-button'
+				) as HTMLProgressElement;
+				arButton.classList.remove( 'hide' );
+
+				arButton.addEventListener( 'click', () => {
+					// enable ar
+					container.activateAR();
+					modal?.classList.add( 'hide' );
+				} );
+				// hide the progress bar
+				updatingBar.classList.add( 'hide' );
+			}
+		}
+	}
+}
 
 /**
  * It takes a string as an argument, and then it displays that string in the error container

@@ -204,6 +204,10 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
     opacity: 1;
     transition: .35s opacity;
 
+    &.attachment-page-3d-product {
+      margin: 0 auto;
+    }
+
     /* PROGRESS BAR */
     .progress-bar-container {
       width: 100%;
@@ -273,7 +277,7 @@ model-viewer {
     padding: 0;
     height: 100%;
     max-height: calc(100vh - 90px);
-    min-height: 600px;
+    min-height: 500px;
   }
 }
 
@@ -309,6 +313,22 @@ body.attachment #vr-model {
     margin: 16px;
     .material-icons {
       margin: 0 16px;
+    }
+    &#ar-initialize {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      height: 40px;
+      cursor: pointer;
+      color: var(--color__gray-800);
+      background-color: var(--color__white);
+      box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+      border-radius: 100px;
+      margin: 20px auto 0;
+      &.hide {
+        display: none;
+      }
     }
     &#ar-failure {
       position: absolute;

@@ -16,7 +16,6 @@ export let metersPerPixel: number;
  */
 export const arInitialize = ( event: Event, container: ModelViewerElement ) => {
 	if ( container?.canActivateAR ) {
-		container.activateAR();
 		const hotspots = container.querySelectorAll( 'div.hotspot' );
 		toggleHotspotVisibility( hotspots, true );
 	} else {
@@ -58,11 +57,12 @@ export const isSelected = ( event: Event ) => {
  */
 export const startRotate = ( container: ModelViewerElement ) => {
 	if ( container ) {
-		container.autoplay = true;
-		container.autoRotate = true;
 		startPan( container );
 
-		container.interactionPrompt = 'none';
+		container.autoRotateDelay = 0;
+		container.autoplay = true;
+		container.autoRotate = true;
+		container.autoRotateDelay = 3000;
 	}
 };
 

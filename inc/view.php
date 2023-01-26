@@ -46,12 +46,13 @@ function replace_attachment_content( $content ) {
 		);
 
 		ob_start();
-		?><div id="woocommerce-product-gallery__3d">
+		?><div id="woocommerce-product-gallery__3d" class="attachment-page-3d-product">
 		<model-viewer id="vr-model"
 					  src="<?php echo $model_url; ?>"
 					  data-model="<?php echo $model_3d; ?>"
 					  poster="<?php echo wp_get_attachment_image_url( $model_preview_id, 'square-crop-570' ); ?>"
 					  bounds="tight" camera-controls <?php echo $model_options; ?> min-field-of-view="10deg"
+					  ar-modes="webxr scene-viewer quick-look"
 					  ar camera-controls environment-image="neutral" shadow-intensity="1">
 			<button id="ar-failure">
 				<div class="material-icons large">
@@ -63,8 +64,9 @@ function replace_attachment_content( $content ) {
 			<div class="vsge-modal-notice progress-bar-container hide" slot="progress-bar">
 				<div class="inner-modal">
 					<h3><?php esc_html_e( 'Ladies and Gentlemen, please start your (VR) Engines', 'vsge-mv' ); ?></h3>
-					<p><?php printf( esc_html__( '3D model is loading, please wait. After the download augmented reality mode wil be enabled, keep your phone facing the part of your workshop where you want to place your new %s product', 'vsge-mv' ), COMPANY ); ?></p>
+					<p><?php printf( esc_html__( '3D model is loading, please wait. After the download augmented reality mode will be enabled, keep your phone facing the part of your workshop where you want to place your new %s product', 'vsge-mv' ), COMPANY ); ?></p>
 					<progress class="progress-bar" value="0" max="100"></progress>
+					<button id="ar-initialize" class="ar-button hide" >Start AR</button>
 				</div>
 			</div>
 		</model-viewer>

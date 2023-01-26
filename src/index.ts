@@ -12,6 +12,7 @@ import {
 	onInteraction,
 	onProgress,
 	throwErrorOnFail,
+	attachmentPageInit,
 } from './utils';
 
 import {
@@ -73,7 +74,13 @@ export const getModelID = ( container: HTMLElement ): string | null =>
  */
 export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
 	// execute loading
-	mvContainer.addEventListener( 'progress', onProgress );
+	if ( document.body.classList.contains( 'attachment' ) ) {
+		mvContainer.addEventListener( 'progress', ( e ) =>
+			attachmentPageInit( e, mvContainer )
+		);
+	} else {
+		mvContainer.addEventListener( 'progress', onProgress );
+	}
 
 	// throw an error if the model fails to load
 	mvContainer.addEventListener( 'ar-status', throwErrorOnFail );
