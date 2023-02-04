@@ -13,10 +13,21 @@ define( 'VSGE_MV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'VSGE_MV_PLUGIN_DIR', __DIR__ );
 define( 'VSGE_MV_PLUGIN_NAMESPACE', 'brb' );
 
+/**
+ * Enables the upload of glb files to WordPress media library.
+ */
+function vsge_mv_mime_types($mime_types){
+	$mime_types['glb'] = 'application/octet-stream';
+	return $mime_types;
+}
+add_filter('upload_mimes', 'vsge_mv_mime_types', 1, 1);
+
 include_once VSGE_MV_PLUGIN_DIR . '/inc/enqueue.php';
 include_once VSGE_MV_PLUGIN_DIR . '/inc/view.php';
 
-/* Adding actions to the init hook. */
+/**
+ * Adding actions to the init hook.
+ */
 add_action(
 	'plugins_loaded',
 	function() {
