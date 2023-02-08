@@ -18,6 +18,7 @@ export const arInitialize = ( event: Event, container: ModelViewerElement ) => {
 	if ( container?.canActivateAR ) {
 		const hotspots = container.querySelectorAll( 'div.hotspot' );
 		toggleHotspotVisibility( hotspots, true );
+		container.activateAR();
 	} else {
 		const modalGenerateQR =
 			( document.getElementById( 'vsge-modal-qrcode' ) as HTMLElement ) ||

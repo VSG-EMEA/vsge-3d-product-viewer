@@ -15,6 +15,21 @@ function vsge_3d_model_container_class( $classes ) {
 }
 
 /**
+ * returns true if the browser is safari
+ * @param $user_agent
+ *
+ * @return bool
+ */
+function vsge_3d_model_is_safari( $user_agent ) {
+	if(strlen(strstr($user_agent,'Safari')) > 0 ){
+		if(strstr($user_agent,'Chrome')){
+			return false;
+		}
+		return true;
+	}
+}
+
+/**
  * If the current post is an attachment, and the attachment is a 3D model, then replace the content
  * with the 3D model
  *
@@ -52,7 +67,13 @@ function replace_attachment_content( $content ) {
 					  data-model="<?php echo $model_3d; ?>"
 					  poster="<?php echo wp_get_attachment_image_url( $model_preview_id, 'square-crop-570' ); ?>"
 					  bounds="tight" camera-controls <?php echo $model_options; ?> min-field-of-view="10deg"
-					  ar-modes="webxr scene-viewer quick-look"
+					  ar-modes="<?php
+						if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
+							echo 'webxr scene-viewer quick-look';
+						} else {
+							echo 'scene-viewer quick-look';
+						}
+						?>"
 					  ar camera-controls environment-image="neutral" shadow-intensity="1">
 			<button id="ar-failure">
 				<div class="material-icons large">
@@ -168,7 +189,12 @@ function vsge_3d_model_viewer() {
 					  data-model="<?php echo $model_3d; ?>"
 					  poster="<?php echo wp_get_attachment_image_url( $model_preview[0], 'square-crop-570' ); ?>"
 					  camera-controls auto-rotate min-field-of-view="10deg" <?php echo $model_options; ?>
-					  ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed"
+					  ar ar-modes="
+					  <?php
+						if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
+							echo 'webxr ';}
+						?>
+						scene-viewer quick-look" ar-scale="fixed"
 					  bounds="tight" environment-image="neutral" shadow-intensity="1"
 		>
 			<?php echo $hotspots_html; ?>
