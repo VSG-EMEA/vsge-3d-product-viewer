@@ -187,7 +187,7 @@ function vsge_3d_model_viewer() {
 		<model-viewer id="vr-model"
 					  src="<?php echo $model_url; ?>"
 					  data-model="<?php echo $model_3d; ?>"
-					  poster="<?php echo wp_get_attachment_image_url( $model_preview[0], 'square-crop-570' ); ?>"
+					  poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-570' ); ?>"
 					  camera-controls auto-rotate min-field-of-view="10deg" <?php echo $model_options; ?>
 					  ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed"
 					  bounds="tight" environment-image="neutral" shadow-intensity="1"

@@ -15,7 +15,8 @@ function vsge_mv_frontend_scripts() {
 	$model_3d = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true );
 
 	if ( is_attachment() || $model_3d ) {
-		wp_enqueue_script( 'model-viewer', 'https://unpkg.com/@google/model-viewer@3.0.0/dist/model-viewer.min.js', false, true );
+		wp_register_script( 'model-viewer', 'https://unpkg.com/@google/model-viewer@3.0.1/dist/model-viewer.min.js' );
+		wp_enqueue_script('model-viewer');
 
 		$asset = include VSGE_MV_PLUGIN_DIR . '/build/vsge-3d-product-viewer.asset.php';
 		wp_enqueue_script( 'vsge-3d-product-viewer', VSGE_MV_PLUGIN_URL . 'build/vsge-3d-product-viewer.js', array( 'model-viewer', $asset['dependencies'][0] ) );
