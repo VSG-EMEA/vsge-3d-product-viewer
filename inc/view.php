@@ -71,7 +71,7 @@ function replace_attachment_content( $content ) {
 						if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
 							echo 'webxr scene-viewer quick-look';
 						} else {
-							echo 'scene-viewer quick-look';
+							echo 'webxr scene-viewer quick-look';
 						}
 						?>"
 					  ar camera-controls environment-image="neutral" shadow-intensity="1">
@@ -161,7 +161,7 @@ function vsge_3d_model_viewer() {
 	}
 	?>
 	<!-- <model-viewer> HTML element -->
-	<div id="woocommerce-product-gallery__3d">
+	<div id="woocommerce-product-gallery__3d" style="display:none">
 		<div class="model-viewer-helpers">
 			<button slot="ar-init" id="ar-init">
 		  <span class="material-icons">
@@ -189,12 +189,7 @@ function vsge_3d_model_viewer() {
 					  data-model="<?php echo $model_3d; ?>"
 					  poster="<?php echo wp_get_attachment_image_url( $model_preview[0], 'square-crop-570' ); ?>"
 					  camera-controls auto-rotate min-field-of-view="10deg" <?php echo $model_options; ?>
-					  ar ar-modes="
-					  <?php
-						if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
-							echo 'webxr ';}
-						?>
-						scene-viewer quick-look" ar-scale="fixed"
+					  ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed"
 					  bounds="tight" environment-image="neutral" shadow-intensity="1"
 		>
 			<?php echo $hotspots_html; ?>
@@ -205,8 +200,8 @@ function vsge_3d_model_viewer() {
 		</model-viewer>
 	</div>
 	<div id="woo-switch-gallery" class="woocommerce-product-gallery__select">
-		<button id="woo-select-3d" class="active" data-type="3d-model"><?php esc_html_e( '3D/VR', 'vsge-mv' ); ?></button>
-		<button id="woo-select-gallery" data-type="gallery"><?php esc_html_e( 'Gallery', 'vsge-mv' ); ?></button>
+		<button id="woo-select-3d" data-type="3d-model"><?php esc_html_e( '3D/VR', 'vsge-mv' ); ?></button>
+		<button id="woo-select-gallery" class="active" data-type="gallery"><?php esc_html_e( 'Gallery', 'vsge-mv' ); ?></button>
 	</div>
 	<div id="vsge-modal-qrcode" class="vsge-modal-notice outer-modal">
 		<div class="inner-modal">
