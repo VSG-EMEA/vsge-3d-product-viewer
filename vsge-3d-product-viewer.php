@@ -3,7 +3,7 @@
  * Plugin Name: VSGE 3d product viewer
  * Plugin URI: https://github.com/erikyo/vsge-3d-product-viewer
  * Description: WordPress plugin vsge-3d-product-viewer
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author: codekraft
  * Text Domain: vsge-mv
  * Domain Path: /languages/

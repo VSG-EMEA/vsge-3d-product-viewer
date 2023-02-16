@@ -1,7 +1,7 @@
 {
   "name": "vsge-3d-product-viewer",
   "description": "vsge-3d-product-viewer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "codekraft",
   "license": "GPL-2.0-or-later",
   "main": "./build/vsge-model-viewer.js",
