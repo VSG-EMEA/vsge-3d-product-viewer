@@ -32,7 +32,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.5",
     "@babel/preset-typescript": "^7.18.6",
-    "@google/model-viewer": "^3.0.0",
+    "@google/model-viewer": "^3.0.1",
     "@jest/globals": "^29.3.1",
     "@types/expect-puppeteer": "^5.0.2",
     "@types/jest": "^29.2.5",
