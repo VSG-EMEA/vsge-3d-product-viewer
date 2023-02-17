@@ -69,9 +69,9 @@ function replace_attachment_content( $content ) {
 					  bounds="tight" camera-controls <?php echo $model_options; ?> min-field-of-view="10deg"
 					  ar-modes="<?php
 						if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
-							echo 'webxr scene-viewer quick-look';
+							echo 'quick-look webxr scene-viewer';
 						} else {
-							echo 'webxr scene-viewer quick-look';
+							echo 'scene-viewer quick-look';
 						}
 						?>"
 					  ar camera-controls environment-image="neutral" shadow-intensity="1">
@@ -189,7 +189,13 @@ function vsge_3d_model_viewer() {
 					  data-model="<?php echo $model_3d; ?>"
 					  poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-570' ); ?>"
 					  camera-controls auto-rotate min-field-of-view="10deg" <?php echo $model_options; ?>
-					  ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed"
+					  ar ar-modes="<?php
+		if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			echo 'quick-look webxr scene-viewer';
+		} else {
+			echo 'scene-viewer quick-look';
+		}
+		?>" ar-scale="fixed"
 					  bounds="tight" environment-image="neutral" shadow-intensity="1"
 		>
 			<?php echo $hotspots_html; ?>
