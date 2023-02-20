@@ -6,7 +6,6 @@ module.exports = {
 	entry: {
 		'vsge-3d-product-viewer': path.resolve( process.cwd(), `src/index.ts` ),
 	},
-	devtool: 'source-map',
 	module: {
 		rules: [
 			{

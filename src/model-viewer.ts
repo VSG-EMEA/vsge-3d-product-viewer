@@ -59,11 +59,9 @@ export const isSelected = ( event: Event ) => {
 export const startRotate = ( container: ModelViewerElement ) => {
 	if ( container ) {
 		startPan( container );
-
-		container.autoRotateDelay = 0;
 		container.autoplay = true;
 		container.autoRotate = true;
-		container.autoRotateDelay = 3000;
+		container.autoRotateDelay = 0;
 	}
 };
 
