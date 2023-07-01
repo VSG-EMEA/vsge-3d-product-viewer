@@ -19,10 +19,11 @@ function vsge_3d_model_container_class( $classes ) {
 }
 
 /**
- * returns true if the browser is safari
- * @param $user_agent
+ * Returns true if the browser is safari.
  *
- * @return bool
+ * @param string $user_agent The user agent.
+ *
+ * @return bool true if the browser is safari, false otherwise.
  */
 function vsge_3d_model_is_safari( $user_agent ) {
 	if ( strlen( strstr( $user_agent, 'iPhone' ) ) > 0 || strlen( strstr( $user_agent, 'iPad' ) ) > 0 ) {
@@ -39,7 +40,7 @@ function vsge_3d_model_is_safari( $user_agent ) {
  * @return string The content of the attachment page.
  */
 function replace_attachment_content( $content ) {
-	if ( ! is_main_query() || in_the_loop() || ! is_singular() ) {
+	if ( is_attachment() && (! is_main_query() || ! is_singular()) ) {
 		return $content;
 	}
 
@@ -62,7 +63,7 @@ function replace_attachment_content( $content ) {
 		);
 
 		ob_start();
-		?><div id="woocommerce-product-gallery__3d" class="attachment-page-3d-product">
+		?><div id="woocommerce-product-gallery__3d" class="attachment-page-3d-product alignfull">
 		<model-viewer id="vr-model"
 					  src="<?php echo $model_url; ?>"
 					  data-model="<?php echo $model_3d; ?>"

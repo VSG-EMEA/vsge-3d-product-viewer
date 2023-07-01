@@ -112,13 +112,13 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
     button {
       border: 1px solid var(--wp--preset--color--gray);
       font-size: 14px;
-      color: black;
+      color: var(--wp--preset--color--black);
       padding: 5px 12px;
       margin: 0 3px;
       opacity: .6;
 
       &.active {
-        color: #000;
+        color: var(--wp--preset--color--black);
         border-color: var(--wp--preset--color--gray-dark);
       }
 
@@ -170,12 +170,10 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
       }
 
       .button-icon {
-        line-height: 56px;
-        font-size: 36px;
         pointer-events: none;
         @media #{$mq__phablet} {
-          line-height: 32px;
-          font-size: 24px;
+          width: 24px;
+          height: 24px;
         }
       }
 
@@ -193,7 +191,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
   }
 
   #woocommerce-product-gallery__3d {
-    background: #f3f3f3;
+    background: var(--wp--preset--color--white);
     position: absolute;
     z-index: 3;
     top: 0;
@@ -249,7 +247,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
         display: flex;
         align-items: center;
         padding: 10px 20px;
-        background: #f3f3f3;
+        background: var(--wp--preset--color--gray-light);
         max-width: 640px;
       }
       #error-message {
@@ -309,6 +307,8 @@ model-viewer {
 }
 
 body.attachment #vr-model {
+  min-height: 80vh;
+
   button {
     margin: 16px;
     .button-icon {
