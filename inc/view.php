@@ -8,8 +8,12 @@
  * @return array the new product classes array.
  */
 function vsge_3d_model_container_class( $classes ) {
-	global $product;
-	$classes[] = 'woocommerce-product-gallery--' . ( get_post_meta( $product->get_id(), VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true ) > 0 ? 'with-vr' : '' );
+	global $post;
+	if ($post && is_product()) {
+		$classes[] = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true )
+			? 'woocommerce-product-gallery--with-vr'
+			: 'woocommerce-product-gallery--without-vr ';
+	}
 
 	return $classes;
 }
@@ -21,7 +25,7 @@ function vsge_3d_model_container_class( $classes ) {
  * @return bool
  */
 function vsge_3d_model_is_safari( $user_agent ) {
-	if(strlen(strstr($user_agent,'iPhone')) > 0 || strlen(strstr($user_agent,'iPad')) > 0 ){
+	if ( strlen( strstr( $user_agent, 'iPhone' ) ) > 0 || strlen( strstr( $user_agent, 'iPad' ) ) > 0 ) {
 		return true;
 	}
 }
@@ -160,23 +164,25 @@ function vsge_3d_model_viewer() {
 	<div id="woocommerce-product-gallery__3d" style="display:none">
 		<div class="model-viewer-helpers">
 			<button slot="ar-init" id="ar-init">
-		  <span class="material-icons">
-		  view_in_ar
-		  </span>
+				<span class="button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M448-167 228-296q-13.775-8.426-21.387-22.213Q199-332 199-348v-257q0-16 7.613-29.787Q214.225-648.574 228-657l221-131q14-8 31-8t31 8l221 131q13.775 8.426 21.388 22.213Q761-621 761-605v257q0 16-7.875 29.787Q745.25-304.426 731-296L508-167q-14.328 8-30.164 8Q462-159 448-167Zm2-69v-224L260-569v219l190 114Zm60 0 191-114v-219L510-460v224ZM80-691v-129q0-24.75 17.625-42.375T140-880h129v60H140v129H80ZM269-80H140q-24.75 0-42.375-17.625T80-140v-129h60v129h129v60Zm422 0v-60h129v-129h60v129q0 24.75-17.625 42.375T820-80H691Zm129-611v-129H691v-60h129q24.75 0 42.375 17.625T880-820v129h-60ZM480-514l190-110-190-109-190 109 190 110Zm0 25Zm0-25Zm30 54Zm-60 0Z"/></svg>
+				</span>
 			</button>
 			<button slot="ar-center" id="ar-center">
-		  <span class="material-icons">
-		  zoom_in_map
-		  </span>
+				<span class="button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="m143-100-43-43 147-147H120v-60h230v230h-60v-127L143-100Zm674 0L670-247v127h-60v-230h230v60H713l147 147-43 43ZM120-610v-60h127L100-817l43-43 147 147v-127h60v230H120Zm490 0v-230h60v127l148-148 43 43-148 148h127v60H610Z"/></svg>
+				</span>
 			</button>
 			<button slot="ar-rotation" id="ar-rotation" class="active">
-		  <span class="material-icons">
-		  360
-		  </span>
+				<span class="button-icon">
+					<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="m357-167-43-43 80-81q-136-15-225-66T80-486q0-79 116.5-134.5T480-676q168 0 284 55.5T880-486q0 59-64 104t-170 70v-65q80-20 127-52t47-57q0-32-83.5-81T480-616q-172 0-256 49t-84 81q0 45 57.5 77.5T397-349l-83-81 43-43 153 152-153 154Z"/></svg>
+				</span>
 			</button>
 			<?php if ( ! empty( $hotspots_html ) ) { ?>
 				<button slot="ar-toggle-hotspots" id="ar-toggle-hotspots" class="active">
-					<span class="material-icons">unfold_more</span>
+					<span class="button-icon">
+						<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M480-120 300-300l44-44 136 136 136-136 44 44-180 180ZM344-612l-44-44 180-180 180 180-44 44-136-136-136 136Z"/></svg>
+					</span>
 				</button>
 			<?php } ?>
 		</div>

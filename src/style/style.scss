@@ -169,7 +169,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
         margin: 0 5px 0 0;
       }
 
-      .material-icons {
+      .button-icon {
         line-height: 56px;
         font-size: 36px;
         pointer-events: none;
@@ -179,7 +179,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
         }
       }
 
-      &.active .material-icons {
+      &.active .button-icon {
         color: var(--color__accent);
       }
 
@@ -255,7 +255,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
       #error-message {
         margin: 0 0 0 16px;
       }
-      .material-icons {
+      .button-icon {
         font-size: 48px;
         color: #f44336;
       }
@@ -311,7 +311,7 @@ model-viewer {
 body.attachment #vr-model {
   button {
     margin: 16px;
-    .material-icons {
+    .button-icon {
       margin: 0 16px;
     }
     &#ar-initialize {

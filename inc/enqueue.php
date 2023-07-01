@@ -7,7 +7,7 @@
  * @return void
  */
 function vsge_mv_frontend_scripts() {
-	if ( ! is_main_query() || in_the_loop() || ! is_singular() ) {
+	if ( ! is_main_query() ||! is_singular() ) {
 		return;
 	}
 	global $post;
@@ -18,7 +18,7 @@ function vsge_mv_frontend_scripts() {
 		wp_enqueue_script( 'model-viewer', 'https://cdn.jsdelivr.net/npm/@google/model-viewer@3.0.1/dist/model-viewer.min.js' );
 
 		$asset = include VSGE_MV_PLUGIN_DIR . '/build/vsge-3d-product-viewer.asset.php';
-		wp_enqueue_script( 'vsge-3d-product-viewer', VSGE_MV_PLUGIN_URL . 'build/vsge-3d-product-viewer.js', array( 'model-viewer', $asset['dependencies'][0] ), $asset['version'] );
+		wp_enqueue_script( 'vsge-3d-product-viewer', VSGE_MV_PLUGIN_URL . 'build/vsge-3d-product-viewer.js', array_merge( array( 'model-viewer' ), $asset['dependencies'] ), $asset['version'], true );
 		wp_localize_script(
 			'vsge-3d-product-viewer',
 			'vsgenv',
@@ -55,7 +55,7 @@ add_filter( 'script_loader_tag', 'add_type_attribute', 10, 3 );
  * @return void
  */
 function vsge_mv_frontend_style() {
-	if ( ! is_main_query() || in_the_loop() || ! is_singular() ) {
+	if ( ! is_main_query() || ! is_singular() ) {
 		return;
 	}
 
