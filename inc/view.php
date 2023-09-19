@@ -40,7 +40,7 @@ function vsge_3d_model_is_safari( $user_agent ) {
  * @return string The content of the attachment page.
  */
 function replace_attachment_content( $content ) {
-	if ( is_attachment() && (! is_main_query() || ! is_singular()) ) {
+	if ( ! is_attachment() ) {
 		return $content;
 	}
 
@@ -190,16 +190,17 @@ function vsge_3d_model_viewer() {
 		<model-viewer id="vr-model"
 					  src="<?php echo $model_url; ?>"
 					  data-model="<?php echo $model_3d; ?>"
-					  poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-570' ); ?>"
-					  camera-controls auto-rotate min-field-of-view="10deg" <?php echo $model_options; ?>
+					  poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-medium' ); ?>"
+					  camera-controls auto-rotate min-field-of-view="10deg"
+					  bounds="tight" environment-image="neutral" shadow-intensity="1"
+					  <?php echo $model_options; ?>
 					  ar ar-modes="<?php
 		if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			echo 'quick-look scene-viewer';
 		} else {
 			echo 'scene-viewer quick-look webxr';
 		}
-		?>" ar-scale="fixed"
-					  bounds="tight" environment-image="neutral" shadow-intensity="1"
+		?>"
 		>
 			<?php echo $hotspots_html; ?>
 			<button slot="ar-button" class="hide"></button>
