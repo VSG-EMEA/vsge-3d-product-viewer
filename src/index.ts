@@ -17,6 +17,7 @@ import {
 
 import {
 	arInitialize,
+	centerView,
 	enableAutoRotate,
 	setAutoRotation,
 	setRecenter,
@@ -81,6 +82,8 @@ export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
 	} else {
 		mvContainer.addEventListener( 'progress', onProgress );
 	}
+
+  mvContainer.addEventListener( 'load', () => centerView( mvContainer ) );
 
 	// throw an error if the model fails to load
 	mvContainer.addEventListener( 'ar-status', throwErrorOnFail );
