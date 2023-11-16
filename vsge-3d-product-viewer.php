@@ -5,7 +5,7 @@
  * Description: WordPress plugin vsge-3d-product-viewer
  * Version: 0.0.2
  * Author: codekraft
- * Text Domain: vsge-mv
+ * Text Domain: vsge-3d-product-viewer
  * Domain Path: /languages/
  */
 
@@ -31,7 +31,7 @@ include_once VSGE_MV_PLUGIN_DIR . '/inc/view.php';
 add_action(
 	'plugins_loaded',
 	function() {
-		load_plugin_textdomain( 'vsge-mv', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'vsge-3d-product-viewer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 );
 
@@ -41,4 +41,4 @@ add_action( 'wp_footer', 'vsge_mv_frontend_style' );
 add_filter( 'woocommerce_single_product_image_gallery_classes', 'vsge_3d_model_container_class' );
 add_action( 'woocommerce_after_product-gallery__wrapper', 'vsge_3d_model_viewer', 20 );
 
-add_filter( 'the_content', 'replace_attachment_content', 1 );
+add_filter( 'the_content', 'replace_attachment_content', 2 );

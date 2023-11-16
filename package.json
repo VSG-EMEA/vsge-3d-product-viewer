@@ -19,6 +19,7 @@
     "build": "wp-scripts build",
     "build:types": "tsc --project tsconfig.types.json",
     "build:withTypes": "npm run build && npm run build:types",
+    "build:makepot": "wp i18n make-pot . languages/vsge-3d-product-viewer.pot --exclude=node_modules,vendor --domain=vsge-3d-product-viewer",
     "start": "wp-scripts start",
     "format": "wp-scripts format /src",
     "lint:css": "wp-scripts lint-style /src",

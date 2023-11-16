@@ -85,8 +85,8 @@ function replace_attachment_content( $content ) {
 			</button>
 			<div class="vsge-modal-notice progress-bar-container hide" slot="progress-bar">
 				<div class="inner-modal">
-					<h3><?php esc_html_e( 'Ladies and Gentlemen, please start your (VR) Engines', 'vsge-mv' ); ?></h3>
-					<p><?php printf( esc_html__( '3D model is loading, please wait. After the download augmented reality mode will be enabled, keep your phone facing the part of your workshop where you want to place your new %s product', 'vsge-mv' ), COMPANY ); ?></p>
+					<h3><?php esc_html_e( 'Ladies and Gentlemen, please start your (VR) Engines', 'vsge-3d-product-viewer' ); ?></h3>
+					<p><?php printf( esc_html__( '3D model is loading, please wait. After the download augmented reality mode will be enabled, keep your phone facing the part of your workshop where you want to place your new %s product', 'vsge-3d-product-viewer' ), COMPANY ); ?></p>
 					<progress class="progress-bar" value="0" max="100"></progress>
 					<button id="ar-initialize" class="ar-button hide" >Start AR</button>
 				</div>
@@ -210,15 +210,15 @@ function vsge_3d_model_viewer() {
 		</model-viewer>
 	</div>
 	<div id="woo-switch-gallery" class="woocommerce-product-gallery__select">
-		<button id="woo-select-3d" data-type="3d-model"><?php esc_html_e( '3D/VR', 'vsge-mv' ); ?></button>
-		<button id="woo-select-gallery" class="active" data-type="gallery"><?php esc_html_e( 'Gallery', 'vsge-mv' ); ?></button>
+		<button id="woo-select-3d" data-type="3d-model"><?php esc_html_e( '3D/VR', 'vsge-3d-product-viewer' ); ?></button>
+		<button id="woo-select-gallery" class="active" data-type="gallery"><?php esc_html_e( 'Gallery', 'vsge-3d-product-viewer' ); ?></button>
 	</div>
 	<div id="vsge-modal-qrcode" class="vsge-modal-notice outer-modal">
 		<div class="inner-modal">
 			<canvas id="vsge-vr-model"></canvas>
-			<h3><?php esc_html_e( 'Instructions:', 'vsge-mv' ); ?></h3>
-			<p><?php esc_html_e( 'Scan this code to open the model on your device, then, tap on the AR icon.', 'vsge-mv' ); ?></p>
-			<p><b><?php esc_html_e( 'Click to close this message', 'vsge-mv' ); ?></b></p>
+			<h3><?php esc_html_e( 'Instructions:', 'vsge-3d-product-viewer' ); ?></h3>
+			<p><?php esc_html_e( 'Scan this code to open the model on your device, then, tap on the AR icon.', 'vsge-3d-product-viewer' ); ?></p>
+			<p><b><?php esc_html_e( 'Click to close this message', 'vsge-3d-product-viewer' ); ?></b></p>
 		</div>
 	</div>
 	<?php
