@@ -57,8 +57,8 @@ function replace_attachment_content( $content ) {
 		$model_options = implode(
 			' ',
 			array(
-				isset( $model_data['camera-orbit'] ) ? ' camera-orbit="' . $model_data['camera-orbit'] . '"' : null,
-				isset( $model_data['camera-target'] ) ? ' camera-target="' . $model_data['camera-target'] . '"' : null,
+				isset( $model_data['camera-orbit'] ) && $model_data['camera-orbit'] !== '' ? '' : null,
+				isset( $model_data['camera-target'] ) && $model_data['camera-target'] !== ''  ? '' : null,
 			)
 		);
 
@@ -80,7 +80,7 @@ function replace_attachment_content( $content ) {
 				<div class="material-icons large">
 					error
 				</div>
-				<?php esc_html_e( 'AR is not tracking!', 'vsge-mv' ); ?>
+				<?php esc_html_e( 'AR is not tracking!', 'vsge-3d-product-viewer' ); ?>
 				<p id="error"></p>
 			</button>
 			<div class="vsge-modal-notice progress-bar-container hide" slot="progress-bar">
@@ -124,8 +124,8 @@ function vsge_3d_model_viewer() {
 	$model_options = implode(
 		' ',
 		array(
-			isset( $model_data['camera-orbit'] ) ? ' camera-orbit="' . $model_data['camera-orbit'] . '"' : null,
-			isset( $model_data['camera-target'] ) ? ' camera-target="' . $model_data['camera-target'] . '"' : null,
+			isset( $model_data['camera-orbit'] ) && $model_data['camera-orbit'] !== '65deg 90deg 25m' ? ' camera-orbit="' . $model_data['camera-orbit'] . '"' : null,
+			isset( $model_data['camera-target'] ) && $model_data['camera-target'] !== '0m 4.5m 0m'  ? ' camera-target="' . $model_data['camera-target'] . '"' : null,
 		)
 	);
 	// if the hotspots has set generate the hotspot html pointers
