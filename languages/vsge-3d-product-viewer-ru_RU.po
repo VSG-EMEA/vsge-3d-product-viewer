@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: vsge-3d-product-viewer\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vsge-3d-product-"
+"viewer\n"
+"POT-Creation-Date: 2023-11-16T05:50:30+00:00\n"
+"PO-Revision-Date: 2023-11-16 06:55+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.3.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: vsge-mv.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
+
+#. Plugin Name of the plugin
+msgid "VSGE 3d product viewer"
+msgstr "VSGE 3d просмотрщик продуктов"
+
+#. Plugin URI of the plugin
+msgid "https://github.com/erikyo/vsge-3d-product-viewer"
+msgstr "https://github.com/erikyo/vsge-3d-product-viewer"
+
+#. Description of the plugin
+msgid "WordPress plugin vsge-3d-product-viewer"
+msgstr "WordPress плагин vsge-3d-product-viewer"
+
+#. Author of the plugin
+msgid "codekraft"
+msgstr "codekraft"
+
+#: inc/view.php:83
+msgid "AR is not tracking!"
+msgstr "AR не отслеживает!"
+
+#: inc/view.php:88
+msgid "Ladies and Gentlemen, please start your (VR) Engines"
+msgstr "Дамы и господа, пожалуйста, заводите свои двигатели (VR)"
+
+#: inc/view.php:89
+msgid ""
+"3D model is loading, please wait. After the download augmented reality mode "
+"will be enabled, keep your phone facing the part of your workshop where you "
+"want to place your new %s product"
+msgstr ""
+"3D-модель загружается, пожалуйста, подождите. После загрузки будет включен "
+"режим дополненной реальности, держите телефон напротив той части мастерской, "
+"где вы хотите разместить новое изделие %s"
+
+#: inc/view.php:213
+msgid "3D/VR"
+msgstr "3D/VR"
+
+#: inc/view.php:214
+msgid "Gallery"
+msgstr "Галерея"
+
+#: inc/view.php:219
+msgid "Instructions:"
+msgstr "Инструкции:"
+
+#: inc/view.php:220
+msgid ""
+"Scan this code to open the model on your device, then, tap on the AR icon."
+msgstr ""
+"Отсканируйте этот код, чтобы открыть модель на вашем устройстве, затем "
+"нажмите на значок AR."
+
+#: inc/view.php:221
+msgid "Click to close this message"
+msgstr "Нажмите, чтобы закрыть это сообщение"
