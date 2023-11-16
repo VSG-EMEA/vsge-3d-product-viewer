@@ -34,7 +34,7 @@ export const arInitialize = ( event: Event, container: ModelViewerElement ) => {
  * the rotation button is used to determine whether the model is autoRotating or not,
  * if it has the classname "active" if the model is autoRotating
  *
- * @param  button
+ * @param button
  */
 export const getAutoRotation = ( button: HTMLElement | null ): boolean => {
 	return button ? button.classList.contains( 'active' ) : false;
@@ -54,7 +54,7 @@ export const isSelected = ( event: Event ) => {
 /**
  * It starts the rotation of the model.
  *
- * @param  container
+ * @param container
  */
 export const startRotate = ( container: ModelViewerElement ) => {
 	if ( container ) {
@@ -68,7 +68,7 @@ export const startRotate = ( container: ModelViewerElement ) => {
 /**
  * It stops the rotation of the 3d model viewer
  *
- * @param  container
+ * @param container
  */
 export const stopRotate = ( container: ModelViewerElement ) => {
 	if ( container ) {
@@ -80,8 +80,8 @@ export const stopRotate = ( container: ModelViewerElement ) => {
 /**
  * If the 3D rotation isn't active, start the rotation
  *
- * @param  button3dRotation
- * @param  mvContainer
+ * @param button3dRotation
+ * @param mvContainer
  */
 export const enableAutoRotate = (
 	button3dRotation: HTMLElement | null,
@@ -114,8 +114,8 @@ export const fireButtonState = (
 /**
  * If the button is active, stop the rotation, otherwise start the rotation
  *
- * @param  event     - Event - The event object.
- * @param  container
+ * @param event     - Event - The event object.
+ * @param container
  */
 export const setAutoRotation = (
 	event: Event,
@@ -135,7 +135,7 @@ export const setAutoRotation = (
  * It sets up the panning
  * vectors and the meters per pixel scale factor
  *
- * @param  container
+ * @param container
  */
 export const startPan = ( container: ModelViewerElement ) => {
 	if ( container ) {
@@ -157,7 +157,7 @@ export const startPan = ( container: ModelViewerElement ) => {
 /**
  * It resets the camera to its initial position
  *
- * @param  container
+ * @param container
  */
 export const centerView = ( container: ModelViewerElement ) => {
 	if ( container ) {
