@@ -35,10 +35,24 @@ add_action(
 	}
 );
 
+/**
+ * Enqueue scripts and styles
+ */
 add_action( 'wp_enqueue_scripts', 'vsge_mv_frontend_scripts' );
 add_action( 'wp_footer', 'vsge_mv_frontend_style' );
 
+/**
+ * Custom Template Redirect
+ */
+add_action( 'template_redirect', 'vsge_mv_template_redirect' );
+
+/**
+ * Single product page
+ */
 add_filter( 'woocommerce_single_product_image_gallery_classes', 'vsge_3d_model_container_class' );
 add_action( 'woocommerce_after_product-gallery__wrapper', 'vsge_3d_model_viewer', 20 );
 
+/**
+ * Attachment page
+ */
 add_filter( 'the_content', 'replace_attachment_content', 2 );
