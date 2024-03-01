@@ -20,11 +20,20 @@ export const arInitialize = ( event: Event, container: ModelViewerElement ) => {
 		toggleHotspotVisibility( hotspots, true );
 		container.activateAR();
 	} else {
-		const modalGenerateQR =
-			( document.getElementById( 'vsge-modal-qrcode' ) as HTMLElement ) ||
+		/**
+		 * The modal that displays the QR code
+		 */
+		const mainModal =
+			( document.getElementById( 'vsge-modal-3d' ) as HTMLElement ) ||
 			null;
-		modalGenerateQR?.addEventListener( 'click', deactivateQR );
-		modalGenerateQR.classList.add( 'active' );
+		if ( mainModal ) {
+			const modalQr = mainModal.querySelector( '.vsge-modal-qr' );
+			const modalInfo = mainModal.querySelector( '.vsge-modal-info' );
+
+			modalQr?.addEventListener( 'click', deactivateQR );
+			modalQr?.classList.add( 'active' );
+		}
+
 	}
 
 	event.preventDefault();

@@ -1,5 +1,3 @@
-/* global wp */
-
 // 3D MODEL VIEWER
 import { ModelViewerElement } from '@google/model-viewer';
 import 'focus-visible';
@@ -54,7 +52,7 @@ export const getQrURL = ( productID: string | null ) => {
 		'vsge-vr-model'
 	) as HTMLElement | null;
 
-	if ( modelVR && productID ) return getQRCode( modelVR, productID );
+	return modelVR && productID ? getQRCode( modelVR, productID ) : false;
 };
 
 /**
@@ -83,7 +81,7 @@ export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
 		mvContainer.addEventListener( 'progress', onProgress );
 	}
 
-  mvContainer.addEventListener( 'load', () => centerView( mvContainer ) );
+	mvContainer.addEventListener( 'load', () => centerView( mvContainer ) );
 
 	// throw an error if the model fails to load
 	mvContainer.addEventListener( 'ar-status', throwErrorOnFail );
@@ -110,6 +108,7 @@ export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
  */
 export const onProductInit = ( mvContainer: ModelViewerElement ) => {
 	const buttonArInit = document.getElementById( 'ar-init' ) as HTMLElement;
+	const buttonArInfo = document.getElementById( 'ar-info' ) as HTMLElement;
 
 	const button3dRecenter = document.getElementById(
 		'ar-center'
@@ -142,7 +141,7 @@ export const onProductInit = ( mvContainer: ModelViewerElement ) => {
 /**
  * On page Load
  */
-window.addEventListener( 'load', () => {
+window.addEventListener( 'load', async () => {
 	const container3d: HTMLElement | null = document.getElementById(
 		'woocommerce-product-gallery__3d'
 	);
@@ -175,7 +174,8 @@ window.addEventListener( 'load', () => {
 		 * - qr url of the related attachment page product page only
 		 * - enable extra controls on the left
 		 */
-		if ( getQrURL( getModelID( mvContainer ) ) ) {
+		const qrUrl = getQrURL( getModelID( mvContainer ) );
+		if ( qrUrl ) {
 			onProductInit( mvContainer );
 		}
 	}
