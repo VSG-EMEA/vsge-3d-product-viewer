@@ -194,7 +194,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
 		}
 	}
 
-	#vsge-modal-qrcode {
+	#vsge-modal-3d {
 
 		&.active {
 			visibility: visible;
@@ -203,6 +203,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
 
 	#woocommerce-product-gallery__3d {
 		background: var(--poster-color);
+		border: 0 !important;
 		position: absolute;
 		z-index: 3;
 		top: 0;
