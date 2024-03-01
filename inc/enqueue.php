@@ -9,7 +9,7 @@ function vsge_mv_frontend_scripts() {
 		wp_enqueue_script( 'vsge-3d-product-viewer', VSGE_MV_PLUGIN_URL . 'build/vsge-3d-product-viewer.js', array_merge( $asset['dependencies'] ), $asset['version'], true );
 		wp_localize_script(
 			'vsge-3d-product-viewer',
-			'vsgenv',
+			'vsgeData',
 			array(
 				'siteurl' => get_option( 'siteurl' ),
 			)

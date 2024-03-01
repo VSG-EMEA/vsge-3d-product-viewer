@@ -21,7 +21,7 @@ export const onInteraction = () => {
 export function getQRCode( canvas: HTMLElement, id: string ): string | false {
 	if ( canvas && id ) {
 		// @ts-ignore
-		const url = vsgenv.siteurl + '/3d-model/?id=' + id;
+		const url = vsgeData.siteurl + '/3d-model/?id=' + id;
 		QRCode.toCanvas( canvas, url, ( error ) => {
 			// console.log( '3D Model-Viewer on mobiles at ' + url );
 			if ( error ) throw new Error( error.message );
