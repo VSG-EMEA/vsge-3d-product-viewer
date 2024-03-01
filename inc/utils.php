@@ -18,8 +18,13 @@ function has_3d_model($postID = null) {
 	}
 
 	if ( $post === null && is_numeric($postID) ) {
-		$post = new \stdClass();
+		global $wp_query;
+		global $post;
 		$post = get_post( $postID );
+		$wp_query->is_single = true;
+		$wp_query->is_404 = false;
+		$wp_query->queried_object = $post;
+		$post->ID = $postID;
 	}
 
 	if ($postID) {
