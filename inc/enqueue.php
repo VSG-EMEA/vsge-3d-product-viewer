@@ -1,10 +1,7 @@
 <?php
-
 /**
  * If the current page is a single post, and the post has a 3D model attached, then enqueue the 3D
  * model viewer script
- *
- * @return void
  */
 function vsge_mv_frontend_scripts() {
 	if ( has_3d_model() ) {
@@ -22,8 +19,6 @@ function vsge_mv_frontend_scripts() {
 
 /**
  * If the current page is a single product page, then enqueue the stylesheet.
- *
- * @return void
  */
 function vsge_mv_frontend_style() {
 	if ( has_3d_model() ) {

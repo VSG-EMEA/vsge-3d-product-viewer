@@ -1,78 +1,57 @@
 <?php
 
+/**
+ * Redirects to a custom page if the current page is '3d-model'.
+ *
+ * @param mixed $template The original template.
+ * @return mixed
+ */
 function vsge_redirect_to_custom_page( $template ) {
-	$custom_template = VSGE_MV_PLUGIN_DIR . '/template/single-3d-model.php';
-	if ( ! is_page( '3d-model' ) ) {
-		return $template;
+	if ( is_page( 'model' ) ) {
+		$custom_template = VSGE_MV_PLUGIN_DIR . '/template/single-3d-model.php';
+		return $custom_template;
 	}
-	// Load the custom template file
-	if ( file_exists( $custom_template ) ) {
-		include($custom_template);
-		exit;
-	}
+
+	return $template;
 }
 add_filter( 'template_include', 'vsge_redirect_to_custom_page' );
 
+/**
+ * Redirects to custom template file for 3D model if query parameters match criteria.
+ *
+ * @return string URL for custom template file
+ */
+function vsge_3d_model_redirect( $template ) {
+	if ( is_page( 'model' ) && isset( $_GET['id'] ) ) {
+		$attachment_id = intval( $_GET['id'] );
 
-function vsge_3d_model_redirect() {
-	// Check if the query parameters match your criteria
-	if ( is_page( '3d-model' ) &&  isset( $_GET['model_id'] ) ) {
-		$attachment_id = intval( $_GET['model_id'] );
-
-		// Check if the 3D model exists
 		if ( has_3d_model( $attachment_id ) ) {
-			// Use your custom template file for redirection
-			return VSGE_MV_PLUGIN_URL . '/template/single-3d-model.php';
+			$custom_template = VSGE_MV_PLUGIN_DIR . '/template/single-3d-model.php';
+			return $custom_template;
 		}
 	}
+
+	return $template;
 }
-add_filter( 'redirect_canonical', 'vsge_3d_model_redirect' );
+add_filter( 'template_include', 'vsge_3d_model_redirect' );
 
-function register_custom_template_part() {
-	if ( is_page( '3d-model' ) ) {
-		get_template_part( 'vsge-3d-product-viewer' );
-	}
+/**
+ * Function to enqueue scripts and styles for the custom template.
+ */
+function vsge_mv_enqueue_scripts() {
+	wp_enqueue_style( 'your-style-handle', 'path-to-your-style.css' );
+	wp_enqueue_script( 'your-script-handle', 'path-to-your-script.js', array( 'jquery' ), '', true );
 }
-add_action( 'after_setup_theme', 'register_custom_template_part' );
+add_action( 'wp_enqueue_scripts', 'vsge_mv_enqueue_scripts' );
 
-function vsge_3d_model_init() {
-	register_block_type( 'vsge/3d-model', array(
-		'render_callback' => 'vsge_3d_model_block_render',
-	) );
-}
-add_action( 'init', 'vsge_3d_model_init' );
-
-function vsge_3d_model_block_render() {
-	return VSGE_MV_PLUGIN_URL . '/template/single-3d-model.php';
-}
-
-function vsge_3d_model_classic_render() {
-	get_header();
-
-	echo VSGE_MV_PLUGIN_URL . '/template/single-3d-model.php';
-
-	get_footer();
-}
-
-
+/**
+ * Function to redirect based on page template.
+ */
 function vsge_mv_template_redirect() {
-	if ( is_page_template( 'single-3d-model.php' ) ) {
-		// Enqueue scripts and styles only when using the custom template.
-		add_action( 'wp_enqueue_scripts', 'vsge_mv_frontend_style' );
-		add_action( 'wp_enqueue_scripts', 'vsge_mv_frontend_scripts' );
+	if ( is_page( 'model' ) ) {
+		// Your code here
+		include VSGE_MV_PLUGIN_DIR . '/template/single-3d-model.php';
+		die();
 	}
 }
 add_action( 'template_redirect', 'vsge_mv_template_redirect' );
-
-/**
- * Shortcode to display 3D model viewer.
- * Used in the "3D model" in a custom user page
- */
-function vsge_3d_model_container() {
-	if ( has_3d_model() ) {
-		add_action( 'wp_enqueue_scripts', 'vsge_mv_frontend_scripts' );
-		add_action( 'wp_enqueue_scripts', 'vsge_mv_frontend_style' );
-		include VSGE_MV_PLUGIN_DIR . '/template/model-callback.php';
-	}
-}
-add_shortcode( 'vsge_3d_model', 'vsge_3d_model_container' );

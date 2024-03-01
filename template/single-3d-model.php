@@ -1,5 +1,8 @@
 <?php
 global $post;
+print_r($post->ID);
+
+global $post;
 $model_3d         = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true );
 $model_url        = wp_get_attachment_url( $model_3d );
 $model_preview_id = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model_preview', true );
