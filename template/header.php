@@ -11,9 +11,6 @@
 
 	<?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?>>
+<body <?php body_class('model3d'); ?>>
 <?php wp_body_open();
-
-// Add the header
-echo do_blocks( file_get_contents( get_theme_file_path( '/parts/header.html' ) ) );
 ?>

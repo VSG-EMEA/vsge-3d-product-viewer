@@ -1,6 +1,5 @@
 <?php
 global $post;
-print_r($post->ID);
 
 global $post;
 $model_3d         = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true );
@@ -13,11 +12,12 @@ $model_options = implode( ' ', array(
 	isset( $model_data['camera-orbit'] ) && $model_data['camera-orbit'] !== '' ? '' : null,
 	isset( $model_data['camera-target'] ) && $model_data['camera-target'] !== '' ? '' : null,
 ) );
-?>
+include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 
+?>
 <div id="woocommerce-product-gallery__3d" class="attachment-page-3d-product alignfull">
 	<model-viewer id="vr-model"
-				  style="min-height: 80vh; padding-top: 1rem; padding-bottom: 1rem"
+				  style="min-height: 100vh; width: 100%"
 				  src="<?php echo $model_url; ?>"
 				  data-model="<?php echo $model_3d; ?>"
 				  bounds="tight" camera-controls <?php echo $model_options; ?> min-field-of-view="10deg"
@@ -46,3 +46,5 @@ $model_options = implode( ' ', array(
 		</div>
 	</model-viewer>
 </div>
+<?php
+include VSGE_MV_PLUGIN_DIR . '/template/footer.php';
