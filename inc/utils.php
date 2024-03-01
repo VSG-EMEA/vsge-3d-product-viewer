@@ -1,5 +1,40 @@
 <?php
 
+/**
+ * Check if the post has a 3D model attached.
+ *
+ * @return bool true if the post has a 3D model, false otherwise.
+ */
+function has_3d_model($postID = null) {
+	global $post;
+	// Check if the post has a 3D model already attached
+	if (!$postID) {
+		if ( isset( $post->ID ) ) {
+			// Check if the post has a 3D model
+			$postID = $post->ID;
+		} else {
+			$postID = intval( $_GET['id'] );
+		}
+	}
+
+	if ( $post === null ) {
+		$post = new \stdClass();
+		$post = get_post( $postID );
+	}
+
+	if ($postID) {
+		// Check if the attachment has a 3D model
+		$attachment_id = get_post_meta( $postID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true );
+	}
+
+	// if the post has a 3D model return true and set the $post->has_3d_model
+	if ( !empty($attachment_id) ) {
+		$post->model3d = $attachment_id;
+		return true;
+	}
+
+	return false;
+}
 
 /**
  * If the product has a 3D model, add a class to the product gallery container
