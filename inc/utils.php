@@ -12,8 +12,6 @@ function has_3d_model($postID = null) {
 		if ( isset( $post->ID ) ) {
 			// Check if the post has a 3D model
 			$postID = $post->ID;
-		} else {
-			$postID = intval( $_GET['id'] );
 		}
 	}
 

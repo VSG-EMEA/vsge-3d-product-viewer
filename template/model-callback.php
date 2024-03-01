@@ -15,13 +15,10 @@ $model_preview = get_post_meta( $model_3d, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d
 
 $model_data = (array) json_decode( get_post_meta( $model_3d, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model_data', true ) );
 
-$model_options = implode(
-	' ',
-	array(
+$model_options = implode( ' ', array(
 		isset( $model_data['camera-orbit'] ) && $model_data['camera-orbit'] !== '65deg 90deg 25m' ? ' camera-orbit="' . $model_data['camera-orbit'] . '"' : null,
-		isset( $model_data['camera-target'] ) && $model_data['camera-target'] !== '0m 4.5m 0m'  ? ' camera-target="' . $model_data['camera-target'] . '"' : null,
-	)
-);
+		isset( $model_data['camera-target'] ) && $model_data['camera-target'] !== '0m 4.5m 0m' ? ' camera-target="' . $model_data['camera-target'] . '"' : null,
+	) );
 
 // if the hotspots have set generate the hotspot HTML pointers
 $hotspots_html = '';
@@ -30,33 +27,25 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 		if ( isset( $hotspot->position, $hotspot->title ) ) {
 			$slot = $hotspot->slot ? $hotspot->slot : 'hotspot-' . $k;
 			if ( isset( $hotspot->href ) ) {
-				$hotspots_html .= sprintf(
-					'<div class="hotspot" slot="hotspot-%s" data-position="%s" data-visibility-attribute="visible">
+				$hotspots_html .= sprintf( '<div class="hotspot" slot="hotspot-%s" data-position="%s" data-visibility-attribute="visible">
           <div class="dot"></div>
           <a class="annotation" href="%s">%s</a>
-        </div>',
-					$slot,
-					$hotspot->position,
-					$hotspot->href,
-					$hotspot->title
-				);
+        </div>', $slot, $hotspot->position, $hotspot->href, $hotspot->title );
 			} else {
-				$hotspots_html .= sprintf(
-					'<div class="hotspot" slot="hotspot-%s" data-position="%s" data-visibility-attribute="visible">
+				$hotspots_html .= sprintf( '<div class="hotspot" slot="hotspot-%s" data-position="%s" data-visibility-attribute="visible">
           <div class="dot"></div>
           <span class="annotation">%s</span>
         </div>
-',
-					$slot,
-					$hotspot->position,
-					$hotspot->title
-				);
+', $slot, $hotspot->position, $hotspot->title );
 			}
 		}
 	}
 }
 ?>
+
+<!-- The 3D model container -->
 <div id="woocommerce-product-gallery__3d" style="display:none">
+	<!-- The 3D model buttons and helpers -->
 	<div class="model-viewer-helpers">
 		<button slot="ar-init" id="ar-init">
 				<span class="button-icon">
@@ -86,21 +75,22 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 			</button>
 		<?php } ?>
 	</div>
+
+	<!-- The 3D model -->
 	<model-viewer id="vr-model"
-	              src="<?php echo $model_url; ?>"
-	              data-model="<?php echo $model_3d; ?>"
-	              poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-medium' ); ?>"
-	              camera-controls auto-rotate min-field-of-view="10deg"
-	              bounds="tight" environment-image="neutral" shadow-intensity="1"
+				  class="mv-3d-model-viewer"
+				  src="<?php echo $model_url; ?>"
+				  data-model="<?php echo $model_3d; ?>"
+				  poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-medium' ); ?>"
+				  camera-controls auto-rotate min-field-of-view="10deg"
+				  bounds="tight" environment-image="neutral" shadow-intensity="1"
 		<?php echo $model_options; ?>
-		          ar ar-modes="<?php
+				  ar ar-modes="<?php
 	if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
 		echo 'quick-look scene-viewer';
 	} else {
 		echo 'scene-viewer quick-look webxr';
-	}
-	?>"
-	>
+	} ?>">
 		<?php echo $hotspots_html; ?>
 		<button slot="ar-button" class="hide"></button>
 		<div class="progress-bar-container hide" slot="progress-bar">
@@ -108,10 +98,14 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 		</div>
 	</model-viewer>
 </div>
+
+<!-- Switch between gallery and 3D -->
 <div id="woo-switch-gallery" class="woocommerce-product-gallery__select">
 	<button id="woo-select-3d" data-type="3d-model"><?php esc_html_e( '3D/VR', 'vsge-3d-product-viewer' ); ?></button>
 	<button id="woo-select-gallery" class="active" data-type="gallery"><?php esc_html_e( 'Gallery', 'vsge-3d-product-viewer' ); ?></button>
 </div>
+
+<!-- 3D model modal -->
 <div id="vsge-modal-3d" class="vsge-modal-notice outer-modal">
 	<div class="inner-modal">
 		<div class="vsge-modal-qr">

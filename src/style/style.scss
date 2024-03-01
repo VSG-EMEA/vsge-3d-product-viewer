@@ -1,4 +1,5 @@
 $mq__phablet: "(max-width: 600px)";
+$red : var(--wp--preset--color--vivid-red);
 
 @media (min-width: 600px) {
 
@@ -7,19 +8,90 @@ $mq__phablet: "(max-width: 600px)";
 	}
 }
 
-/* MODEL VIEWER */
-body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
+body.model3d #vr-model {
+	min-height: 100vh;
+	width: 100%;
+	margin: 0;
+	padding: 0;
 
-	:not(:defined) > * {
-		display: none;
+	button {
+		margin: 16px;
+
+		.button-icon {
+			margin: 0 16px;
+		}
+
+		&#ar-initialize {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-sizing: border-box;
+			height: 40px;
+			cursor: pointer;
+			color: var(--wp--preset--color--gray-dark);
+			background-color: var(--color__white);
+			box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+			border-radius: 100px;
+			margin: 20px auto 0;
+
+			&.hide {
+				display: none;
+			}
+		}
+
+		&#ar-failure {
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			bottom: 175px;
+			background-color: var(--wp--preset--color--white);
+			border: 1px solid var(--wp--preset--color--gray-light);
+			color: var(--wp--preset--color--gray-dark);
+			padding: 36px;
+			display: none;
+		}
+
+		&#ar-button {
+			border-radius: 4px;
+			border: none;
+			position: absolute;
+			z-index: 1000;
+			bottom: -16px;
+			right: 16px;
+		}
 	}
 
-	--poster-color: transparent;
-
-	@media #{$mq__phablet} {
-		max-height: 60vh;
-		height: 60vh;
+	.vsge-modal-notice .inner-modal {
+		border: 1px solid #eee;
 	}
+
+	.vsge-modal-notice:not(.hide) {
+		visibility: visible;
+	}
+}
+
+div.woocommerce.product {
+
+	model-viewer {
+		width: 100%;
+		height: calc(100% + 48px);
+		padding-left: 152px;
+		box-sizing: border-box;
+		outline: none;
+		border: 0 !important;
+
+		@media #{$mq__phablet} {
+			padding-left: 0;
+		}
+
+		body.attachment & {
+			padding: 0;
+			height: 100%;
+			max-height: calc(100vh - 90px);
+			min-height: 500px;
+		}
+	}
+
 
 	.hotspot {
 		--min-hotspot-opacity: 0;
@@ -101,6 +173,21 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
 		&:focus {
 			outline: none;
 		}
+	}
+}
+
+/* MODEL VIEWER */
+body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
+
+	:not(:defined) > * {
+		display: none;
+	}
+
+	--poster-color: transparent;
+
+	@media #{$mq__phablet} {
+		max-height: 60vh;
+		height: 60vh;
 	}
 
 	/* SWITCHER BUTTONS CONTAINER */
@@ -203,7 +290,6 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
 
 	#woocommerce-product-gallery__3d {
 		background: var(--poster-color);
-		border: 0 !important;
 		position: absolute;
 		z-index: 3;
 		top: 0;
@@ -275,32 +361,15 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
 
 			.button-icon {
 				font-size: 48px;
-				color: #f44336;
+				color: $red;
 			}
 		}
 	}
 }
 
-model-viewer {
-	width: 100%;
-	height: 100%;
-	padding-left: 152px;
-	box-sizing: border-box;
-
-	@media #{$mq__phablet} {
-		padding-left: 0;
-	}
-
-	body.attachment & {
-		padding: 0;
-		height: 100%;
-		max-height: calc(100vh - 90px);
-		min-height: 500px;
-	}
-}
 
 /* The qr code modal with tip to view from mobile devices */
-.vsge-modal-notice {
+#vsge-modal-3d {
 	position: absolute;
 	z-index: 5;
 	top: 0;
@@ -327,70 +396,8 @@ model-viewer {
 	}
 }
 
-body.attachment #vr-model {
-	min-height: 80vh;
-
-	button {
-		margin: 16px;
-
-		.button-icon {
-			margin: 0 16px;
-		}
-
-		&#ar-initialize {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			box-sizing: border-box;
-			height: 40px;
-			cursor: pointer;
-			color: var(--wp--preset--color--gray-dark);
-			background-color: var(--color__white);
-			box-shadow: 0 0 4px rgb(0 0 0 / 15%);
-			border-radius: 100px;
-			margin: 20px auto 0;
-
-			&.hide {
-				display: none;
-			}
-		}
-
-		&#ar-failure {
-			position: absolute;
-			left: 50%;
-			transform: translateX(-50%);
-			bottom: 175px;
-			background-color: var(--wp--preset--color--white);
-			border: 1px solid var(--wp--preset--color--gray-light);
-			color: var(--wp--preset--color--gray-dark);
-			padding: 36px;
-			display: none;
-		}
-
-		&#ar-button {
-			border-radius: 4px;
-			border: none;
-			position: absolute;
-			z-index: 1000;
-			bottom: -16px;
-			right: 16px;
-		}
-	}
-}
-
 model-viewer[ar-tracking="not-tracking"] > #ar-failure {
 	display: block;
-}
-
-article.type-attachment {
-
-	.vsge-modal-notice .inner-modal {
-		border: 1px solid #eee;
-	}
-
-	.vsge-modal-notice:not(.hide) {
-		visibility: visible;
-	}
 }
 
 
