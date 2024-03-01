@@ -16,17 +16,17 @@ export const onInteraction = () => {
  *
  * @param {HTMLElement} canvas - The canvas element to render the QR code to.
  * @param {string}      id     - The attachment ID of the model.
- * @return {boolean} A function that takes two arguments, canvas and id.
+ * @return {string|false} A function that takes two arguments, canvas and id.
  */
-export function getQRCode( canvas: HTMLElement, id: string ): boolean {
+export function getQRCode( canvas: HTMLElement, id: string ): string | false {
 	if ( canvas && id ) {
 		// @ts-ignore
-		const url = vsgenv.siteurl + '/?attachment_id=' + id;
+		const url = vsgenv.siteurl + '/3d-model/?id=' + id;
 		QRCode.toCanvas( canvas, url, ( error ) => {
 			// console.log( '3D Model-Viewer on mobiles at ' + url );
 			if ( error ) throw new Error( error.message );
 		} );
-		return true;
+		return url;
 	}
 	return false;
 }
