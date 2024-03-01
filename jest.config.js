@@ -5,7 +5,6 @@ const jestConfig = {
 		'@wordpress/jest-console',
 		'@wordpress/jest-puppeteer-axe',
 		'expect-puppeteer',
-		'puppeteer-testing-library/extend-expect',
 	],
 	modulePaths: [ '<rootDir>' ],
 	projects: [
