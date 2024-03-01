@@ -146,6 +146,14 @@ window.addEventListener( 'load', () => {
 	const container3d: HTMLElement | null = document.getElementById(
 		'woocommerce-product-gallery__3d'
 	);
+
+	// append the script
+	const script = document.createElement( 'script' );
+	script.type = 'module';
+	await import( '@google/model-viewer/dist/model-viewer-module' );
+
+	document.head.appendChild( script );
+
 	const mvContainer: ModelViewerElement | null =
 		getModelViewer( container3d );
 
