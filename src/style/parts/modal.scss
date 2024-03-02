@@ -1,3 +1,34 @@
+/* The qr code modal with tip to view from mobile devices */
+#vsge-modal-3d,
+.vsge-modal-notice.progress-bar-container {
+	position: absolute;
+	z-index: 5;
+	top: 0;
+	bottom: 0;
+	left: 130px;
+	right: 0;
+	visibility: hidden;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-content: center;
+
+	.inner-modal {
+		position: relative;
+		text-align: center;
+		width: 60%;
+		background-color: var(--wp--preset--color--white);
+		padding: 24px 36px;
+		margin: auto;
+
+		@media #{$mq__phablet} {
+			width: 100%;
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+	}
+}
+
 #vsge-modal-3d {
 
 	.modal {
@@ -14,7 +45,7 @@
 		position: absolute;
 		z-index: 10000;
 		right: 24px;
-		top: 16px;
+		top: 20px;
 
 		svg {
 			height: 16px;
@@ -32,7 +63,7 @@
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
-		max-width: 360px;
+		max-width: 380px;
 		min-height: 48px;
 		margin: 0 auto 12px;
 
@@ -57,36 +88,5 @@
 		font-size: 90%;
 		padding: 1rem 0 0;
 		margin: 0;
-	}
-}
-
-/* The qr code modal with tip to view from mobile devices */
-#vsge-modal-3d,
-.vsge-modal-notice.progress-bar-container {
-	position: absolute;
-	z-index: 5;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	visibility: hidden;
-	display: flex;
-	flex-flow: wrap;
-	justify-content: center;
-	align-content: center;
-
-	.inner-modal {
-		position: relative;
-		text-align: center;
-		width: 50%;
-		background-color: var(--wp--preset--color--white);
-		padding: 36px;
-		margin: auto;
-
-		@media #{$mq__phablet} {
-			width: 100%;
-			margin-left: 20px;
-			margin-right: 20px;
-		}
 	}
 }
