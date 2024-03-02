@@ -12,16 +12,17 @@ function vsge_3d_model_redirect( $template ) {
 	// check if the requested page is a 3D model
 	if ( ! empty( $model[0] )  ) {
 		$string_slug = $model[0];
-		$model = $model[1];
 		if ($string_slug === 'model3d') {
-			if ( ! is_numeric( $model ) ) {
-				$product_id = get_page_by_path( sanitize_text_field($model), OBJECT, 'product' )->ID;
+			$currentModel = $model[1];
+			if ( ! is_numeric( $currentModel ) ) {
+				$product = get_page_by_path( $currentModel, OBJECT, 'product' );
+				$product_id = !empty($product) ? $product->ID : false;
 			} else {
-				$product_id = intval($model);
+				$product_id = intval($currentModel);
 			}
 
 			// check if the post has a 3D model
-			if ( has_3d_model($product_id ) ) {
+			if ( $product_id && has_3d_model($product_id ) ) {
 				// check if the post has a 3D model
 				$template = VSGE_MV_PLUGIN_DIR . '/template/single-3d-model.php';
 			} else {
