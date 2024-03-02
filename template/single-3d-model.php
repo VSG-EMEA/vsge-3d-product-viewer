@@ -22,7 +22,8 @@ include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 		<model-viewer
 			id="vr-model"
 			data-src="<?php echo $model_url; ?>"
-			data-model="<?php echo $model_3d; ?>"
+			data-attachment="<?php echo $model_3d; ?>"
+			data-product="<?php echo $post->ID; ?>"
 			bounds="tight"
 			<?php echo $model_options; ?>
 			ar
@@ -34,7 +35,7 @@ include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 				<?php __( 'Start AR', 'vsge-3d-product-viewer' ); ?>
 			</button>
 			
-			<button id="ar-failure">
+			<button id="ar-failure" class="hide">
 				<div class="material-icons large">
 					<?php __( 'error', 'vsge-3d-product-viewer' ); ?>
 				</div>

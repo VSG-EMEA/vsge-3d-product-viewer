@@ -10,6 +10,7 @@ $model_3d = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_mode
 
 if ( ! $model_3d ) {
 	include VSGE_MV_PLUGIN_DIR . '/template/missing-3d-model.php';
+	
 	return;
 }
 
@@ -19,9 +20,9 @@ $model_preview = get_post_meta( $model_3d, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d
 $model_data = (array) json_decode( get_post_meta( $model_3d, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model_data', true ) );
 
 $model_options = implode( ' ', array(
-		isset( $model_data['camera-orbit'] ) && $model_data['camera-orbit'] !== '65deg 90deg 25m' ? ' camera-orbit="' . $model_data['camera-orbit'] . '"' : null,
-		isset( $model_data['camera-target'] ) && $model_data['camera-target'] !== '0m 4.5m 0m' ? ' camera-target="' . $model_data['camera-target'] . '"' : null,
-	) );
+	isset( $model_data['camera-orbit'] ) && $model_data['camera-orbit'] !== '65deg 90deg 25m' ? ' camera-orbit="' . $model_data['camera-orbit'] . '"' : null,
+	isset( $model_data['camera-target'] ) && $model_data['camera-target'] !== '0m 4.5m 0m' ? ' camera-target="' . $model_data['camera-target'] . '"' : null,
+) );
 
 // if the hotspots have set generate the hotspot HTML pointers
 $hotspots_html = '';
@@ -78,31 +79,33 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 			</button>
 		<?php } ?>
 	</div>
-
+	
 	<!-- The 3D model -->
 	<model-viewer
-		 			id="vr-model"
-				  class="mv-3d-model-viewer"
-				  data-src="<?php echo $model_url; ?>"
-				  data-model="<?php echo $model_3d; ?>"
-				  poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-medium' ); ?>"
-				  camera-controls
-					auto-rotate
-					min-field-of-view="10deg"
-					tone-mapping="commerce"
-					environment-image="neutral"
-				  shadow-intensity="1"
+		id="vr-model"
+		class="mv-3d-model-viewer"
+		data-src="<?php echo $model_url; ?>"
+		data-attachment="<?php echo $model_3d; ?>"
+		data-product="<?php echo $post->ID; ?>"
+		poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-medium' ); ?>"
+		camera-controls
+		auto-rotate
+		min-field-of-view="10deg"
+		tone-mapping="commerce"
+		environment-image="neutral"
+		shadow-intensity="1"
 		<?php echo $model_options; ?>
-				  ar
-					ar-modes="<?php
-	if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
-		echo 'quick-look scene-viewer';
-	} else {
-		echo 'scene-viewer quick-look webxr';
-	} ?>">
+		ar
+		ar-modes="<?php
+		if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			echo 'quick-look scene-viewer';
+		} else {
+			echo 'scene-viewer quick-look webxr';
+		} ?>">
 		<?php echo $hotspots_html; ?>
 		<button slot="ar-button" class="hide"></button>
 		<div class="progress-bar-container hide" slot="progress-bar">
+			<p><?php esc_html_e( 'Loading...', 'vsge-3d-product-viewer' ); ?></p>
 			<progress class="progress-bar" value="0" max="100"></progress>
 		</div>
 	</model-viewer>
@@ -118,7 +121,9 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 <div id="vsge-modal-3d" class="vsge-modal-notice outer-modal">
 	<div class="inner-modal">
 		<div class="mv-close-button">
-			<svg id="close" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.7 18.7"><path d="m10.41,9.35L18.48,1.28c.29-.29.29-.77,0-1.06s-.77-.29-1.06,0l-8.07,8.07L1.28.22C.99-.07.51-.07.22.22S-.07.99.22,1.28l8.07,8.07L.22,17.42c-.29.29-.29.77,0,1.06.15.15.34.22.53.22s.38-.07.53-.22l8.07-8.07,8.07,8.07c.15.15.34.22.53.22s.38-.07.53-.22c.29-.29.29-.77,0-1.06l-8.07-8.07Z"/></svg>
+			<svg id="close" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.7 18.7">
+				<path d="m10.41,9.35L18.48,1.28c.29-.29.29-.77,0-1.06s-.77-.29-1.06,0l-8.07,8.07L1.28.22C.99-.07.51-.07.22.22S-.07.99.22,1.28l8.07,8.07L.22,17.42c-.29.29-.29.77,0,1.06.15.15.34.22.53.22s.38-.07.53-.22l8.07-8.07,8.07,8.07c.15.15.34.22.53.22s.38-.07.53-.22c.29-.29.29-.77,0-1.06l-8.07-8.07Z"/>
+			</svg>
 		</div>
 		
 		<?php include VSGE_MV_PLUGIN_DIR . '/template/qr-template.php'; ?>
