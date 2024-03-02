@@ -15,6 +15,14 @@ body.model3d {
 			padding: 2rem 3rem;
 			border-radius: 2px;
 			box-shadow: 0 8px 40px -30px rgb(0, 0, 0);
+			box-sizing: border-box;
+
+			@media #{$mq__phablet} {
+				margin-top: 50%;
+				margin-left: 20px;
+				margin-right: 20px;
+				width: calc(100% - 40px);
+			}
 
 			h3 {
 				margin: 0 0 1rem;

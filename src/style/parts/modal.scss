@@ -12,10 +12,15 @@
 	justify-content: center;
 	align-content: center;
 
+	@media #{$mq__phablet} {
+		left: 0;
+	}
+
 	.inner-modal {
 		position: relative;
 		text-align: center;
 		width: 60%;
+		box-sizing: border-box;
 		background-color: var(--wp--preset--color--white);
 		padding: 24px 36px;
 		margin: auto;
@@ -29,13 +34,11 @@
 
 		@media #{$mq__phablet} {
 			width: 100%;
-			margin-left: 20px;
-			margin-right: 20px;
+			margin: 0;
 		}
 	}
 
 	&.active {
-
 		.inner-modal {
 			height: auto;
 			transform: scale(1) translateY(0);
