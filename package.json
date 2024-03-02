@@ -59,6 +59,7 @@
     "node": ">=16.0.0",
     "npm": ">=6.9.0"
   },
+  "prettier": "@wordpress/prettier-config",
   "browserslist": [
     "extends @wordpress/browserslist-config"
   ]
