@@ -9,9 +9,16 @@ body.model3d {
 
 		.progress-bar-container {
 			width: 100%;
-			max-width: 480px;
-			margin: 0 auto;
-			margin-top: 20%;
+			max-width: 680px;
+			margin: 20% auto 0;
+			border: 1px solid #ddd;
+			padding: 2rem 3rem;
+			border-radius: 2px;
+			box-shadow: 0 8px 40px -30px rgb(0, 0, 0);
+
+			h3 {
+				margin: 0 0 1rem;
+			}
 		}
 	}
 
