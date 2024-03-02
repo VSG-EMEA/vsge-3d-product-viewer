@@ -17,6 +17,7 @@ The VSGE 3D Product Viewer is a WordPress plugin that allows you to easily add a
 2. Upload and activate the plugin through the WordPress admin interface.
 
 ## Usage
+![3dmodel](https://github.com/VSG-EMEA/vsge-3d-product-viewer/assets/8550908/87b46456-dc97-4f68-955e-f42b5da0f5c5)
 
 ### Uploading 3D Models
 
@@ -28,11 +29,11 @@ The VSGE 3D Product Viewer is a WordPress plugin that allows you to easily add a
 
 To enable the plugin for a product, follow these steps:
 
-** Manual Add **
+**Manual Add**
 - add a post meta to the product named "brb_media_3d_model" with the id of the 3D model in the media library
 - add a post meta to the product named "brb_media_3d_model" with the id of the 3D model preview in the media library (optional, accepted images are .png, .jpg, .jpeg, .gif, and .svg)
 
-** BRB Importer **
+**BRB Importer**
 - in our importer in order to add the model to the product we need to register the 3D model in this way:
 - 
 ```json
@@ -63,7 +64,7 @@ To enable the plugin for a product, follow these steps:
 					"slot": "pin3",
 					"position": "0.62 0.05 0.58",
 					"title": "Pin 3",
-          "href": "https://url"
+          				"href": "https://url"
 				}
 			]
 		}
@@ -86,6 +87,11 @@ To enable the plugin for a product, follow these steps:
 
 ## Screenshots
 
+
+
+## Examples
+- [Product page - 2-post-lift-kpx32](https://dev.codekraft.it/ravaglioli.it/product/2-post-lift-kpx32/)
+- [Ar mode (On devices that allow it, otherwise vr)](https://dev.codekraft.it/ravaglioli.it/model3d=2-post-lift-kpx32)
 
 ## Frequently Asked Questions (FAQ)
 
