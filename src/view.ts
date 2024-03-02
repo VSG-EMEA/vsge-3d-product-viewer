@@ -66,7 +66,7 @@ export const getQrURL = ( productID: string | null ) => {
  * @param {HTMLElement} container - HTMLElement - The container element that contains the model.
  */
 export const getModelID = ( container: HTMLElement ): string | null =>
-	container?.dataset.model || null;
+	container?.dataset.product || null;
 
 /**
  * It adds event listeners to the model viewer element, and to the document body
