@@ -1,3 +1,4 @@
+// global vsgeData
 import QRCode from 'qrcode';
 import { __ } from '@wordpress/i18n';
 import { ModelViewerElement } from '@google/model-viewer';
@@ -21,7 +22,7 @@ export const onInteraction = () => {
 export function getQRCode( canvas: HTMLElement, id: string ): string | false {
 	if ( canvas && id ) {
 		// @ts-ignore
-		const url = vsgeData.siteurl + '/3d-model/?id=' + id;
+		const url = vsgeData.siteurl + '/model3d=' + id;
 		QRCode.toCanvas( canvas, url, ( error ) => {
 			// console.log( '3D Model-Viewer on mobiles at ' + url );
 			if ( error ) throw new Error( error.message );
@@ -133,14 +134,4 @@ export const throwErrorOnFail = ( event: Event ) => {
 				)
 			);
 	}
-};
-
-/**
- * It removes the class 'active' from the modalGenerateQR element
- *
- * @param {Event} event - Event - This is the event that is being passed to the function.
- */
-export const deactivateQR = ( event: Event ) => {
-	( event.currentTarget as HTMLInputElement ).classList.remove( 'active' );
-	event.preventDefault();
 };
