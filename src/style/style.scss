@@ -9,7 +9,8 @@ $red : var(--wp--preset--color--vivid-red);
 }
 
 body.model3d #vr-model {
-	min-height: 100vh;
+	min-height: 500px;
+	height: 100vh;
 	width: 100%;
 	margin: 0;
 	padding: 0;
@@ -283,8 +284,15 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
 
 	#vsge-modal-3d {
 
-		&.active {
-			visibility: visible;
+		.modal {
+			visibility: hidden;
+			display: none;
+		}
+
+		&.active,
+		.modal.active {
+			display: block;
+			visibility: visible !important;
 		}
 	}
 
@@ -369,7 +377,8 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
 
 
 /* The qr code modal with tip to view from mobile devices */
-#vsge-modal-3d {
+#vsge-modal-3d,
+.vsge-modal-notice.progress-bar-container {
 	position: absolute;
 	z-index: 5;
 	top: 0;
@@ -387,6 +396,7 @@ body.woocommerce div.product div.images.woocommerce-product-gallery--with-vr {
 		width: 50%;
 		background-color: white;
 		padding: 36px;
+		margin: auto;
 
 		@media #{$mq__phablet} {
 			width: 100%;
