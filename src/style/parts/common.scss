@@ -57,6 +57,8 @@ body.woocommerce.product {
 
 		.vsge-modal-notice .inner-modal {
 			border: 1px solid #eee;
+			display: flex;
+			flex-direction: column;
 		}
 
 		.vsge-modal-notice:not(.hide) {
