@@ -1,10 +1,12 @@
 <?php
+/**
+ * Template for the 3D model viewer displayed in the woocommerce product page
+ */
 global $post;
 
 $model_3d         = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true );
 $model_url        = wp_get_attachment_url( $model_3d );
 $model_preview_id = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model_preview', true );
-
 
 $model_data = (array) json_decode( get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model_data', true ) );
 
@@ -22,10 +24,10 @@ include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 			data-src="<?php echo $model_url; ?>"
 			data-model="<?php echo $model_3d; ?>"
 			bounds="tight"
-			camera-controls <?php echo $model_options; ?>
+			<?php echo $model_options; ?>
 			ar
-			ar-modes="<?php echo vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ? 'quick-look scene-viewer' : 'scene-viewer quick-look webxr'; ?>"
 			camera-controls
+			ar-modes="<?php echo vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ? 'quick-look scene-viewer' : 'scene-viewer quick-look webxr'; ?>"
 		>
 			
 			<button id="ar-failure">
@@ -51,9 +53,14 @@ include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 				</div>
 			</div>
 		</model-viewer>
+
 		<div class="button back mv-active-button ar-button">
-			<?php esc_html_e( 'Back to product page', 'vsge-3d-product-viewer' ); ?>
+			<a href="<?php echo get_permalink( $post->ID ); ?>" title="<?php esc_attr_e( 'Back to product page', 'vsge-3d-product-viewer' ); ?>">
+				<svg height="62" width="62" viewBox="0 0 62 62" style="transform: rotate(-90deg)" xmlns="http://www.w3.org/2000/svg"><circle fill="#3b3b3b" r="31" cy="31" cx="31"></circle><path d="M32.1 26.6l5.9 5.9 1.5-1.5-8.5-8.5-8.5 8.5 1.5 1.5 5.9-5.9v12.9h2.2V26.6z" fill="#eeeeee"></path></svg>
+				<?php esc_html_e( 'Back to product page', 'vsge-3d-product-viewer' ); ?>
+			</a>
 		</div>
+
 	</div>
 <?php
 include VSGE_MV_PLUGIN_DIR . '/template/footer.php';

@@ -1,6 +1,8 @@
 <?php
 /**
  * Template for the 3D model viewer.
+ *
+ * @package  vsge-3d-product-viewer
  */
 global $post;
 
@@ -112,6 +114,9 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 <!-- 3D model modal -->
 <div id="vsge-modal-3d" class="vsge-modal-notice outer-modal">
 	<div class="inner-modal">
+		<div class="mv-close-button">
+			<svg id="close" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.7 18.7"><path d="m10.41,9.35L18.48,1.28c.29-.29.29-.77,0-1.06s-.77-.29-1.06,0l-8.07,8.07L1.28.22C.99-.07.51-.07.22.22S-.07.99.22,1.28l8.07,8.07L.22,17.42c-.29.29-.29.77,0,1.06.15.15.34.22.53.22s.38-.07.53-.22l8.07-8.07,8.07,8.07c.15.15.34.22.53.22s.38-.07.53-.22c.29-.29.29-.77,0-1.06l-8.07-8.07Z"/></svg>
+		</div>
 		
 		<div class="modal vsge-modal-qr" title="ar-init">
 			<canvas id="vsge-vr-model"></canvas>

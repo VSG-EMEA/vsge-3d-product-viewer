@@ -1,3 +1,10 @@
+<?php
+/**
+ * The header template.
+ *
+ * @package vsge-3d-product-viewer
+ */
+?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -13,4 +20,3 @@
 </head>
 <body <?php body_class('model3d'); ?>>
 <?php wp_body_open();
-?>
