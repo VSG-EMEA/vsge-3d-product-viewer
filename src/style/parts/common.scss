@@ -20,9 +20,15 @@ body.woocommerce.product {
 
 		/* PROGRESS BAR */
 		.progress-bar-container {
-			width: 100%;
-			position: absolute;
-			left: 0;
+			padding: 24px;
+			background: #fff;
+			margin-left: auto;
+			margin-right: auto;
+
+			p {
+				margin: 0;
+				padding: 0;
+			}
 
 			progress.progress-bar {
 				display: block;
@@ -54,13 +60,6 @@ body.woocommerce.product {
 	 * The model viewer container
 	 */
 	#vr-model {
-
-		.vsge-modal-notice .inner-modal {
-			border: 1px solid #eee;
-			display: flex;
-			flex-direction: column;
-		}
-
 		.vsge-modal-notice:not(.hide) {
 			visibility: visible;
 		}

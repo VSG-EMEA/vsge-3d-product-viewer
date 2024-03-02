@@ -6,7 +6,15 @@ body.model3d {
 		width: 100%;
 		margin: 0;
 		padding: 0;
+
+		.progress-bar-container {
+			width: 100%;
+			max-width: 480px;
+			margin: 0 auto;
+			margin-top: 20%;
+		}
 	}
+
 
 	.button.back.mv-active-button.ar-button {
 		position: absolute;
