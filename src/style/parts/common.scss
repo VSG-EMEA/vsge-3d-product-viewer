@@ -1,0 +1,228 @@
+body.model3d,
+body.woocommerce.product {
+
+	#vr-model {
+		min-height: 500px;
+		height: 100vh;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+
+		button {
+			margin: 16px;
+
+			.button-icon {
+				margin: 0 16px;
+			}
+
+			&#ar-initialize {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				box-sizing: border-box;
+				height: 40px;
+				cursor: pointer;
+				color: var(--wp--preset--color--gray-dark);
+				background-color: var(--color__white);
+				box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+				border-radius: 100px;
+				margin: 20px auto 0;
+
+				&.hide {
+					display: none;
+				}
+			}
+
+			&#ar-failure {
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				bottom: 175px;
+				background-color: var(--wp--preset--color--white);
+				border: 1px solid var(--wp--preset--color--gray-light);
+				color: var(--wp--preset--color--gray-dark);
+				padding: 36px;
+				display: none;
+			}
+
+			&#ar-button {
+				border-radius: 4px;
+				border: none;
+				position: absolute;
+				z-index: 1000;
+				bottom: -16px;
+				right: 16px;
+			}
+		}
+
+		.vsge-modal-notice .inner-modal {
+			border: 1px solid #eee;
+		}
+
+		.vsge-modal-notice:not(.hide) {
+			visibility: visible;
+		}
+	}
+
+	.hotspot {
+		--min-hotspot-opacity: 0;
+		white-space: nowrap;
+
+		.dot {
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			transform-origin: center;
+			border-radius: 18px;
+			background-color: var(--wp--preset--color--primary);
+			border: 3px solid var(--wp--preset--color--primary);
+			box-sizing: border-box;
+			transition: 200ms;
+			transform: translate(-50%, -50%);
+		}
+
+		.annotation {
+			position: absolute;
+			background-color: rgba(0, 0, 0, 0.75);
+			border: 1px solid var(--wp--preset--color--black);
+			color: white;
+			border-radius: 2px;
+			padding: 5px 12px;
+			opacity: 0;
+			transform: translate(12px, 0);
+			transition: 200ms;
+			transition-delay: 100ms;
+
+			p,
+			a {
+				color: white;
+			}
+		}
+
+		&:not([data-visible]) {
+
+			.dot {
+				opacity: 0.5;
+			}
+
+			annotation {
+				pointer-events: none;
+			}
+		}
+
+		&:active,
+		&:hover {
+
+			.dot {
+				width: 24px;
+				height: 24px;
+				background-color: transparent;
+			}
+
+			.annotation {
+				opacity: 1;
+			}
+		}
+	}
+
+	button {
+		border: 1px solid #ddd;
+		background-color: rgba(243, 243, 243, 0.8);
+		color: #444;
+		margin: 0 0 0 5px;
+		filter: inherit !important;
+
+		&:active {
+			border: 1px solid rgba(243, 243, 243, 0.9);
+		}
+
+		&:hover {
+			color: #000;
+			border: 1px solid #bbb;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	div#error {
+		display: flex;
+		justify-content: center;
+
+		&.hide {
+			display: none;
+		}
+
+		.message-inner {
+			display: flex;
+			align-items: center;
+			padding: 10px 20px;
+			background: var(--wp--preset--color--gray-light);
+			max-width: 640px;
+		}
+
+		#error-message {
+			margin: 0 0 0 16px;
+		}
+
+		.button-icon {
+			font-size: 48px;
+			color: $red;
+		}
+	}
+
+	/* 3D VIEWER */
+	#woocommerce-product-gallery__3d {
+		background: var(--poster-color);
+		position: absolute;
+		z-index: 3;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 0;
+		opacity: 1;
+		transition: 0.35s opacity;
+
+		&.attachment-page-3d-product {
+			margin: 0 auto;
+		}
+
+		/* PROGRESS BAR */
+		.progress-bar-container {
+			width: 100%;
+			position: absolute;
+			left: 0;
+			top: 50%;
+
+			progress.progress-bar {
+				display: block;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				border-radius: 3px;
+				box-shadow: 0 3px 10px 3px rgba(0, 0, 0, 0.15), 0 0 5px 1px rgba(0, 0, 0, 0.1);
+				border: 1px solid var(--wp--preset--color--gray-dark);
+				background-color: rgba(255, 255, 255, 0.9);
+				height: 6px;
+				width: 50%;
+				transform: translate3d(-50%, -50%, 0);
+
+				&::-webkit-progress-value {
+					background-color: var(--wp--preset--color--primary);
+				}
+
+				&::-webkit-progress-bar {
+					background-color: var(--wp--preset--color--gray-light);
+				}
+			}
+
+			&.hide {
+				visibility: hidden;
+				transition: visibility 0.3s;
+			}
+		}
+	}
+}
+

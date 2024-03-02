@@ -1,0 +1,43 @@
+#vsge-modal-3d {
+
+	.modal {
+		visibility: hidden;
+		display: none;
+	}
+
+	&.active,
+	.modal.active {
+		display: block;
+		visibility: visible !important;
+	}
+}
+
+/* The qr code modal with tip to view from mobile devices */
+#vsge-modal-3d,
+.vsge-modal-notice.progress-bar-container {
+	position: absolute;
+	z-index: 5;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	visibility: hidden;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-content: center;
+
+	.inner-modal {
+		text-align: center;
+		width: 50%;
+		background-color: white;
+		padding: 36px;
+		margin: auto;
+
+		@media #{$mq__phablet} {
+			width: 100%;
+			margin-left: 20px;
+			margin-right: 20px;
+		}
+	}
+}
