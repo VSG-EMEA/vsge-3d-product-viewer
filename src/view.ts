@@ -156,6 +156,12 @@ export const onProductInit = ( mvContainer: ModelViewerElement ) => {
 				} )
 		);
 
+	const closeAll = document.querySelector(
+		'#vsge-modal-3d'
+	) as HTMLButtonElement;
+
+	if ( closeAll ) closeAll.onclick = () => modals.hideAll();
+
 	/**
 	 *  center view
 	 */
