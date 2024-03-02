@@ -51,8 +51,8 @@ include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 				</div>
 			</div>
 		</model-viewer>
-		<div>
-			back to <?php echo $post->post_title; ?>
+		<div class="button back mv-active-button ar-button">
+			<?php esc_html_e( 'Back to product page', 'vsge-3d-product-viewer' ); ?>
 		</div>
 	</div>
 <?php
