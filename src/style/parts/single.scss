@@ -7,4 +7,12 @@ body.model3d {
 		margin: 0;
 		padding: 0;
 	}
+
+	.button.back.mv-active-button.ar-button {
+		position: absolute;
+		bottom: 24px;
+		left: 24px;
+		border-radius: 50%;
+		font-size: 0;
+	}
 }
