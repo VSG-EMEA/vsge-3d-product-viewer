@@ -8,20 +8,20 @@
  * visibility of the 3D model viewer
  */
 export function init3dControls(): void {
-	const switcherContainer = document.getElementById( 'woo-switch-gallery' );
-	const switcherContainerButtons = switcherContainer
-		? switcherContainer.getElementsByTagName( 'button' )
-		: null;
+	const switchButtons = document
+		.getElementById( 'woo-switch-gallery' )
+		?.getElementsByTagName( 'button' );
 
-	if ( switcherContainerButtons ) {
+	if ( switchButtons ) {
 		const modelViewerWrapper =
 			( document.getElementById(
 				'woocommerce-product-gallery__3d'
 			) as HTMLElement ) || null;
 
-		Object.values( switcherContainerButtons ).forEach( ( button ) => {
+		Object.values( switchButtons ).forEach( ( button ) => {
 			button.addEventListener( 'click', function () {
-				Object.values( switcherContainerButtons ).forEach( ( item ) => {
+				// handle the buttons items state
+				Object.values( switchButtons ).forEach( ( item ) => {
 					if ( button.dataset.type !== item.dataset.type ) {
 						item.classList.remove( 'active' );
 					} else {

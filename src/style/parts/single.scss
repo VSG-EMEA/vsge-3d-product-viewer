@@ -1,0 +1,41 @@
+body.model3d {
+
+	#vr-model {
+		min-height: 500px;
+		height: 100vh;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+
+		.progress-bar-container {
+			width: 100%;
+			max-width: 680px;
+			margin: 20% auto 0;
+			border: 1px solid #ddd;
+			padding: 2rem 3rem;
+			border-radius: 2px;
+			box-shadow: 0 8px 40px -30px rgb(0, 0, 0);
+			box-sizing: border-box;
+
+			@media #{$mq__phablet} {
+				margin-top: 50%;
+				margin-left: 20px;
+				margin-right: 20px;
+				width: calc(100% - 40px);
+			}
+
+			h3 {
+				margin: 0 0 1rem;
+			}
+		}
+	}
+
+
+	.button.back.mv-active-button.ar-button {
+		position: absolute;
+		bottom: 24px;
+		left: 24px;
+		border-radius: 50%;
+		font-size: 0;
+	}
+}

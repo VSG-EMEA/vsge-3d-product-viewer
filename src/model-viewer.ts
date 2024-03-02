@@ -1,5 +1,5 @@
 import { ModelViewerElement } from '@google/model-viewer';
-import { deactivateQR } from './utils';
+import { Modals } from './Modal';
 
 export const tapDistance: number = 2;
 export let panning: boolean = false;
@@ -8,24 +8,33 @@ export let startX: number, startY: number;
 export let metersPerPixel: number;
 
 /**
- * If the mvContainer can activate AR, then activate AR and show the hotspots. Otherwise, show the QR
- * code modal
+ * Activates AR if supported by the container and toggles the visibility of hotspots.
  *
- * @param {Event} event     - Event - The event object that was triggered by the user.
- * @param         container
+ * @param {ModelViewerElement} container - the container for the AR activation
+ * @return {boolean} true if AR is activated, false otherwise
  */
-export const arInitialize = ( event: Event, container: ModelViewerElement ) => {
+export const activateAR = ( container: ModelViewerElement ) => {
 	if ( container?.canActivateAR ) {
 		const hotspots = container.querySelectorAll( 'div.hotspot' );
 		toggleHotspotVisibility( hotspots, true );
 		container.activateAR();
-	} else {
-		const modalGenerateQR =
-			( document.getElementById( 'vsge-modal-qrcode' ) as HTMLElement ) ||
-			null;
-		modalGenerateQR?.addEventListener( 'click', deactivateQR );
-		modalGenerateQR.classList.add( 'active' );
+		return true;
 	}
+	return false;
+};
+
+/**
+ * If the mvContainer can activate AR, then activate AR and show the hotspots. Otherwise, show the QR
+ * code modal
+ *
+ * @param {Event} event  - Event - The event object that was triggered by the user.
+ * @param         modal  - The modal element
+ * @param         modals - The modals object
+ */
+export const showModal = ( event: Event, modal: string, modals: Modals ) => {
+	// The handler to disable the modal related to the QR code
+	modals.hideAll();
+	modals.show( modal );
 
 	event.preventDefault();
 };
@@ -58,7 +67,6 @@ export const isSelected = ( event: Event ) => {
  */
 export const startRotate = ( container: ModelViewerElement ) => {
 	if ( container ) {
-		startPan( container );
 		container.autoplay = true;
 		container.autoRotate = true;
 		container.autoRotateDelay = 0;
@@ -178,14 +186,14 @@ export const centerView = ( container: ModelViewerElement ) => {
  *
  * @param {ModelViewerElement} container
  * @param {Object}             pointer         - The pointer object from the event.
- * @param                      pointer.clientX
- * @param                      pointer.clientY
+ * @param                      pointer.clientX - The x coordinate of the mouse pointer.
+ * @param                      pointer.clientY - The y coordinate of the mouse pointer.
  * @return {void}
  */
 export const recenter = (
 	container: ModelViewerElement,
 	pointer: { clientX: number; clientY: number } = { clientX: 0, clientY: 0 }
-) => {
+): void => {
 	panning = false;
 	if (
 		! container ||

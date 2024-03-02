@@ -1,0 +1,110 @@
+/* The qr code modal with tip to view from mobile devices */
+#vsge-modal-3d {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 130px;
+	z-index: 5;
+	right: 0;
+	visibility: hidden;
+	display: flex;
+	flex-flow: wrap;
+	justify-content: center;
+	align-content: center;
+
+	@media #{$mq__phablet} {
+		left: 0;
+	}
+
+	.inner-modal {
+		position: relative;
+		text-align: center;
+		width: 60%;
+		box-sizing: border-box;
+		background-color: var(--wp--preset--color--white);
+		padding: 24px 36px;
+		margin: auto;
+		opacity: 0;
+		box-shadow: 0 8px 40px -30px rgba(0, 0, 0, 1);
+		transform: scale(0.99) translateY(-0.75em);
+		transform-origin: top;
+		transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+		transition-duration: 500ms;
+		transition-property: opacity, transform;
+
+		@media #{$mq__phablet} {
+			width: 100%;
+			margin: 0;
+		}
+	}
+
+	&.active {
+		.inner-modal {
+			height: auto;
+			transform: scale(1) translateY(0);
+			opacity: 1;
+		}
+	}
+}
+
+#vsge-modal-3d {
+
+	.modal {
+		visibility: hidden;
+		display: none;
+	}
+
+	.mv-close-button {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		opacity: 0.7;
+		padding: 4px;
+		position: absolute;
+		z-index: 10000;
+		right: 24px;
+		top: 20px;
+
+		svg {
+			height: 16px;
+		}
+	}
+
+	&.active,
+	.modal.active {
+		display: block;
+		visibility: visible !important;
+	}
+
+	.mv-instructions {
+
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		max-width: 380px;
+		min-height: 48px;
+		margin: 0 auto 12px;
+
+		p {
+			margin: 0;
+			padding: 0;
+			text-align: left;
+			line-height: 1.4;
+		}
+
+		&-icon svg {
+			width: 32px;
+			height: 32px;
+			padding-top: 4px;
+			margin-right: 16px;
+		}
+	}
+
+	.mv-close-message {
+		text-align: center;
+		opacity: 0.7;
+		font-size: 90%;
+		padding: 1rem 0 0;
+		margin: 0;
+	}
+}

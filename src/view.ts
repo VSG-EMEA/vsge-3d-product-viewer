@@ -1,5 +1,3 @@
-/* global wp */
-
 // 3D MODEL VIEWER
 import { ModelViewerElement } from '@google/model-viewer';
 import 'focus-visible';
@@ -16,7 +14,6 @@ import {
 } from './utils';
 
 import {
-	arInitialize,
 	centerView,
 	enableAutoRotate,
 	setAutoRotation,
@@ -24,6 +21,9 @@ import {
 	stopRotate,
 	toggleHotspot,
 } from './model-viewer';
+import { Modals } from './Modal';
+
+let modals: Modals;
 
 /**
  * "If the container exists, return the model viewer element inside it, otherwise return null."
@@ -54,7 +54,7 @@ export const getQrURL = ( productID: string | null ) => {
 		'vsge-vr-model'
 	) as HTMLElement | null;
 
-	if ( modelVR && productID ) return getQRCode( modelVR, productID );
+	return modelVR && productID ? getQRCode( modelVR, productID ) : false;
 };
 
 /**
@@ -66,7 +66,7 @@ export const getQrURL = ( productID: string | null ) => {
  * @param {HTMLElement} container - HTMLElement - The container element that contains the model.
  */
 export const getModelID = ( container: HTMLElement ): string | null =>
-	container?.dataset.model || null;
+	container?.dataset.product || null;
 
 /**
  * It adds event listeners to the model viewer element, and to the document body
@@ -74,6 +74,7 @@ export const getModelID = ( container: HTMLElement ): string | null =>
  * @param {ModelViewerElement} mvContainer - The model viewer element.
  */
 export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
+	mvContainer.src = mvContainer.dataset.src as string;
 	// execute loading
 	if ( document.body.classList.contains( 'attachment' ) ) {
 		mvContainer.addEventListener( 'progress', ( e ) =>
@@ -83,11 +84,19 @@ export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
 		mvContainer.addEventListener( 'progress', onProgress );
 	}
 
-  mvContainer.addEventListener( 'load', () => centerView( mvContainer ) );
+	/**
+	 *  on load event - center the model
+	 */
+	mvContainer.addEventListener( 'load', () => centerView( mvContainer ) );
 
-	// throw an error if the model fails to load
+	/**
+	 * throw an error if the model fails to load
+	 */
 	mvContainer.addEventListener( 'ar-status', throwErrorOnFail );
 
+	/**
+	 * mouse or touch interaction
+	 */
 	document.body.addEventListener( 'mouseover', onInteraction, {
 		once: true,
 	} );
@@ -95,11 +104,25 @@ export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
 		once: true,
 	} );
 
+	/**
+	 * mousewheel interaction
+	 */
 	document.body.addEventListener( 'scroll', onInteraction, { once: true } );
+
+	/**
+	 *  first interaction after loading the model - keyboard interaction
+	 */
 	document.body.addEventListener( 'keydown', onInteraction, { once: true } );
 
+	/**
+	 *  on mouseleave - stop rotation of the model
+	 */
 	mvContainer.onmouseleave = () => stopRotate( mvContainer );
 
+	/**
+	 *  on contextmenu - stop rotation of the model
+	 * @param ev - The event object.
+	 */
 	mvContainer.oncontextmenu = ( ev: Event ) => ev.preventDefault();
 };
 
@@ -109,29 +132,60 @@ export const initModelViewer = ( mvContainer: ModelViewerElement ) => {
  * @param {ModelViewerElement} mvContainer - The model-viewer element.
  */
 export const onProductInit = ( mvContainer: ModelViewerElement ) => {
-	const buttonArInit = document.getElementById( 'ar-init' ) as HTMLElement;
+	/**
+	 * init Modals
+	 */
+	modals = new Modals( document.querySelector( '#vsge-modal-3d' ) );
 
+	const modalButtons: NodeListOf< HTMLButtonElement > =
+		document.querySelectorAll( '.model-viewer-helpers .modal-button' );
+
+	if ( modalButtons )
+		modalButtons.forEach(
+			( button ) =>
+				( button.onclick = ( evt ) => {
+					if ( mvContainer.canActivateAR ) {
+						mvContainer.activateAR();
+					} else {
+						modals.hideAll();
+						modals.show(
+							( evt.currentTarget as HTMLButtonElement )
+								.id as string
+						);
+					}
+				} )
+		);
+
+	const closeAll = document.querySelector(
+		'#vsge-modal-3d'
+	) as HTMLButtonElement;
+
+	if ( closeAll ) closeAll.onclick = () => modals.hideAll();
+
+	/**
+	 *  center view
+	 */
 	const button3dRecenter = document.getElementById(
 		'ar-center'
 	) as HTMLElement;
-
-	const modalToggleHotspot = document.getElementById(
-		'ar-toggle-hotspots'
-	) as HTMLElement;
-
-	const button3dRotation = document.getElementById(
-		'ar-rotation'
-	) as HTMLElement;
-
-	if ( buttonArInit )
-		buttonArInit.onclick = ( e ) => arInitialize( e, mvContainer );
-
-	if ( modalToggleHotspot )
-		modalToggleHotspot.onclick = ( e ) => toggleHotspot( e, mvContainer );
-
 	if ( button3dRecenter )
 		button3dRecenter.onclick = ( e ) => setRecenter( e, mvContainer );
 
+	/**
+	 * hotspot
+	 */
+	const modalToggleHotspot = document.getElementById(
+		'ar-toggle-hotspots'
+	) as HTMLElement;
+	if ( modalToggleHotspot )
+		modalToggleHotspot.onclick = ( e ) => toggleHotspot( e, mvContainer );
+
+	/**
+	 * rotation
+	 */
+	const button3dRotation = document.getElementById(
+		'ar-rotation'
+	) as HTMLElement;
 	if ( button3dRotation )
 		button3dRotation.onclick = ( e ) => setAutoRotation( e, mvContainer );
 
@@ -139,13 +193,30 @@ export const onProductInit = ( mvContainer: ModelViewerElement ) => {
 		enableAutoRotate( button3dRotation, mvContainer );
 };
 
+// append the script
+async function injectScript() {
+	const script = document.createElement( 'script' );
+	script.type = 'module';
+	// @ts-ignore
+	await import( '@google/model-viewer/dist/model-viewer-module' );
+	// append the script to the page head
+	document.head.appendChild( script );
+}
+
 /**
  * On page Load
  */
-window.addEventListener( 'load', () => {
+window.addEventListener( 'load', async () => {
 	const container3d: HTMLElement | null = document.getElementById(
 		'woocommerce-product-gallery__3d'
 	);
+
+	if ( ! container3d ) {
+		return;
+	}
+
+	await injectScript();
+
 	const mvContainer: ModelViewerElement | null =
 		getModelViewer( container3d );
 
@@ -167,7 +238,8 @@ window.addEventListener( 'load', () => {
 		 * - qr url of the related attachment page product page only
 		 * - enable extra controls on the left
 		 */
-		if ( getQrURL( getModelID( mvContainer ) ) ) {
+		const qrUrl = getQrURL( getModelID( mvContainer ) );
+		if ( qrUrl ) {
 			onProductInit( mvContainer );
 		}
 	}

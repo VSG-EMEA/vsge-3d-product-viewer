@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "es2015",
+    "target": "es2020",
+    "module": "es2020",
     "jsx": "react-jsx",
     // Search under node_modules for non-relative imports.
     "moduleResolution": "node",
