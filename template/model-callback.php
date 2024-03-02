@@ -7,6 +7,7 @@ global $post;
 $model_3d = get_post_meta( $post->ID, VSGE_MV_PLUGIN_NAMESPACE . '_media_3d_model', true );
 
 if ( ! $model_3d ) {
+	include VSGE_MV_PLUGIN_DIR . '/template/missing-3d-model.php';
 	return;
 }
 
@@ -47,7 +48,7 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 <div id="woocommerce-product-gallery__3d" style="display:none">
 	<!-- The 3D model buttons and helpers -->
 	<div class="model-viewer-helpers">
-		<button slot="ar-init" id="ar-init">
+		<button slot="ar-init" id="ar-init" class="modal-button">
 				<span class="button-icon">
 					<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M448-167 228-296q-13.775-8.426-21.387-22.213Q199-332 199-348v-257q0-16 7.613-29.787Q214.225-648.574 228-657l221-131q14-8 31-8t31 8l221 131q13.775 8.426 21.388 22.213Q761-621 761-605v257q0 16-7.875 29.787Q745.25-304.426 731-296L508-167q-14.328 8-30.164 8Q462-159 448-167Zm2-69v-224L260-569v219l190 114Zm60 0 191-114v-219L510-460v224ZM80-691v-129q0-24.75 17.625-42.375T140-880h129v60H140v129H80ZM269-80H140q-24.75 0-42.375-17.625T80-140v-129h60v129h129v60Zm422 0v-60h129v-129h60v129q0 24.75-17.625 42.375T820-80H691Zm129-611v-129H691v-60h129q24.75 0 42.375 17.625T880-820v129h-60ZM480-514l190-110-190-109-190 109 190 110Zm0 25Zm0-25Zm30 54Zm-60 0Z"/></svg>
 				</span>
@@ -62,13 +63,13 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 					<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="m357-167-43-43 80-81q-136-15-225-66T80-486q0-79 116.5-134.5T480-676q168 0 284 55.5T880-486q0 59-64 104t-170 70v-65q80-20 127-52t47-57q0-32-83.5-81T480-616q-172 0-256 49t-84 81q0 45 57.5 77.5T397-349l-83-81 43-43 153 152-153 154Z"/></svg>
 				</span>
 		</button>
-		<button slot="ar-info" id="ar-info" class="active">
+		<button slot="ar-info" id="ar-info" class="modal-button">
 				<span class="button-icon">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 27"><g fill="none" stroke="#000" data-name="Icon akar-info"><path d="M27 14A13 13 0 1 1 14 1a13 13 0 0 1 13 13Z" data-name="Tracciato 4148"/><path stroke-linecap="round" stroke-width="3" d="M14 8h0" data-name="Tracciato 4149"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 13h3v6m-3 0h5" data-name="Tracciato 4150"/></g></svg>
 				</span>
 		</button>
 		<?php if ( ! empty( $hotspots_html ) ) { ?>
-			<button slot="ar-toggle-hotspots" id="ar-toggle-hotspots" class="active">
+			<button slot="ar-toggle-hotspots" id="ar-toggle-hotspots">
 					<span class="button-icon">
 						<svg xmlns="http://www.w3.org/2000/svg" height="36" width="36" viewBox="0 -960 960 960"><path d="M480-120 300-300l44-44 136 136 136-136 44 44-180 180ZM344-612l-44-44 180-180 180 180-44 44-136-136-136 136Z"/></svg>
 					</span>
@@ -77,13 +78,16 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 	</div>
 
 	<!-- The 3D model -->
-	<model-viewer id="vr-model"
+	<model-viewer
+		 			id="vr-model"
 				  class="mv-3d-model-viewer"
-				  src="<?php echo $model_url; ?>"
+				  data-src="<?php echo $model_url; ?>"
 				  data-model="<?php echo $model_3d; ?>"
 				  poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-medium' ); ?>"
 				  camera-controls auto-rotate min-field-of-view="10deg"
-				  bounds="tight" environment-image="neutral" shadow-intensity="1"
+				  bounds="tight"
+				  environment-image="neutral"
+				  shadow-intensity="1"
 		<?php echo $model_options; ?>
 				  ar ar-modes="<?php
 	if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
@@ -108,14 +112,14 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 <!-- 3D model modal -->
 <div id="vsge-modal-3d" class="vsge-modal-notice outer-modal">
 	<div class="inner-modal">
-		<div class="vsge-modal-qr">
+		<div class="modal vsge-modal-qr" title="ar-init">
 			<canvas id="vsge-vr-model"></canvas>
 			<h3><?php esc_html_e( 'Instructions:', 'vsge-3d-product-viewer' ); ?></h3>
 			<p><?php esc_html_e( 'Scan this code to open the model on your device, then, tap on the AR icon.', 'vsge-3d-product-viewer' ); ?></p>
 			<p><b><?php esc_html_e( 'Click to close this message', 'vsge-3d-product-viewer' ); ?></b></p>
 		</div>
 
-		<div class="vsge-modal-info">
+		<div class="modal vsge-modal-info" title="ar-info">
 			<h3><?php esc_html_e( 'info:', 'vsge-3d-product-viewer' ); ?></h3>
 		</div>
 	</div>
