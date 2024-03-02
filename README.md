@@ -90,8 +90,8 @@ To enable the plugin for a product, follow these steps:
 
 
 ## Examples
-- [Product page - 2-post-lift-kpx32](https://dev.codekraft.it/ravaglioli.it/product/2-post-lift-kpx32/)
-- [Ar mode (On devices that allow it, otherwise vr)](https://dev.codekraft.it/ravaglioli.it/model3d=2-post-lift-kpx32)
+- [Product page - 2-post-lift-kpx32](https://ravaglioli.it/product/2-post-lift-kpx32/)
+- [Ar mode (On devices that allow it, otherwise vr)](https://ravaglioli.it/model3d=2-post-lift-kpx32)
 
 ## Frequently Asked Questions (FAQ)
 
