@@ -86,12 +86,15 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 				  data-src="<?php echo $model_url; ?>"
 				  data-model="<?php echo $model_3d; ?>"
 				  poster="<?php echo wp_get_attachment_image_url( $model_preview, 'square-crop-medium' ); ?>"
-				  camera-controls auto-rotate min-field-of-view="10deg"
-				  bounds="tight"
-				  environment-image="neutral"
+				  camera-controls
+					auto-rotate
+					min-field-of-view="10deg"
+					tone-mapping="commerce"
+					environment-image="neutral"
 				  shadow-intensity="1"
 		<?php echo $model_options; ?>
-				  ar ar-modes="<?php
+				  ar
+					ar-modes="<?php
 	if ( vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ) {
 		echo 'quick-look scene-viewer';
 	} else {
@@ -118,13 +121,7 @@ if ( ! empty( $model_data['hotspots'] ) ) {
 			<svg id="close" width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.7 18.7"><path d="m10.41,9.35L18.48,1.28c.29-.29.29-.77,0-1.06s-.77-.29-1.06,0l-8.07,8.07L1.28.22C.99-.07.51-.07.22.22S-.07.99.22,1.28l8.07,8.07L.22,17.42c-.29.29-.29.77,0,1.06.15.15.34.22.53.22s.38-.07.53-.22l8.07-8.07,8.07,8.07c.15.15.34.22.53.22s.38-.07.53-.22c.29-.29.29-.77,0-1.06l-8.07-8.07Z"/></svg>
 		</div>
 		
-		<div class="modal vsge-modal-qr" title="ar-init">
-			<canvas id="vsge-vr-model"></canvas>
-			<h3><?php esc_html_e( 'Instructions:', 'vsge-3d-product-viewer' ); ?></h3>
-			<p><?php esc_html_e( 'Scan this code to open the model on your device, then, tap on the AR icon.', 'vsge-3d-product-viewer' ); ?></p>
-			<p><b><?php esc_html_e( 'Click to close this message', 'vsge-3d-product-viewer' ); ?></b></p>
-		</div>
-
+		<?php include VSGE_MV_PLUGIN_DIR . '/template/qr-template.php'; ?>
 		<?php include VSGE_MV_PLUGIN_DIR . '/template/instructions.php'; ?>
 	</div>
 </div>

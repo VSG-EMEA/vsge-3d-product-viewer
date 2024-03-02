@@ -30,6 +30,10 @@ include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 			ar-modes="<?php echo vsge_3d_model_is_safari( $_SERVER['HTTP_USER_AGENT'] ) ? 'quick-look scene-viewer' : 'scene-viewer quick-look webxr'; ?>"
 		>
 			
+			<button slot="ar-button" id="ar-button" id="ar-initialize" class="mv-active-button ar-button hide">
+				<?php __( 'Start AR', 'vsge-3d-product-viewer' ); ?>
+			</button>
+			
 			<button id="ar-failure">
 				<div class="material-icons large">
 					<?php __( 'error', 'vsge-3d-product-viewer' ); ?>
@@ -48,7 +52,6 @@ include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 							<?php printf( esc_html__( '3D model is loading, please wait. After the download augmented reality mode will be enabled, keep your phone facing the part of your workshop where you want to place your new %s product', 'vsge-3d-product-viewer' ), COMPANY ); ?>
 						</p>
 						<progress class="progress-bar" value="0" max="100"></progress>
-						<button id="ar-initialize" class="mv-active-button ar-button hide"><?php __( 'Start AR', 'vsge-3d-product-viewer' ); ?></button>
 					</div>
 				</div>
 			</div>
@@ -57,7 +60,6 @@ include VSGE_MV_PLUGIN_DIR . '/template/header.php';
 		<div class="button back mv-active-button ar-button">
 			<a href="<?php echo get_permalink( $post->ID ); ?>" title="<?php esc_attr_e( 'Back to product page', 'vsge-3d-product-viewer' ); ?>">
 				<svg height="62" width="62" viewBox="0 0 62 62" style="transform: rotate(-90deg)" xmlns="http://www.w3.org/2000/svg"><circle fill="#3b3b3b" r="31" cy="31" cx="31"></circle><path d="M32.1 26.6l5.9 5.9 1.5-1.5-8.5-8.5-8.5 8.5 1.5 1.5 5.9-5.9v12.9h2.2V26.6z" fill="#eeeeee"></path></svg>
-				<?php esc_html_e( 'Back to product page', 'vsge-3d-product-viewer' ); ?>
 			</a>
 		</div>
 
