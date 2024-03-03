@@ -15,7 +15,7 @@ function vsge_3d_model_redirect( $template ) {
 		if ($string_slug === 'model3d') {
 			$currentModel = $model[1];
 			if ( ! is_numeric( $currentModel ) ) {
-				$product = get_page_by_path( $currentModel, OBJECT, 'product' );
+				$product = get_page_by_path( sanitize_text_field($currentModel), OBJECT, 'product' );
 				$product_id = !empty($product) ? $product->ID : false;
 			} else {
 				$product_id = intval($currentModel);
