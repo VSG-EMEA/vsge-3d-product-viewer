@@ -53,6 +53,124 @@ body.woocommerce.product {
 				visibility: hidden;
 				transition: visibility 0.3s;
 			}
+
+
+			/**
+			 * The button element in the model viewer
+			 */
+			button {
+				border: 1px solid #ddd;
+				background-color: rgba(243, 243, 243, 0.8);
+				color: #444;
+				margin: 0 0 0 5px;
+				filter: inherit !important;
+
+				&:active {
+					border: 1px solid rgba(243, 243, 243, 0.9);
+				}
+
+				&:hover {
+					color: #000;
+					border: 1px solid #bbb;
+				}
+
+				&:focus {
+					outline: none;
+				}
+			}
+		}
+
+		/**
+		 * The hotspot element in the model viewer
+		 */
+		.hotspot {
+			--min-hotspot-opacity: 0;
+			white-space: nowrap;
+
+			.dot {
+				position: absolute;
+				width: 10px;
+				height: 10px;
+				transform-origin: center;
+				border-radius: 18px;
+				background-color: var(--wp--preset--color--primary);
+				border: 3px solid var(--wp--preset--color--primary);
+				box-sizing: border-box;
+				transition: 200ms;
+				transform: translate(-50%, -50%);
+			}
+
+			.annotation {
+				position: absolute;
+				background-color: rgba(0, 0, 0, 0.75);
+				border: 1px solid var(--wp--preset--color--black);
+				color: white;
+				border-radius: 2px;
+				padding: 5px 12px;
+				opacity: 0;
+				transform: translate(12px, 0);
+				transition: 200ms;
+				transition-delay: 100ms;
+
+				p,
+				a {
+					color: var(--wp--preset--color--white);
+				}
+			}
+
+			&:not([data-visible]) {
+
+				.dot {
+					opacity: 0.5;
+				}
+
+				annotation {
+					pointer-events: none;
+				}
+			}
+
+			&:active,
+			&:hover {
+
+				.dot {
+					width: 24px;
+					height: 24px;
+					background-color: transparent;
+				}
+
+				.annotation {
+					opacity: 1;
+				}
+			}
+		}
+
+		/**
+		 * Error
+		 */
+		div#error {
+			display: flex;
+			justify-content: center;
+
+			&.hide {
+				display: none;
+			}
+
+			.message-inner {
+				display: flex;
+				align-items: center;
+				padding: 10px 20px;
+				background: var(--wp--preset--color--gray-light);
+				max-width: 640px;
+			}
+
+			#error-message {
+				margin: 0 0 0 16px;
+			}
+
+			.button-icon {
+				font-size: 48px;
+				color: $red;
+			}
 		}
 	}
 
@@ -60,125 +178,9 @@ body.woocommerce.product {
 	 * The model viewer container
 	 */
 	#vr-model {
+
 		.vsge-modal-notice:not(.hide) {
 			visibility: visible;
-		}
-	}
-
-	/**
-	 * The hotspot element in the model viewer
-	 */
-	.hotspot {
-		--min-hotspot-opacity: 0;
-		white-space: nowrap;
-
-		.dot {
-			position: absolute;
-			width: 10px;
-			height: 10px;
-			transform-origin: center;
-			border-radius: 18px;
-			background-color: var(--wp--preset--color--primary);
-			border: 3px solid var(--wp--preset--color--primary);
-			box-sizing: border-box;
-			transition: 200ms;
-			transform: translate(-50%, -50%);
-		}
-
-		.annotation {
-			position: absolute;
-			background-color: rgba(0, 0, 0, 0.75);
-			border: 1px solid var(--wp--preset--color--black);
-			color: white;
-			border-radius: 2px;
-			padding: 5px 12px;
-			opacity: 0;
-			transform: translate(12px, 0);
-			transition: 200ms;
-			transition-delay: 100ms;
-
-			p,
-			a {
-				color: var(--wp--preset--color--white);
-			}
-		}
-
-		&:not([data-visible]) {
-
-			.dot {
-				opacity: 0.5;
-			}
-
-			annotation {
-				pointer-events: none;
-			}
-		}
-
-		&:active,
-		&:hover {
-
-			.dot {
-				width: 24px;
-				height: 24px;
-				background-color: transparent;
-			}
-
-			.annotation {
-				opacity: 1;
-			}
-		}
-	}
-
-	/**
-	 * The button element in the model viewer
-	 */
-	button {
-		border: 1px solid #ddd;
-		background-color: rgba(243, 243, 243, 0.8);
-		color: #444;
-		margin: 0 0 0 5px;
-		filter: inherit !important;
-
-		&:active {
-			border: 1px solid rgba(243, 243, 243, 0.9);
-		}
-
-		&:hover {
-			color: #000;
-			border: 1px solid #bbb;
-		}
-
-		&:focus {
-			outline: none;
-		}
-	}
-
-	/**
-	 * Error
-	 */
-	div#error {
-		display: flex;
-		justify-content: center;
-
-		&.hide {
-			display: none;
-		}
-
-		.message-inner {
-			display: flex;
-			align-items: center;
-			padding: 10px 20px;
-			background: var(--wp--preset--color--gray-light);
-			max-width: 640px;
-		}
-
-		#error-message {
-			margin: 0 0 0 16px;
-		}
-
-		.button-icon {
-			font-size: 48px;
-			color: $red;
 		}
 	}
 }
