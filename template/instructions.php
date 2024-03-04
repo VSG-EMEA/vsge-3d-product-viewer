@@ -57,7 +57,4 @@ $instructions = array(
 			</div>
 		</div>
 	<?php } ?>
-	<p class="mv-close-message">
-		<?php esc_html_e( 'Click to close this message', 'vsge-3d-product-viewer' ); ?>
-	</p>
 </div>
