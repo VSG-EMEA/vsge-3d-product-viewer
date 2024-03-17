@@ -7,8 +7,8 @@
 
 $instructions = array(
 		"Overview" => array(
-				"title" => __( 'Overview' ),
-				"text"  => __( "Hold down the right button to move the model" ),
+				"title" => __( 'Overview', 'vsge-3d-product-viewer' ),
+				"text"  => __( "Hold down the right button to move the model", 'vsge-3d-product-viewer' ),
 				"icon"  => '<svg id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><path id="b" d="m15,30l-5.52-5.52.82-.82,4.12,4.12v-8.41h1.15v8.41l4.12-4.12.82.82-5.52,5.52Zm-9.48-9.48L0,15l5.52-5.52.82.82-4.12,4.12h8.41v1.15H2.22l4.12,4.12-.82.82Zm18.96,0l-.82-.82,4.12-4.12h-8.41v-1.15h8.41l-4.12-4.12.82-.82,5.52,5.52-5.52,5.52Zm-10.05-9.89V2.22l-4.12,4.12-.82-.82L15,0l5.52,5.52-.82.82-4.12-4.12v8.41h-1.15Z" style="fill:#969696;"/></svg>'
 		),
 		"Rotation" => array(

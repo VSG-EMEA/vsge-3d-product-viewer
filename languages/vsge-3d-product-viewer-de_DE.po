@@ -3,72 +3,151 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: VSGE 3d product viewer 0.0.2\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vsge-3d-product-"
-"viewer\n"
-"POT-Creation-Date: 2023-11-17T13:26:27+00:00\n"
-"PO-Revision-Date: 2023-11-17 14:28+0100\n"
+"Report-Msgid-Bugs-To: AUTHOR EMAIL https://wordpress.org/support/plugin/"
+"vsge-3d-product-viewer\n"
+"POT-Creation-Date: 2024-03-16T01:33:40.704Z\n"
+"PO-Revision-Date: 2024-03-17 03:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Domain: vsge-3d-product-viewer\n"
 
-#. Plugin Name of the plugin
+#. Name of the plugin
+#: vsge-3d-product-viewer.php
 msgid "VSGE 3d product viewer"
 msgstr "VSGE 3d Produktbetrachter"
 
-#. Plugin URI of the plugin
+#. Url of the plugin
+#: vsge-3d-product-viewer.php
 msgid "https://github.com/erikyo/vsge-3d-product-viewer"
 msgstr "https://github.com/erikyo/vsge-3d-product-viewer"
 
 #. Description of the plugin
+#: vsge-3d-product-viewer.php
 msgid "WordPress plugin vsge-3d-product-viewer"
 msgstr "WordPress-Plugin vsge-3d-product-viewer"
 
-#. Author of the plugin
+#. plugin author
+#: vsge-3d-product-viewer.php
 msgid "codekraft"
 msgstr "codekraft"
 
-#: inc/view.php:83
+#. Author of the plugin
+#: vsge-3d-product-viewer.php
+msgid "undefined"
+msgstr "nicht definiert"
+
+#: template\single-3d-model.php:35
+msgid "Start AR"
+msgstr "Start AR"
+
+#: template\single-3d-model.php:40
+msgid "error"
+msgstr "Fehler"
+
+#: template\single-3d-model.php:42
 msgid "AR is not tracking!"
 msgstr "AR ist kein Tracking!"
 
-#: inc/view.php:88
+#: template\single-3d-model.php:50
 msgid "Ladies and Gentlemen, please start your (VR) Engines"
 msgstr "Meine Damen und Herren, bitte starten Sie Ihre (VR)-Motoren"
 
-#: inc/view.php:89
+#: template\single-3d-model.php:53
 msgid ""
 "3D model is loading, please wait. After the download augmented reality mode "
 "will be enabled, keep your phone facing the part of your workshop where you "
 "want to place your new %s product"
 msgstr ""
 "Das 3D-Modell wird geladen, bitte warten Sie. Nach dem Download wird der "
-"Augmented-Reality-Modus aktiviert. Halten Sie Ihr Telefon auf den Teil "
-"Ihrer Werkstatt, in dem Sie Ihr neues %s Produkt platzieren möchten"
+"Augmented-Reality-Modus aktiviert. Halten Sie Ihr Telefon auf den Teil Ihrer "
+"Werkstatt, in dem Sie Ihr neues %s Produkt platzieren möchten"
 
-#: inc/view.php:213
-msgid "3D/VR"
-msgstr "3D/VR"
+#: template\single-3d-model.php:62
+msgid "Back to product page"
+msgstr "Zurück zur Produktseite"
 
-#: inc/view.php:214
-msgid "Gallery"
-msgstr "Galerie"
+#: template\qr-template.php:11 template\instructions.php:39
+msgid "Instructions"
+msgstr "Anweisungen"
 
-#: inc/view.php:219
-msgid "Instructions:"
-msgstr "Anleitung:"
-
-#: inc/view.php:220
+#: template\qr-template.php:12
 msgid ""
 "Scan this code to open the model on your device, then, tap on the AR icon."
 msgstr ""
-"Scannen Sie diesen Code, um das Modell auf Ihrem Gerät zu öffnen, und "
-"tippen Sie dann auf das AR-Symbol."
+"Scannen Sie diesen Code, um das Modell auf Ihrem Gerät zu öffnen, und tippen "
+"Sie dann auf das AR-Symbol."
 
-#: inc/view.php:221
-msgid "Click to close this message"
-msgstr "Klicken Sie, um diese Nachricht zu schließen"
+#: template\model-callback.php:108
+msgid "Loading..."
+msgstr "Laden..."
+
+#: template\model-callback.php:116
+msgid "3D/VR"
+msgstr "3D/VR"
+
+#: template\model-callback.php:117
+msgid "Gallery"
+msgstr "Galerie"
+
+#: template\missing-3d-model.php:9
+msgid "This product does not have a 3D model yet"
+msgstr "Für dieses Produkt gibt es noch kein 3D-Modell"
+
+#: template\instructions.php:10
+msgid "Overview"
+msgstr "Übersicht"
+
+#: template\instructions.php:11
+msgid "Hold down the right button to move the model"
+msgstr "Halten Sie die rechte Taste gedrückt, um das Modell zu bewegen"
+
+#: template\instructions.php:15
+msgid "Rotation"
+msgstr "Drehung"
+
+#: template\instructions.php:16
+msgid "Left-click and drag to change the angle"
+msgstr ""
+"Klicken und ziehen Sie mit der linken Maustaste, um den Winkel zu ändern"
+
+#: template\instructions.php:20
+msgid "Zoom"
+msgstr "Zoom"
+
+#: template\instructions.php:21
+msgid "Use the mouse wheel to zoom in or out on the model"
+msgstr ""
+"Verwenden Sie das Mausrad, um das Modell zu vergrößern oder zu verkleinern"
+
+#: src\utils.ts:132
+msgid ""
+"An error occurred activating VR, please check your browser permissions then "
+"clean cookies!<br/>To verify that the device is correctly configured to run "
+"WebXR, browse to <a href=\"https://immersive-web.github.io/webxr-samples/"
+"immersive-ar-session.html\">a sample WebXR page</a> in <a href=\"https://"
+"developer.mozilla.org/en-US/docs/Web/API/"
+"WebXR_Device_API#browser_compatibility\">a compatible browser</a>."
+msgstr ""
+"Bei der Aktivierung von VR ist ein Fehler aufgetreten. Bitte überprüfen Sie "
+"Ihre Browser-Berechtigungen und löschen Sie die Cookies!<br/>Um zu "
+"überprüfen, ob das Gerät korrekt für die Ausführung von WebXR konfiguriert "
+"ist, rufen Sie <a href=\"https://immersive-web.github.io/webxr-samples/"
+"immersive-ar-session.html\">eine WebXR-Beispielseite</a> in einem <a "
+"href=\"https://developer.mozilla.org/en-US/docs/Web/API/"
+"WebXR_Device_API#browser_compatibility\">kompatiblen Browser</a> auf."
+
+#: inc\template-fse.php:31
+msgid "Single 3d model"
+msgstr "Einzelnes 3d-Modell"
+
+#: inc\template-fse.php:32
+msgid "Displays a single product."
+msgstr "Zeigt eine einzelne Schulung an."
+
+#~ msgid "Click to close this message"
+#~ msgstr "Klicken Sie, um diese Nachricht zu schließen"

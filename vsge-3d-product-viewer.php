@@ -6,7 +6,7 @@
  * Version: 0.0.2
  * Author: codekraft
  * Text Domain: vsge-3d-product-viewer
- * Domain Path: /languages/
+ * Domain Path: languages/
  */
 
 define( 'VSGE_MV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
