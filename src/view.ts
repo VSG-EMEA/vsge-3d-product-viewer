@@ -198,7 +198,10 @@ async function injectScript() {
 	const script = document.createElement( 'script' );
 	script.type = 'module';
 	// @ts-ignore
-	await import( '@google/model-viewer/dist/model-viewer-module' );
+	await import(
+		/* WebpackChunkName: 'model-viewer' */
+		'@google/model-viewer/dist/model-viewer-module'
+	);
 	// append the script to the page head
 	document.head.appendChild( script );
 }
