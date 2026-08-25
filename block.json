@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "vsge/3d-model",
+  "version": "0.2.0",
+  "title": "3D Viewer Overlay",
+  "category": "widgets",
+  "icon": "format-image",
+  "description": "Adds a 3D model overlay beside the WooCommerce Product Gallery.",
+  "textdomain": "vsge-3d-product-viewer",
+  "attributes": { "productId": { "type": "number" } },
+  "usesContext": [ "postId", "postType" ],
+  "editorScript": "file:./build/index.js",
+  "style": "file:./build/style-view.css",
+  "viewScript": "file:./build/view.js",
+  "supports": { "html": false }
+}
