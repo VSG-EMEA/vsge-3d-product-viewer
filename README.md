@@ -1,107 +1,95 @@
-# VSGE 3D Product Viewer WordPress Plugin
+# VSGE 3D Product Viewer
 
-## Overview
+Standalone WooCommerce 3D and AR viewing for VSGE products. The plugin reads media written by VSGE Products Importer; it does not acquire, migrate, or modify product media.
 
-The VSGE 3D Product Viewer is a WordPress plugin that allows you to easily add a 3D model viewer to your WooCommerce product pages. Showcase your products in a more interactive way by enabling customers to view your products in 3D and even in Augmented Reality (AR).
+## Requirements
 
-## Features
+- WordPress and WooCommerce with a `product` post type.
+- A GLB attachment assigned through the importer contract below.
+- Node 20.19+ for development tooling.
 
-- Upload and manage 3D models in the WordPress media library.
-- Automatically adds a 3D viewer to WooCommerce product pages.
-- Supports Augmented Reality (AR) on compatible devices.
-- Customizable templates for displaying 3D models.
+## Data contract
 
-## Installation
+The persisted contracts are intentionally unchanged:
 
-1. Download the plugin ZIP file from the [GitHub repository](https://github.com/erikyo/vsge-3d-product-viewer).
-2. Upload and activate the plugin through the WordPress admin interface.
+- The **product** owns `brb_media_3d_model`, containing the GLB attachment ID.
+- That **model attachment** canonically owns `brb_media_3d_model_preview`, containing an image attachment ID.
+- That **model attachment** canonically owns `brb_media_3d_model_data`, containing JSON camera and hotspot configuration.
 
-## Usage
-![3dmodel](https://github.com/VSG-EMEA/vsge-3d-product-viewer/assets/8550908/87b46456-dc97-4f68-955e-f42b5da0f5c5)
+The viewer reads preview/configuration from the product only as a read-only fallback for older site data. It never migrates metadata.
 
-### Uploading 3D Models
+Example data JSON:
 
-1. Go to the WordPress Media Library.
-2. Upload your 3D models (in GLB format).
-3. Assign 3D models to your WooCommerce products.
-
-### Displaying 3D Models
-
-To enable the plugin for a product, follow these steps:
-
-**Manual Add**
-- add a post meta to the product named "brb_media_3d_model" with the id of the 3D model in the media library
-- add a post meta to the product named "brb_media_3d_model" with the id of the 3D model preview in the media library (optional, accepted images are .png, .jpg, .jpeg, .gif, and .svg)
-
-**BRB Importer**
-- in our importer in order to add the model to the product we need to register the 3D model in this way:
-- 
 ```json
 {
-	"media": {
-		"3d_model": [
-			"3dmodel.glb"
-		],
-		"3d_model_preview": [
-			"preview.png"
-		],
-		"3d_model_data": {
-			"camera-orbit": "65deg 90deg 25m",
-			"camera-target": "0m 1m 0m",
-			"hotspots": [
-				{
-					"slot": "pin3",
-					"position": "0 0.75 0.75",
-					"title": "Pin 1"
-				},
-				{
-					"slot": "pin3",
-					"position": "0.01 1.25 -1",
-					"title": "Pin 2",
-					"href": "https://url"
-				},
-				{
-					"slot": "pin3",
-					"position": "0.62 0.05 0.58",
-					"title": "Pin 3",
-          				"href": "https://url"
-				}
-			]
-		}
-	}
+  "camera-orbit": "65deg 90deg 25m",
+  "camera-target": "0m 1m 0m",
+  "hotspots": [
+    { "slot": "lift-arm", "position": "0 0.75 0.75", "title": "Lift arm" },
+    { "slot": "control", "position": "0.01 1.25 -1", "title": "Controls", "href": "https://example.com" }
+  ]
 }
 ```
 
-#### Automatic Display (WooCommerce Product Pages)
+Malformed camera or hotspot values are omitted safely at render time.
 
-- The plugin automatically adds a 3D viewer to WooCommerce product pages if a 3D model is assigned overlaying the product images gallery using the hook `do_action( 'woocommerce_after_product-gallery__wrapper' );`.
+## Display methods
 
-#### Custom Display (Shortcode)
+- Dynamic overlay block: `vsge/3d-model`.
+- Shortcode: `[vsge_3d_model]`, optionally `[vsge_3d_model product_id="123"]`.
+- Standalone page: `/model3d=product-slug/` or `/model3d=123/`. Existing slashless links continue through the rewrite rule.
 
-- Use the `[vsge_3d_model]` shortcode to manually display the 3D model viewer on any page or post classic editor or Gutenberg.
-- Use the block `vsge/3d_model` to manually display the 3D model viewer on any page or post using the block editor.
+The overlay block is the primary FSE integration. It does not inject itself into, replace, clone, or manage WooCommerce Product Gallery. Product pages load the small controller only, then load `<model-viewer>` and the GLB after the visitor selects **View in 3D**. The standalone page loads its model immediately.
 
-## Configuration
+## WooCommerce Product Gallery integration
 
-- Configure 3D model settings in the plugin settings page in the WordPress admin.
+Wrap WooCommerce's Product Gallery and the VSGE block in a `vsge-product-media` group. The block becomes an overlay only in this wrapper; outside it, the launcher opens a usable in-flow viewer.
 
-## Screenshots
+```html
+<!-- wp:group {"className":"vsge-product-media"} -->
+<div class="wp-block-group vsge-product-media">
 
+    <!-- wp:woocommerce/product-gallery {"hoverZoom":false,"fullScreenOnClick":false,"layout":{"type":"flex","flexWrap":"nowrap","orientation":"horizontal","verticalAlignment":"bottom"}} -->
+    <div class="wp-block-woocommerce-product-gallery wc-block-product-gallery">
+        <!-- wp:woocommerce/product-gallery-thumbnails /-->
+        <!-- wp:woocommerce/product-gallery-large-image -->
+        <div class="wp-block-woocommerce-product-gallery-large-image wc-block-product-gallery-large-image__inner-blocks">
+            <!-- wp:woocommerce/product-image {"showProductLink":false,"showSaleBadge":false} -->
+            <div class="is-loading"></div>
+            <!-- /wp:woocommerce/product-image -->
+            <!-- wp:woocommerce/product-sale-badge /-->
+            <!-- wp:woocommerce/product-gallery-large-image-next-previous /-->
+        </div>
+        <!-- /wp:woocommerce/product-gallery-large-image -->
+    </div>
+    <!-- /wp:woocommerce/product-gallery -->
 
+    <!-- wp:vsge/3d-model /-->
+</div>
+<!-- /wp:group -->
+```
 
-## Examples
-- [Product page - 2-post-lift-kpx32](https://ravaglioli.com/product/2-post-lift-kpx32/)
-- [Ar mode (On devices that allow it, otherwise vr)](https://ravaglioli.com/model3d=2-post-lift-kpx32)
+When 3D opens, the Woo gallery remains mounted and its original `inert`/`aria-hidden` values are restored on return. WooCommerce remains the sole owner of images, thumbnails, navigation, zoom, lightbox, and variation image state. Automatic classic-gallery injection is intentionally deprecated; shortcode and standalone-viewer compatibility remain.
 
-## Frequently Asked Questions (FAQ)
+## AR and accessibility
 
-- **Q:** Can I use this plugin with any theme?
-    - **A:** The plugin is designed to work with most themes, but some custom themes may require additional adjustments.
+AR modes are delegated to model-viewer in this order: WebXR, Scene Viewer, then Quick Look. There is no user-agent sniffing and AR is only invoked after the visitor presses an AR control. Controls expose labels and state; the QR/instructions use a native dialog and QR generation is deferred until requested.
 
-## Contributing
+## Development
 
-Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request.
+```text
+npm ci
+npm run build
+npm run lint:js
+npm run lint:css
+npm run lint:pkg
+npm run test:unit
+npm run test:e2e
+php tests/php/smoke.php
+```
+
+`test:e2e` uses WordPress Playwright tooling and `wp-env`. The supplied test validates activation; a product/media fixture should write the three contracts above before asserting gallery switching, standalone output, block rendering, and shortcode output.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+LICENSE DECISION REQUIRED: the repository’s `LICENSE.md` contains GPLv3 text while the existing plugin/package metadata states `GPL-2.0-or-later`. The repository history available in this checkout is not sufficient to resolve ownership or relicensing. No license grant was changed by this modernization.
