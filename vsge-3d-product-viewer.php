@@ -3,7 +3,7 @@
  * Plugin Name: VSGE 3d product viewer
  * Plugin URI: https://github.com/erikyo/vsge-3d-product-viewer
  * Description: WordPress plugin vsge-3d-product-viewer
- * Version: 0.0.2
+ * Version: 0.2.0
  * Author: codekraft
  * Text Domain: vsge-3d-product-viewer
  * Domain Path: languages/
@@ -11,34 +11,22 @@
 
 define( 'VSGE_MV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'VSGE_MV_PLUGIN_DIR', __DIR__ );
-define( 'VSGE_MV_PLUGIN_NAMESPACE', 'brb' );
-define( 'VSGE_MV_FSE_NAMESPACE', 'vsge' );
+define( 'VSGE_MV_VERSION', '0.2.0' );
 
 /**
  * Enables the upload of glb files to WordPress media library.
  */
-function vsge_mv_mime_types($mime_types){
-	$mime_types['glb'] = 'application/octet-stream';
-	return $mime_types;
-}
-add_filter('upload_mimes', 'vsge_mv_mime_types', 1, 1);
+require_once VSGE_MV_PLUGIN_DIR . '/inc/ModelData.php';
+require_once VSGE_MV_PLUGIN_DIR . '/inc/Assets.php';
+require_once VSGE_MV_PLUGIN_DIR . '/inc/StandaloneViewerEndpoint.php';
+require_once VSGE_MV_PLUGIN_DIR . '/inc/Renderer.php';
+require_once VSGE_MV_PLUGIN_DIR . '/inc/Block.php';
+require_once VSGE_MV_PLUGIN_DIR . '/inc/Plugin.php';
 
-/**
- * Includes the required files
- */
-include_once VSGE_MV_PLUGIN_DIR . '/inc/utils.php';
-include_once VSGE_MV_PLUGIN_DIR . '/inc/enqueue.php';
-include_once VSGE_MV_PLUGIN_DIR . '/inc/template-classic.php';
-include_once VSGE_MV_PLUGIN_DIR . '/inc/template-fse.php';
-include_once VSGE_MV_PLUGIN_DIR . '/inc/template-loader.php';
-include_once VSGE_MV_PLUGIN_DIR . '/inc/view.php';
+\Vsge3DProductViewer\Plugin::register();
+register_activation_hook( __FILE__, array( '\\Vsge3DProductViewer\\StandaloneViewerEndpoint', 'activate' ) );
+register_deactivation_hook( __FILE__, array( '\\Vsge3DProductViewer\\StandaloneViewerEndpoint', 'deactivate' ) );
 
-/** Load the 3D model viewer script and style */
-add_action( 'wp_enqueue_scripts', 'vsge_mv_frontend_scripts' );
-add_action( 'wp_footer', 'vsge_mv_frontend_style' );
-
-/** Adds to the product gallery container the 3D model viewer */
-add_action( 'woocommerce_after_product-gallery__wrapper', 'vsge_3d_model_container', 20 );
-
-/** Add a custom class to the body whenever the displayed product has a 3D model */
-add_filter( 'woocommerce_single_product_image_gallery_classes', 'vsge_3d_model_container_class' );
+/** Compatibility helpers retained for external VSGE callers. */
+function has_3d_model( $product_id = null ) { return null !== \Vsge3DProductViewer\ModelData::for_product( $product_id ?: get_the_ID() ); }
+function vsge_3d_model_container() { echo \Vsge3DProductViewer\Renderer::render(); } // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
