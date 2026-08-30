@@ -2,7 +2,7 @@ import type { ModelViewerElement } from '@google/model-viewer';
 import './style/style.scss';
 import { strings } from './strings';
 import {
-	hasOverlayGallery,
+	initialiseGalleryOverlay,
 	setOverlayState,
 	showViewerError,
 } from './viewer-ui';
@@ -61,11 +61,30 @@ const showDialog = ( root: HTMLElement, content: Node ) => {
 
 const infoContent = () => {
 	const wrapper = document.createElement( 'div' );
+	wrapper.className = 'vsge-viewer-instructions';
+	const illustration = document.createElement( 'span' );
+	illustration.className = 'vsge-viewer-instructions-illustration';
+	illustration.setAttribute( 'aria-hidden', 'true' );
 	const heading = document.createElement( 'h2' );
 	heading.textContent = strings.instructionsTitle;
 	const text = document.createElement( 'p' );
 	text.textContent = strings.instructionsText;
-	wrapper.append( heading, text );
+	wrapper.append( illustration, heading, text );
+	[
+		[ 'center', strings.instructionsOverview ],
+		[ 'rotation', strings.instructionsRotation ],
+		[ 'zoom', strings.instructionsZoom ],
+	].forEach( ( [ icon, instruction ] ) => {
+		const item = document.createElement( 'div' );
+		item.className = 'vsge-viewer-instruction';
+		const iconElement = document.createElement( 'span' );
+		iconElement.className = `vsge-viewer-instruction-icon vsge-viewer-instruction-icon--${ icon }`;
+		iconElement.setAttribute( 'aria-hidden', 'true' );
+		const instructionText = document.createElement( 'p' );
+		instructionText.textContent = instruction;
+		item.append( iconElement, instructionText );
+		wrapper.append( item );
+	} );
 	return wrapper;
 };
 
@@ -95,7 +114,11 @@ const showQr = async ( root: HTMLElement ) => {
 };
 
 const initialiseRoot = ( root: HTMLElement ) => {
-	root.classList.toggle( 'vsge-3d-overlay-mode', hasOverlayGallery( root ) );
+	if ( root.dataset.vsgeViewerInitialised === 'true' ) {
+		return;
+	}
+	root.dataset.vsgeViewerInitialised = 'true';
+	initialiseGalleryOverlay( root );
 	const viewer = root.querySelector< ViewerElement >( 'model-viewer' );
 	if ( ! viewer ) {
 		return;
@@ -116,20 +139,17 @@ const initialiseRoot = ( root: HTMLElement ) => {
 		root.querySelector< HTMLButtonElement >( '.vsge-launch-3d' );
 	const stage = root.querySelector< HTMLElement >( '.vsge-3d-stage' );
 	launcher?.addEventListener( 'click', async () => {
+		if ( root.classList.contains( 'vsge-3d-active' ) ) {
+			setOverlayState( root, false );
+			launcher.focus( { preventScroll: true } );
+			return;
+		}
 		if ( ! ( await prepareViewer( root ) ) ) {
 			return;
 		}
 		setOverlayState( root, true );
-		launcher.setAttribute( 'aria-expanded', 'true' );
 		stage?.focus( { preventScroll: true } );
 	} );
-	root
-		.querySelector< HTMLButtonElement >( '.vsge-return-to-images' )
-		?.addEventListener( 'click', () => {
-			setOverlayState( root, false );
-			launcher?.setAttribute( 'aria-expanded', 'false' );
-			launcher?.focus( { preventScroll: true } );
-		} );
 	root.querySelectorAll< HTMLButtonElement >( '[data-vsge-action]' ).forEach(
 		( button ) =>
 			button.addEventListener( 'click', async () => {
