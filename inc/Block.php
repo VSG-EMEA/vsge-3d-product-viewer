@@ -13,7 +13,9 @@ final class Block {
 			$product_id = absint( $block->context['postId'] );
 		}
 		$product_id = $product_id ?: get_the_ID();
-		$wrapper_attributes = function_exists( 'get_block_wrapper_attributes' ) ? get_block_wrapper_attributes( array( 'class' => 'vsge-3d-product-viewer' ) ) : 'class="wp-block-vsge-3d-model vsge-3d-product-viewer"';
-		return Renderer::render( $product_id, false, $wrapper_attributes );
+		$wrapper_attributes = function_exists( 'get_block_wrapper_attributes' ) ? get_block_wrapper_attributes( array( 'class' => 'vsge-3d-product-viewer' ) ) : 'class="wp-block-vsge-gallery-3d-model vsge-3d-product-viewer"';
+		// Block metadata owns view assets. Enqueuing them again from Renderer would
+		// execute the view script twice and make the persistent toggle race itself.
+		return Renderer::render( $product_id, false, $wrapper_attributes, false );
 	}
 }
