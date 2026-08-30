@@ -3,73 +3,108 @@
 }
 
 .vsge-3d-product-viewer {
-	--vsge-3d-control-background: #1f2937;
-	--vsge-3d-control-color: #fff;
-	--vsge-3d-control-gap: 0.5rem;
-	--vsge-3d-control-size: 2.75rem;
+	--vsge-3d-control-background: var(--wp--preset--color--background, #fff);
+	--vsge-3d-control-border: var(--wp--preset--color--gray-light, #ddd);
+	--vsge-3d-control-color: var(--wp--preset--color--gray-dark, #444);
+	--vsge-3d-control-edge: var(--vsge-gallery-control-edge, 5px);
+	--vsge-3d-control-gap: var(--vsge-gallery-control-gap, 4px);
+	--vsge-3d-control-size: var(--vsge-gallery-control-size, 40px);
 	--vsge-3d-stage-background: #f5f5f5;
 	max-width: 100%;
 	position: relative;
 }
 
-.vsge-product-media > .wp-block-vsge-3d-model.vsge-3d-overlay-mode {
+.vsge-product-media > .vsge-3d-product-viewer,
+.vsge-product-hero__media > .vsge-3d-product-viewer,
+.vsge-3d-product-viewer.vsge-3d-overlay-mode {
 	inset: 0;
+	margin: 0;
 	max-width: none;
 	pointer-events: none;
 	position: absolute;
+	width: auto;
 	z-index: 5;
 }
 
 .vsge-3d-launcher {
 	display: flex;
-	justify-content: flex-end;
-	margin-block: var(--vsge-3d-control-gap);
 	position: relative;
-	z-index: 2;
+	z-index: 4;
 }
 
 .vsge-3d-overlay-mode .vsge-3d-launcher {
+	height: var(--vsge-3d-switch-height);
+	left: var(--vsge-3d-switch-left);
+	pointer-events: auto;
 	position: absolute;
-	right: var(--vsge-3d-control-gap);
-	top: var(--vsge-3d-control-gap);
+	top: var(--vsge-3d-switch-top);
+	width: var(--vsge-3d-switch-width);
+}
+
+.vsge-3d-overlay-mode:not(.vsge-3d-overlay-ready) .vsge-3d-launcher {
+	visibility: hidden;
+}
+
+.vsge-3d-product-viewer:not(.vsge-3d-overlay-mode) .vsge-3d-launcher {
+	justify-content: flex-end;
+	margin-block: var(--vsge-3d-control-gap);
+}
+
+.vsge-product-media > .vsge-3d-product-viewer:not(.vsge-3d-overlay-ready) .vsge-3d-launcher,
+.vsge-product-hero__media > .vsge-3d-product-viewer:not(.vsge-3d-overlay-ready) .vsge-3d-launcher {
+	visibility: hidden;
 }
 
 .vsge-3d-stage {
 	background: var(--vsge-3d-stage-background);
-	display: grid;
-	gap: var(--vsge-3d-control-gap);
-	grid-template-rows: auto minmax(0, 1fr) auto;
 	min-block-size: min(70vw, 40rem);
-	padding: var(--vsge-3d-control-gap);
+	overflow: hidden;
 	position: relative;
 }
 
-.vsge-product-media > .wp-block-vsge-3d-model.vsge-3d-overlay-mode .vsge-3d-stage {
-	inset: 0;
-	min-block-size: 100%;
+.vsge-3d-overlay-mode .vsge-3d-stage {
+	height: var(--vsge-3d-viewport-height);
+	left: var(--vsge-3d-viewport-left);
+	min-block-size: 0;
 	pointer-events: auto;
 	position: absolute;
-}
-
-.vsge-3d-stage[data-eager-stage] {
-	grid-template-rows: minmax(0, 1fr) auto;
+	top: var(--vsge-3d-viewport-top);
+	width: var(--vsge-3d-viewport-width);
+	z-index: 1;
 }
 
 .vsge-3d-stage[hidden] {
 	display: none;
 }
 
-.vsge-3d-stage-header,
 .vsge-viewer-controls {
+	align-items: flex-end;
 	display: flex;
-	flex-wrap: wrap;
 	gap: var(--vsge-3d-control-gap);
-	position: relative;
-	z-index: 1;
+	justify-content: flex-end;
+	pointer-events: auto;
+	position: absolute;
+	right: calc(var(--vsge-3d-control-edge) + var(--vsge-3d-control-size) + var(--vsge-3d-control-gap));
+	bottom: var(--vsge-3d-control-edge);
+	z-index: 3;
 }
 
-.vsge-viewer-controls {
-	justify-content: flex-end;
+.vsge-3d-overlay-mode .vsge-viewer-controls {
+	display: none;
+}
+
+.vsge-3d-overlay-mode.vsge-3d-active.vsge-3d-has-thumbnail-rail .vsge-viewer-controls {
+	align-items: stretch;
+	bottom: auto;
+	display: flex;
+	flex-direction: column;
+	height: var(--vsge-3d-rail-height);
+	justify-content: flex-start;
+	left: var(--vsge-3d-rail-left);
+	overflow: hidden;
+	right: auto;
+	top: var(--vsge-3d-rail-top);
+	width: var(--vsge-3d-rail-width);
 }
 
 .vsge-3d-model {
@@ -81,23 +116,98 @@
 }
 
 .vsge-3d-canvas {
+	inset: 0;
 	min-block-size: 0;
-	position: relative;
+	position: absolute;
 }
 
-.vsge-3d-product-viewer button {
+.vsge-gallery-control,
+.vsge-viewer-dialog-close {
+	align-items: center;
 	appearance: none;
 	background: var(--vsge-3d-control-background);
-	border: 0;
-	border-radius: 0.25rem;
+	border: 1px solid var(--vsge-3d-control-border);
+	border-radius: 0;
+	box-sizing: border-box;
 	color: var(--vsge-3d-control-color);
 	cursor: pointer;
-	min-block-size: var(--vsge-3d-control-size);
-	padding: 0.65rem 0.85rem;
+	display: inline-flex;
+	height: var(--vsge-3d-control-size);
+	justify-content: center;
+	padding: 0;
+	pointer-events: auto;
+	width: var(--vsge-3d-control-size);
 }
 
-.vsge-3d-product-viewer button[aria-pressed="true"] {
-	box-shadow: inset 0 0 0 2px currentcolor;
+.vsge-launch-3d {
+	font-size: 0.875rem;
+	line-height: 1;
+	min-width: var(--vsge-3d-control-size);
+	padding-inline: 0.75rem;
+	white-space: nowrap;
+}
+
+.vsge-3d-overlay-mode .vsge-launch-3d {
+	height: 100%;
+	width: 100%;
+}
+
+.vsge-3d-overlay-mode .vsge-viewer-controls .vsge-gallery-control {
+	aspect-ratio: 1;
+	flex: 0 0 auto;
+	height: auto;
+	padding: 8px;
+	width: 100%;
+}
+
+.vsge-gallery-control[aria-pressed="true"] {
+	border-color: var(--wp--preset--color--primary, #002d53);
+	color: var(--wp--preset--color--primary, #002d53);
+}
+
+.vsge-viewer-instruction-icon,
+.vsge-viewer-instructions-illustration {
+	background-color: currentcolor;
+	display: block;
+	mask-position: center;
+	mask-repeat: no-repeat;
+	mask-size: contain;
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+}
+
+.vsge-viewer-control-icon {
+	fill: currentcolor;
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
+.vsge-3d-overlay-mode .vsge-viewer-controls .vsge-viewer-control-icon {
+	height: 100%;
+	width: 100%;
+}
+
+.vsge-viewer-control-icon--close {
+	background-color: currentcolor;
+	display: block;
+	mask-image: url(../img/close.svg);
+	-webkit-mask-image: url(../img/close.svg);
+}
+
+
+.vsge-visually-hidden {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.vsge-ar-button {
+	display: none;
 }
 
 .vsge-hotspot {
@@ -133,6 +243,8 @@
 	box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.35);
 	max-width: min(32rem, calc(100vw - 2rem));
 	pointer-events: auto;
+	padding: 1.5rem;
+	position: relative;
 }
 
 .vsge-viewer-dialog::backdrop {
@@ -146,9 +258,70 @@
 	max-width: 100%;
 }
 
-.vsge-3d-editor-preview {
-	border: 1px dashed #64748b;
-	padding: 1rem;
+.vsge-viewer-dialog-close {
+	height: 2rem;
+	padding: 0.35rem;
+	position: absolute;
+	right: 0.75rem;
+	top: 0.75rem;
+	width: 2rem;
+}
+
+.vsge-viewer-instructions {
+	text-align: center;
+}
+
+.vsge-viewer-instructions h2 {
+	margin: 0 2rem 0.75rem;
+}
+
+.vsge-viewer-instructions > p {
+	margin: 0 auto 1rem;
+	max-width: 32rem;
+}
+
+.vsge-viewer-instructions-illustration {
+	background-color: #ddd;
+	height: 7rem;
+	margin: 0 auto 1rem;
+	mask-image: url(../img/Instructions-3D.svg);
+	-webkit-mask-image: url(../img/Instructions-3D.svg);
+	width: 6.5rem;
+}
+
+.vsge-viewer-instruction {
+	align-items: center;
+	display: flex;
+	gap: 1rem;
+	margin: 0.75rem auto;
+	max-width: 24rem;
+	text-align: left;
+}
+
+.vsge-viewer-instruction p {
+	margin: 0;
+}
+
+.vsge-viewer-instruction-icon {
+	color: #969696;
+	flex: 0 0 2rem;
+	height: 2rem;
+	width: 2rem;
+}
+
+.vsge-viewer-instruction-icon--center {
+	mask-image: url(../img/Icon-3D-center.svg);
+	-webkit-mask-image: url(../img/Icon-3D-center.svg);
+}
+
+.vsge-viewer-instruction-icon--rotation {
+	mask-image: url(../img/Icon-3D-rotation.svg);
+	-webkit-mask-image: url(../img/Icon-3D-rotation.svg);
+}
+
+.vsge-viewer-instruction-icon--zoom {
+	mask-image: url(../img/Icon-3D-zoom.svg);
+	-webkit-mask-image: url(../img/Icon-3D-zoom.svg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -160,7 +333,7 @@
 
 @media (max-width: 600px) {
 
-	.vsge-3d-stage {
+	.vsge-3d-product-viewer:not(.vsge-3d-overlay-mode) .vsge-3d-stage {
 		min-block-size: 22rem;
 	}
 }
