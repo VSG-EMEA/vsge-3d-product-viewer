@@ -2,6 +2,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 import { registerBlockType } from '@wordpress/blocks';
 import { createElement } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import './style/editor.scss';
 
 const Edit = ( { context } ) => {
 	const props = useBlockProps( { className: 'vsge-3d-editor-preview' } );
@@ -26,7 +27,7 @@ const Edit = ( { context } ) => {
 	);
 };
 
-registerBlockType( 'vsge/3d-model', {
+registerBlockType( 'vsge/gallery-3d-model', {
 	edit: Edit,
 	save: () => null,
 } );

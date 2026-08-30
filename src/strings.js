@@ -14,6 +14,18 @@ export const strings = {
 		'Drag to rotate the model, use the mouse wheel or pinch gesture to zoom, and use the controls to recenter or open augmented reality.',
 		'vsge-3d-product-viewer'
 	),
+	instructionsOverview: __(
+		'Use the right mouse button to move the model.',
+		'vsge-3d-product-viewer'
+	),
+	instructionsRotation: __(
+		'Drag to change the viewing angle.',
+		'vsge-3d-product-viewer'
+	),
+	instructionsZoom: __(
+		'Use the mouse wheel or pinch gesture to zoom.',
+		'vsge-3d-product-viewer'
+	),
 	qrTitle: __( 'View in augmented reality', 'vsge-3d-product-viewer' ),
 	qrText: __(
 		'Scan this QR code on a compatible mobile device.',
