@@ -1,7 +1,7 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "vsge/3d-model",
+  "name": "vsge/gallery-3d-model",
   "version": "0.2.0",
   "title": "3D Viewer Overlay",
   "category": "widgets",
@@ -11,7 +11,8 @@
   "attributes": { "productId": { "type": "number" } },
   "usesContext": [ "postId", "postType" ],
   "editorScript": "file:./build/index.js",
-  "style": "file:./build/style-view.css",
+  "editorStyle": "file:./build/index.css",
+  "viewStyle": "file:./build/style-view.css",
   "viewScript": "file:./build/view.js",
   "supports": { "html": false }
 }

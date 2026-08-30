@@ -35,7 +35,7 @@ Malformed camera or hotspot values are omitted safely at render time.
 
 ## Display methods
 
-- Dynamic overlay block: `vsge/3d-model`.
+- Dynamic overlay block: `vsge/gallery-3d-model`.
 - Shortcode: `[vsge_3d_model]`, optionally `[vsge_3d_model product_id="123"]`.
 - Standalone page: `/model3d=product-slug/` or `/model3d=123/`. Existing slashless links continue through the rewrite rule.
 
@@ -64,7 +64,7 @@ Wrap WooCommerce's Product Gallery and the VSGE block in a `vsge-product-media` 
     </div>
     <!-- /wp:woocommerce/product-gallery -->
 
-    <!-- wp:vsge/3d-model /-->
+    <!-- wp:vsge/gallery-3d-model /-->
 </div>
 <!-- /wp:group -->
 ```
