@@ -12,9 +12,9 @@
 namespace Vsge3DProductViewer;
 
 final class ModelData {
-	const MODEL_META   = 'brb_media_3d_model';
-	const PREVIEW_META = 'brb_media_3d_model_preview';
-	const DATA_META    = 'brb_media_3d_model_data';
+	const MODEL_META   = 'vsge_media_3d_model';
+	const PREVIEW_META = 'vsge_media_3d_model_preview';
+	const DATA_META    = 'vsge_media_3d_model_data';
 
 	/** @return array<string,mixed>|null */
 	public static function for_product( $product_id ) {
