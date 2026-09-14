@@ -16,6 +16,20 @@ const loadModelViewer = () =>
 const motionIsReduced = () =>
 	window.matchMedia?.( '(prefers-reduced-motion: reduce)' ).matches ?? false;
 
+export const setViewerLoading = ( root: HTMLElement, loading: boolean ) => {
+	const indicator = root.querySelector< HTMLElement >( '.vsge-loading' );
+	if ( ! indicator ) {
+		return;
+	}
+	indicator.hidden = ! loading;
+	root.classList.toggle( 'vsge-3d-loading', loading );
+};
+
+const completeViewerLoading = ( root: HTMLElement, viewer: ViewerElement ) => {
+	viewer.dataset.vsgeLoadComplete = 'true';
+	setViewerLoading( root, false );
+};
+
 const prepareViewer = async (
 	root: HTMLElement
 ): Promise< ViewerElement | null > => {
@@ -23,10 +37,19 @@ const prepareViewer = async (
 	if ( ! viewer ) {
 		return null;
 	}
+	if ( viewer.loaded ) {
+		completeViewerLoading( root, viewer );
+	} else if ( viewer.dataset.vsgeLoadComplete !== 'true' ) {
+		setViewerLoading( root, true );
+	}
 	try {
 		await loadModelViewer();
 		if ( ! viewer.getAttribute( 'src' ) ) {
-			viewer.setAttribute( 'src', viewer.dataset.src || '' );
+			const source = viewer.dataset.src;
+			if ( ! source ) {
+				throw new Error( 'Missing 3D model source.' );
+			}
+			viewer.setAttribute( 'src', source );
 		}
 		if ( viewer.dataset.vsgeControlsReady !== 'true' ) {
 			viewer.autoRotate = ! motionIsReduced();
@@ -39,6 +62,7 @@ const prepareViewer = async (
 		}
 		return viewer;
 	} catch {
+		setViewerLoading( root, false );
 		showViewerError( root, strings.viewerLoadError );
 		return null;
 	}
@@ -113,7 +137,7 @@ const showQr = async ( root: HTMLElement ) => {
 	}
 };
 
-const initialiseRoot = ( root: HTMLElement ) => {
+export const initialiseRoot = ( root: HTMLElement ) => {
 	if ( root.dataset.vsgeViewerInitialised === 'true' ) {
 		return;
 	}
@@ -129,12 +153,28 @@ const initialiseRoot = ( root: HTMLElement ) => {
 		const detail = ( event as CustomEvent< { totalProgress?: number } > )
 			.detail;
 		if ( progress && typeof detail.totalProgress === 'number' ) {
-			progress.value = detail.totalProgress * 100;
+			const totalProgress = Math.max(
+				0,
+				Math.min( 1, detail.totalProgress )
+			);
+			progress.value = totalProgress * 100;
+			if ( totalProgress >= 1 ) {
+				completeViewerLoading( root, viewer );
+			} else {
+				setViewerLoading( root, true );
+			}
 		}
 	} );
-	viewer.addEventListener( 'error', () =>
-		showViewerError( root, strings.modelLoadError )
+	viewer.addEventListener( 'load', () =>
+		completeViewerLoading( root, viewer )
 	);
+	viewer.addEventListener( 'error', () => {
+		setViewerLoading( root, false );
+		showViewerError( root, strings.modelLoadError );
+	} );
+	if ( viewer.loaded ) {
+		completeViewerLoading( root, viewer );
+	}
 	const launcher =
 		root.querySelector< HTMLButtonElement >( '.vsge-launch-3d' );
 	const stage = root.querySelector< HTMLElement >( '.vsge-3d-stage' );
