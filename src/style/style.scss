@@ -93,21 +93,23 @@
 	display: none;
 }
 
-.vsge-3d-overlay-mode.vsge-3d-active.vsge-3d-has-thumbnail-rail .vsge-viewer-controls {
-	align-items: stretch;
+.vsge-product-media > .vsge-3d-product-viewer.vsge-3d-overlay-mode.vsge-3d-active.vsge-3d-has-thumbnail-rail .vsge-viewer-controls {
+	align-items: flex-start;
 	bottom: auto;
 	display: flex;
 	flex-direction: column;
-	height: var(--vsge-3d-rail-height);
+	gap: var(--vsge-3d-rail-gap);
+	height: auto;
 	justify-content: flex-start;
 	left: var(--vsge-3d-rail-left);
-	overflow: hidden;
+	overflow: visible;
 	right: auto;
 	top: var(--vsge-3d-rail-top);
 	width: var(--vsge-3d-rail-width);
 }
 
 .vsge-3d-model {
+	--poster-color: transparent;
 	background: var(--vsge-3d-stage-background);
 	display: block;
 	block-size: 100%;
@@ -152,12 +154,11 @@
 	width: 100%;
 }
 
-.vsge-3d-overlay-mode .vsge-viewer-controls .vsge-gallery-control {
-	aspect-ratio: 1;
-	flex: 0 0 auto;
-	height: auto;
+.vsge-product-media > .vsge-3d-product-viewer.vsge-3d-overlay-mode.vsge-3d-active.vsge-3d-has-thumbnail-rail .vsge-viewer-controls .vsge-gallery-control {
+	flex: 0 0 var(--vsge-3d-rail-height);
+	height: var(--vsge-3d-rail-height);
 	padding: 8px;
-	width: 100%;
+	width: var(--vsge-3d-rail-width);
 }
 
 .vsge-gallery-control[aria-pressed="true"] {
@@ -183,7 +184,7 @@
 	width: 1.5rem;
 }
 
-.vsge-3d-overlay-mode .vsge-viewer-controls .vsge-viewer-control-icon {
+.vsge-product-media > .vsge-3d-product-viewer.vsge-3d-overlay-mode.vsge-3d-active.vsge-3d-has-thumbnail-rail .vsge-viewer-controls .vsge-viewer-control-icon {
 	height: 100%;
 	width: 100%;
 }
@@ -228,8 +229,45 @@
 }
 
 .vsge-loading {
+	background: rgb(255 255 255 / 0.92);
+	border: 1px solid var(--vsge-3d-control-border);
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.16);
+	box-sizing: border-box;
 	color: #111;
-	padding: 1rem;
+	display: grid;
+	gap: 0.5rem;
+	left: 50%;
+	max-width: calc(100% - 2rem);
+	padding: 0.75rem 1rem;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: min(18rem, calc(100% - 2rem));
+}
+
+.vsge-loading[hidden] {
+	display: none;
+}
+
+.vsge-loading span {
+	font-size: 0.875rem;
+	line-height: 1.25;
+}
+
+.vsge-loading progress {
+	appearance: none;
+	block-size: 0.375rem;
+	display: block;
+	inline-size: 100%;
+}
+
+.vsge-loading progress::-webkit-progress-bar {
+	background: #e5e5e5;
+}
+
+.vsge-loading progress::-webkit-progress-value,
+.vsge-loading progress::-moz-progress-bar {
+	background: var(--wp--preset--color--primary, #002d53);
 }
 
 .vsge-model-error {
