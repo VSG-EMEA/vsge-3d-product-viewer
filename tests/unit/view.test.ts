@@ -31,7 +31,7 @@ const setRect = (
 describe( 'viewer controls', () => {
 	beforeEach( () => {
 		document.body.innerHTML =
-			'<div class="vsge-product-hero__media"><div class="vsge-product-media"><div class="wp-block-woocommerce-product-gallery wc-block-product-gallery"><div class="wc-block-product-gallery-thumbnails"></div><div class="wc-block-product-gallery-large-image"><ul class="wc-block-product-gallery-large-image__container"></ul><div class="wc-block-next-previous-buttons"><button class="wc-block-next-previous-buttons__button">Previous</button><button class="wc-block-next-previous-buttons__button">Next</button></div></div></div></div><section class="wp-block-vsge-gallery-3d-model vsge-3d-product-viewer" data-vsge-viewer><div class="vsge-3d-launcher"><button class="vsge-launch-3d vsge-gallery-control" aria-pressed="false" data-model-label="View in 3D" data-gallery-label="Return to gallery"><span data-vsge-switch-model>3D/VR</span><span data-vsge-switch-gallery hidden>Gallery</span></button></div><div class="vsge-3d-stage" hidden></div><div class="vsge-viewer-controls"><button class="vsge-gallery-control" data-vsge-action="recenter"></button></div><p class="vsge-model-error" hidden></p></section></div>';
+			'<div class="vsge-product-hero__media"><div class="vsge-product-media"><div class="wp-block-woocommerce-product-gallery wc-block-product-gallery"><div class="wc-block-product-gallery-thumbnails"><button class="wc-block-product-gallery-thumbnails__thumbnail"></button><button class="wc-block-product-gallery-thumbnails__thumbnail"></button></div><div class="wc-block-product-gallery-large-image"><ul class="wc-block-product-gallery-large-image__container"></ul><div class="wc-block-next-previous-buttons"><button class="wc-block-next-previous-buttons__button">Previous</button><button class="wc-block-next-previous-buttons__button">Next</button></div></div></div></div><section class="wp-block-vsge-gallery-3d-model vsge-3d-product-viewer" data-vsge-viewer><div class="vsge-3d-launcher"><button class="vsge-launch-3d vsge-gallery-control" aria-pressed="false" data-model-label="View in 3D" data-gallery-label="Return to gallery"><span data-vsge-switch-model>3D/VR</span><span data-vsge-switch-gallery hidden>Gallery</span></button></div><div class="vsge-3d-stage" hidden></div><div class="vsge-viewer-controls"><button class="vsge-gallery-control" data-vsge-action="recenter"></button></div><p class="vsge-model-error" hidden></p></section></div>';
 	} );
 
 	it( 'uses current Woo geometry without inserting plugin controls into Woo DOM', () => {
@@ -47,6 +47,9 @@ describe( 'viewer controls', () => {
 		const thumbnails = gallery.querySelector(
 			'.wc-block-product-gallery-thumbnails'
 		) as HTMLElement;
+		const thumbnailItems = gallery.querySelectorAll(
+			'.wc-block-product-gallery-thumbnails__thumbnail'
+		);
 		const imageContainer = gallery.querySelector(
 			'.wc-block-product-gallery-large-image__container'
 		) as HTMLElement;
@@ -64,6 +67,8 @@ describe( 'viewer controls', () => {
 		setRect( media, 10, 20, 600, 500 );
 		setRect( gallery, 10, 20, 600, 500 );
 		setRect( thumbnails, 10, 30, 80, 480 );
+		setRect( thumbnailItems[ 0 ], 16, 35, 64, 64 );
+		setRect( thumbnailItems[ 1 ], 16, 107, 64, 64 );
 		setRect( viewport, 110, 20, 500, 500 );
 		setRect( navigation, 115, 25, 490, 490 );
 		setRect( navigationButtons[ 0 ], 441, 465, 40, 40 );
@@ -85,10 +90,19 @@ describe( 'viewer controls', () => {
 			root.style.getPropertyValue( '--vsge-3d-viewport-width' )
 		).toBe( '500px' );
 		expect( root.style.getPropertyValue( '--vsge-3d-rail-left' ) ).toBe(
-			'0px'
+			'6px'
 		);
 		expect( root.style.getPropertyValue( '--vsge-3d-rail-width' ) ).toBe(
-			'80px'
+			'64px'
+		);
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-top' ) ).toBe(
+			'15px'
+		);
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-height' ) ).toBe(
+			'64px'
+		);
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-gap' ) ).toBe(
+			'8px'
 		);
 		expect( root.style.getPropertyValue( '--vsge-3d-switch-left' ) ).toBe(
 			'525px'
@@ -123,7 +137,34 @@ describe( 'viewer controls', () => {
 		expect( gallery.inert ).toBeUndefined();
 		expect( navigation.getAttribute( 'aria-hidden' ) ).toBeNull();
 
+		// Woo's inactive thumbnail cards can collapse while the alternate viewer
+		// is active. Keep the last real card geometry rather than replacing it.
+		setRect( thumbnailItems[ 0 ], 0, 0, 0, 0 );
+		setRect( thumbnailItems[ 1 ], 0, 0, 0, 0 );
+		expect( syncOverlayGeometry( root ) ).toBe( true );
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-top' ) ).toBe(
+			'15px'
+		);
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-width' ) ).toBe(
+			'64px'
+		);
+
+		setRect( thumbnailItems[ 0 ], 18, 38, 68, 68 );
+		setRect( thumbnailItems[ 1 ], 18, 114, 68, 68 );
+
 		setOverlayState( root, false );
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-left' ) ).toBe(
+			'8px'
+		);
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-top' ) ).toBe(
+			'18px'
+		);
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-width' ) ).toBe(
+			'68px'
+		);
+		expect( root.style.getPropertyValue( '--vsge-3d-rail-gap' ) ).toBe(
+			'8px'
+		);
 		setOverlayState( root, true );
 		setOverlayState( root, false );
 		expect( root.classList.contains( 'vsge-3d-active' ) ).toBe( false );
