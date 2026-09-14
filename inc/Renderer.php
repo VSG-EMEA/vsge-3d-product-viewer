@@ -30,7 +30,7 @@ final class Renderer {
 				<div class="vsge-3d-canvas">
 				<model-viewer class="vsge-3d-model" data-src="<?php echo esc_url( $model['model_url'] ); ?>"<?php echo $standalone ? ' src="' . esc_url( $model['model_url'] ) . '" data-eager="true"' : ''; ?><?php echo $model['preview_url'] ? ' poster="' . esc_url( $model['preview_url'] ) . '"' : ''; ?><?php echo $model['camera_orbit'] ? ' camera-orbit="' . esc_attr( $model['camera_orbit'] ) . '"' : ''; ?><?php echo $model['camera_target'] ? ' camera-target="' . esc_attr( $model['camera_target'] ) . '"' : ''; ?> camera-controls min-field-of-view="10deg" tone-mapping="commerce" environment-image="neutral" shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look" aria-label="<?php echo esc_attr( $model['accessible_label'] ); ?>">
 					<button slot="ar-button" type="button" class="vsge-ar-button" hidden aria-label="<?php esc_attr_e( 'View this product in augmented reality', 'vsge-3d-product-viewer' ); ?>"><?php esc_html_e( 'View in AR', 'vsge-3d-product-viewer' ); ?></button>
-					<div class="vsge-loading" slot="progress-bar"><span><?php esc_html_e( 'Loading 3D model…', 'vsge-3d-product-viewer' ); ?></span><progress value="0" max="100"></progress></div>
+					<div class="vsge-loading" slot="progress-bar" hidden><span><?php esc_html_e( 'Loading 3D model…', 'vsge-3d-product-viewer' ); ?></span><progress value="0" max="100"></progress></div>
 					<?php self::hotspots( $model['hotspots'] ); ?>
 				</model-viewer>
 				<p class="vsge-model-error" role="status" hidden></p>
